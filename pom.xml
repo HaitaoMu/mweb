@@ -36,13 +36,28 @@
 		<commons.dbcp.version>1.4</commons.dbcp.version>
 		<commons.pool.version>1.6</commons.pool.version>
 		<commons.lang.version>2.5</commons.lang.version>
-		
+
 
 		<!-- Test -->
 		<junit.version>4.11</junit.version>
-
+		
+		<!-- Plugins -->
+		<maven.compiler.plugin.version>2.3.2</maven.compiler.plugin.version>
+		
 	</properties>
-
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven.compiler.plugin.version}</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 	<dependencies>
 
 		<!-- Spring MVC -->
@@ -62,11 +77,11 @@
 			<artifactId>spring-orm</artifactId>
 			<version>${spring-framework.version}</version>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.springframework</groupId> -->
-<!-- 			<artifactId>spring-aop</artifactId> -->
-<!-- 			<version>${spring-framework.version}</version> -->
-<!-- 		</dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.springframework</groupId> -->
+		<!-- <artifactId>spring-aop</artifactId> -->
+		<!-- <version>${spring-framework.version}</version> -->
+		<!-- </dependency> -->
 
 		<!-- Spring Batch -->
 		<dependency>
@@ -150,11 +165,11 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc7</artifactId>
-			<version>${oracle.version}</version>
-		</dependency>
+		<!-- <dependency> -->
+		<!-- <groupId>com.oracle</groupId> -->
+		<!-- <artifactId>ojdbc7</artifactId> -->
+		<!-- <version>${oracle.version}</version> -->
+		<!-- </dependency> -->
 		<!-- Test Artifacts -->
 		<dependency>
 			<groupId>org.springframework</groupId>
