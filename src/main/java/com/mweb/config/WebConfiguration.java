@@ -4,6 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -17,7 +19,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 public class WebConfiguration extends WebMvcConfigurerAdapter
 {
 	private static final int YEAR_OF_SECONDS = 31556926;
-
+	private static final int MAX_FILE_SIZE = 100000000;
 	/**
 	 * 添加首页
 	 */
@@ -56,6 +58,17 @@ public class WebConfiguration extends WebMvcConfigurerAdapter
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
 		resolver.setPrefix("/WEB-INF/view/");
 		resolver.setSuffix(".jsp");
+		return resolver;
+	}
+	
+	/**
+	 * Common muti part resolver
+	 */
+	@Bean(name="multipartResolver")
+	public CommonsMultipartResolver commonMutipartResolver()
+	{
+		CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+		resolver.setMaxUploadSize(MAX_FILE_SIZE);
 		return resolver;
 	}
 
