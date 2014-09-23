@@ -38,7 +38,7 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
 	{
 		return new Class[]
 		{
-			WebConfiguration.class
+			WebConfiguration.class,
 		};
 	}
 
