@@ -26,7 +26,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry)
 	{
-		registry.addViewController("/").setViewName("index");
+		registry.addViewController("/").setViewName("login");
 	}
 
 	/**
@@ -44,7 +44,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry)
 	{
-		registry.addResourceHandler("/resources/**").addResourceLocations("/public-resources/")
+		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/")
 				.setCachePeriod(YEAR_OF_SECONDS);
 	}
 
@@ -62,7 +62,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter
 	}
 	
 	/**
-	 * Common muti part resolver
+	 * 文件上传
 	 */
 	@Bean(name="multipartResolver")
 	public CommonsMultipartResolver commonMutipartResolver()
@@ -74,7 +74,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter
 
 	/**
 	 * 
-	 * Properties file
+	 * 国际化资源
 	 */
 	@Bean
 	public ResourceBundleMessageSource resourceBundleMessageSource()
