@@ -13,8 +13,8 @@ import org.springframework.security.config.annotation.web.servlet.configuration.
 @EnableWebMvcSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 {
-//	@Autowired
-//	private DataSource dataSource;
+//	 @Autowired
+//	 private DataSource dataSource;
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth)
@@ -24,7 +24,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 			// auth.jdbcAuthentication().dataSource(dataSource).withDefaultSchema().withUser("user").password("password")
 			// .roles("USER").and().withUser("admin").password("password").roles("USER", "ADMIN");
 			// auth.inMemoryAuthentication().withUser("user").password("password").roles("USER");
-		} catch (Exception e)
+		}
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
@@ -32,12 +33,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 
 	protected void configure(HttpSecurity http) throws Exception
 	{
-		// http.authorizeRequests().anyRequest().authenticated().and().formLogin().and().httpBasic();
-
-		// http.antMatcher("/api/**").authorizeRequests().anyRequest().hasRole("ADMIN").and().httpBasic();
-		http.authorizeRequests().antMatchers("/resources/**").hasRole("USER").antMatchers("/home").hasRole("USER")
-				.anyRequest().authenticated();
-		http.formLogin().loginPage("/login").permitAll().and().logout().permitAll();
+		http.authorizeRequests()
+			.antMatchers("/resources/**").hasRole("USER")
+			.antMatchers("/home").hasRole("USER")
+			.anyRequest().authenticated();
+		http.formLogin()
+			.loginPage("/login").permitAll()
+			.and()
+			.logout().permitAll();
 
 	}
 }

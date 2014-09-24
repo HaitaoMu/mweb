@@ -1,6 +1,13 @@
 package com.mweb.config;
 
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+
+import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 //public class MyWebAppInitializer extends AbstractDispatcherServletInitializer
@@ -24,31 +31,28 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 //	}
 //}
 
-public class WebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer
+public class AppWebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer
 {
 
 	@Override
 	protected Class<?>[] getRootConfigClasses()
 	{
-		return null;
+		return new Class[]
+		{ SecurityConfiguration.class };
 	}
 
 	@Override
 	protected Class<?>[] getServletConfigClasses()
 	{
 		return new Class[]
-		{
-			WebConfiguration.class,
-		};
+		{ WebMvcConfiguration.class, };
 	}
 
 	@Override
 	protected String[] getServletMappings()
 	{
 		return new String[]
-		{
-			"/"
-		};
+		{ "/" };
 	}
 
 }

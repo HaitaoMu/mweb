@@ -39,11 +39,7 @@
 		<commons.dbcp.version>1.4</commons.dbcp.version>
 		<commons.pool.version>1.6</commons.pool.version>
 		<commons.lang.version>2.5</commons.lang.version>
-<<<<<<< HEAD
-=======
 		<commons.fileupload.version>1.3.1</commons.fileupload.version>
->>>>>>> 7e08cff6f30824606bd21693ad1a550b06de72c8
-
 
 		<!-- Test -->
 		<junit.version>4.11</junit.version>
@@ -122,21 +118,21 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-<<<<<<< HEAD
+
 		<!-- <dependency> -->
 		<!-- <groupId>org.springframework</groupId> -->
 		<!-- <artifactId>spring-aop</artifactId> -->
 		<!-- <version>${spring-framework.version}</version> -->
 		<!-- </dependency> -->
-=======
+
+		
+		<!-- Spring and Transactions -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-tx</artifactId>
 			<version>${spring-framework.version}</version>
 		</dependency>
-		<!-- Spring and Transactions -->
->>>>>>> 7e08cff6f30824606bd21693ad1a550b06de72c8
-
+		
 		<!-- Spring Batch -->
 		<dependency>
 			<groupId>org.springframework.batch</groupId>
@@ -328,20 +324,13 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql.version}</version>
 		</dependency>
-<<<<<<< HEAD
+
 		<!-- <dependency> -->
 		<!-- <groupId>com.oracle</groupId> -->
 		<!-- <artifactId>ojdbc7</artifactId> -->
 		<!-- <version>${oracle.version}</version> -->
 		<!-- </dependency> -->
-=======
-		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc7</artifactId>
-			<version>${oracle.version}</version>
-		</dependency>
 
->>>>>>> 7e08cff6f30824606bd21693ad1a550b06de72c8
 		<!-- Test Artifacts -->
 		<dependency>
 			<groupId>org.springframework</groupId>
