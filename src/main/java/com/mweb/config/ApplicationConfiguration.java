@@ -29,7 +29,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableBatchProcessing
 @EnableTransactionManagement
 @PropertySource("classpath:jdbc.properties")
-@ComponentScan({"com.g360.service.batchservice"})
+@ComponentScan({"com.mweb"})
 public class ApplicationConfiguration 
 {
 	
@@ -131,7 +131,7 @@ public class ApplicationConfiguration
 		sessionFactory.setDataSource(dataSource());
 		sessionFactory.setPackagesToScan(new String[]
 		{
-			"com.g360.entity.sap"
+			"com.mweb.model"
 		});
 		sessionFactory.setHibernateProperties(hibernateProperties());
 		return sessionFactory;

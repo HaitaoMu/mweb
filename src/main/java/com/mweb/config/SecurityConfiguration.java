@@ -13,17 +13,19 @@ import org.springframework.security.config.annotation.web.servlet.configuration.
 @EnableWebMvcSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 {
-//	 @Autowired
-//	 private DataSource dataSource;
-
+	private static final String USERNAME = "username";
+	private static final String PASSWORD = "password";
+	
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth)
 	{
 		try
 		{
-			// auth.jdbcAuthentication().dataSource(dataSource).withDefaultSchema().withUser("user").password("password")
-			// .roles("USER").and().withUser("admin").password("password").roles("USER", "ADMIN");
-			// auth.inMemoryAuthentication().withUser("user").password("password").roles("USER");
+//			@formatter:off
+			auth.inMemoryAuthentication()
+				.withUser("user").password("password")
+				.roles("USER");
+//			@formatter:on
 		}
 		catch (Exception e)
 		{
@@ -33,14 +35,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 
 	protected void configure(HttpSecurity http) throws Exception
 	{
+//		@formatter:off
 		http.authorizeRequests()
-			.antMatchers("/resources/**").hasRole("USER")
+			.antMatchers("/resources/**").permitAll()
 			.antMatchers("/home").hasRole("USER")
 			.anyRequest().authenticated();
 		http.formLogin()
 			.loginPage("/login").permitAll()
+			.usernameParameter(USERNAME)
+			.passwordParameter(PASSWORD)
+			.loginProcessingUrl("/login")
+			.defaultSuccessUrl("/home")
 			.and()
 			.logout().permitAll();
+//		@formatter:on
 
 	}
 }

@@ -21,7 +21,7 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 @Configuration
 @EnableWebMvc
 @ComponentScan("com.mweb")
-public class WebMvcConfiguration extends WebMvcConfigurerAdapter
+public class MvcConfiguration extends WebMvcConfigurerAdapter
 {
 	private static final int YEAR_OF_SECONDS = 31556926;
 	private static final int MAX_FILE_SIZE = 100000000;
