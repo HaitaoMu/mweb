@@ -9,7 +9,7 @@ import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import com.mweb.config.ApplicationConfiguration;
+import com.mweb.config.common.ApplicationConfiguration;
 
 public class Application
 {

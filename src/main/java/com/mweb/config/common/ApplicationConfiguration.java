@@ -1,4 +1,4 @@
-package com.mweb.config;
+package com.mweb.config.common;
 
 
 import java.util.Properties;
