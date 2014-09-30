@@ -34,6 +34,10 @@ import javax.persistence.Table;
 public class DBConfig  implements Serializable
 {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7018291961359050691L;
 	private Long id;
 	private String url;
 	private String driver;

@@ -21,6 +21,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -40,7 +41,7 @@ public class UserInfo {
 
 	private String userDescription;
 
-	private Set<UserRole> roleCollection;
+	private Set<UserWithRole> roleCollection;
 
 	@Id
 	@Column(name = "USER_ID", length = 32, unique = true)
@@ -81,14 +82,15 @@ public class UserInfo {
 		this.userDescription = userDescription;
 	}
 
-	@ManyToMany(cascade = CascadeType.PERSIST)
-	@JoinTable(name = "USER_ROLE", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "ROLE_ID") })
-	public Set<UserRole> getRoleCollection() {
+	@OneToMany(mappedBy="role")
+	public Set<UserWithRole> getRoleCollection() {
 		return roleCollection;
 	}
 
-	public void setRoleCollection(Set<UserRole> roleCollection) {
+	public void setRoleCollection(Set<UserWithRole> roleCollection) {
 		this.roleCollection = roleCollection;
 	}
 
+
+	
 }

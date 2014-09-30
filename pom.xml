@@ -29,7 +29,7 @@
 		<!-- Hibernate / JPA -->
 		<hibernate.version>4.2.1.Final</hibernate.version>
 		<mysql.version>5.1.19</mysql.version>
-		<oracle.version>11.2.0</oracle.version>
+		<oracle.version>11.2.0.3</oracle.version>
 
 		<!-- Logging -->
 		<logback.version>1.0.13</logback.version>
@@ -43,10 +43,10 @@
 
 		<!-- Test -->
 		<junit.version>4.11</junit.version>
-		
+
 		<!-- Plugins -->
 		<maven.compiler.plugin.version>2.3.2</maven.compiler.plugin.version>
-		
+
 	</properties>
 	<build>
 		<plugins>
@@ -101,14 +101,14 @@
 		<!-- <version>${spring-framework.version}</version> -->
 		<!-- </dependency> -->
 
-		
+
 		<!-- Spring and Transactions -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-tx</artifactId>
 			<version>${spring-framework.version}</version>
 		</dependency>
-		
+
 		<!-- Spring Batch -->
 		<dependency>
 			<groupId>org.springframework.batch</groupId>
@@ -213,11 +213,11 @@
 			<version>${mysql.version}</version>
 		</dependency>
 
-		<!-- <dependency> -->
-		<!-- <groupId>com.oracle</groupId> -->
-		<!-- <artifactId>ojdbc7</artifactId> -->
-		<!-- <version>${oracle.version}</version> -->
-		<!-- </dependency> -->
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc6</artifactId>
+			<version>${oracle.version}</version>
+		</dependency>
 
 		<!-- Test Artifacts -->
 		<dependency>

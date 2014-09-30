@@ -99,7 +99,7 @@ public abstract class AbstractBatchJob
 
 		LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(datasource);
 
-		sessionBuilder.scanPackages("com.g360.entity.sap");
+		sessionBuilder.scanPackages("com.mweb.model");
 		sessionBuilder.setProperties(properties);
 
 		return sessionBuilder.buildSessionFactory();
