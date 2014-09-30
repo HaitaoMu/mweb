@@ -1,4 +1,4 @@
-package com.mweb.batchservice;
+package com.mweb;
 
 import java.util.Date;
 
