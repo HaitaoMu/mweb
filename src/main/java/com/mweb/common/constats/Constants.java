@@ -21,4 +21,10 @@ public class Constants
 	public static final String SOURCE_DB = "SOURCE_DATABASE";
 
 	public static final String DESTINATION_DB = "DESTINATION_DATABASE";
+	
+	public static final String SCAN_ENTITY_PACKAGE_NAME = "com.mweb.model";
+	
+	public static final String SCAN_REPOSITORY_PACKAGE_NAME = "com.mweb.repository";
+	
+	public static final String DATABASE_PROPERTIES_FILE = "classpath:jdbc.properties";
 }

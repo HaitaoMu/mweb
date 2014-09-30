@@ -29,8 +29,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mweb.batchservice.repository.DBConfigService;
 import com.mweb.model.DBConfig;
+import com.mweb.repository.DBConfigService;
+
+import static com.mweb.common.constats.Constants.*;
 
 /**
  * @author jet
@@ -38,7 +40,7 @@ import com.mweb.model.DBConfig;
  */
 @Component
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-@PropertySource("classpath:jdbc.properties")
+@PropertySource(DATABASE_PROPERTIES_FILE)
 public abstract class AbstractBatchJob
 {
 	
@@ -99,7 +101,7 @@ public abstract class AbstractBatchJob
 
 		LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(datasource);
 
-		sessionBuilder.scanPackages("com.mweb.model");
+		sessionBuilder.scanPackages(SCAN_ENTITY_PACKAGE_NAME);
 		sessionBuilder.setProperties(properties);
 
 		return sessionBuilder.buildSessionFactory();

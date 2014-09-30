@@ -10,7 +10,7 @@
  *
  *
  ***********************************************************************/
-package com.mweb.batchservice.repository;
+package com.mweb.repository;
 
 import java.util.HashMap;
 import java.util.List;

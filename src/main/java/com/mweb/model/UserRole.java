@@ -1,5 +1,6 @@
 package com.mweb.model;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -13,7 +14,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "USER_ROLE")
-public class UserRole {
+public class UserRole implements Serializable{
 
 	private String roleId;
 	private String roleName;

@@ -24,12 +24,13 @@ import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import static com.mweb.common.constats.Constants.*;
 
 @Configuration
 @EnableBatchProcessing
 @EnableTransactionManagement
-@PropertySource("classpath:jdbc.properties")
-@ComponentScan({"com.mweb"})
+@PropertySource(DATABASE_PROPERTIES_FILE)
+@ComponentScan({SCAN_ENTITY_PACKAGE_NAME,SCAN_REPOSITORY_PACKAGE_NAME})
 public class ApplicationConfiguration 
 {
 	
@@ -131,7 +132,7 @@ public class ApplicationConfiguration
 		sessionFactory.setDataSource(dataSource());
 		sessionFactory.setPackagesToScan(new String[]
 		{
-			"com.mweb.model"
+			SCAN_ENTITY_PACKAGE_NAME
 		});
 		sessionFactory.setHibernateProperties(hibernateProperties());
 		return sessionFactory;
