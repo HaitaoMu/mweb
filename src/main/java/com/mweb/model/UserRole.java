@@ -3,10 +3,13 @@ package com.mweb.model;
 import java.io.Serializable;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -19,7 +22,8 @@ public class UserRole implements Serializable{
 	private String roleId;
 	private String roleName;
 	private String roleDescription;
-	private Set<UserWithRole> userCollection;
+//	private Set<UserWithRole> userCollection;
+	private Set<UserInfo> users;
 
 	@Id
 	@GeneratedValue(generator="system-uuid")
@@ -51,14 +55,30 @@ public class UserRole implements Serializable{
 		this.roleDescription = roleDescription;
 	}
 
-	@OneToMany(mappedBy="user")
-	public Set<UserWithRole> getUserCollection() {
-		return userCollection;
+	//formatter:off
+	@ManyToMany(targetEntity=UserInfo.class,
+			cascade={CascadeType.PERSIST,CascadeType.MERGE},
+			mappedBy="roles",fetch=FetchType.LAZY)
+	//formatter:on
+	public Set<UserInfo> getUsers()
+	{
+		return users;
 	}
 
-	public void setUserCollection(Set<UserWithRole> userCollection) {
-		this.userCollection = userCollection;
+	public void setUsers(Set<UserInfo> users)
+	{
+		this.users = users;
 	}
 
+//	@OneToMany(mappedBy="user")
+//	public Set<UserWithRole> getUserCollection() {
+//		return userCollection;
+//	}
+//
+//	public void setUserCollection(Set<UserWithRole> userCollection) {
+//		this.userCollection = userCollection;
+//	}
+
+	
 	
 }

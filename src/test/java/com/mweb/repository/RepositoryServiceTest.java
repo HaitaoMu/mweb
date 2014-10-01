@@ -1,7 +1,9 @@
 package com.mweb.repository;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,10 +14,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 
 
+
+
 import com.mweb.config.common.ApplicationConfiguration;
 import com.mweb.model.UserInfo;
 import com.mweb.model.UserRole;
-import com.mweb.model.UserWithRole;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ApplicationConfiguration.class)
@@ -33,13 +36,16 @@ public class RepositoryServiceTest {
 		user.setUserName("Jet");
 		user.setUserPassword("123456");
 		user.setUserDescription("User for test");
-		userInfoService.save(user);
+	
 	
 		UserRole role = new UserRole();
 		role.setRoleDescription("Role for test");
 		role.setRoleName("Administrator");
-		userRoleService.save(role);
 		
-		List<UserWithRole> relations = new ArrayList<UserWithRole>();
+		Set<UserRole> roles = new HashSet<UserRole>();
+		roles.add(role);
+		
+		user.setRoles(roles);
+		userInfoService.save(user);
 	}
 }
