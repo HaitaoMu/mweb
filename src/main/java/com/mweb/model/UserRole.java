@@ -57,7 +57,7 @@ public class UserRole implements Serializable{
 
 	//formatter:off
 	@ManyToMany(targetEntity=UserInfo.class,
-			cascade={CascadeType.PERSIST,CascadeType.MERGE},
+			cascade={CascadeType.ALL},
 			mappedBy="roles",fetch=FetchType.LAZY)
 	//formatter:on
 	public Set<UserInfo> getUsers()
@@ -79,6 +79,10 @@ public class UserRole implements Serializable{
 //		this.userCollection = userCollection;
 //	}
 
-	
+	@Override
+	public String toString()
+	{
+		return String.format("[roleId=%s,roleName=%s]", getRoleId(),getRoleName());
+	}
 	
 }

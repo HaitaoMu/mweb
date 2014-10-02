@@ -29,9 +29,9 @@ public class PageController
 	}
 	//@formatter:on
 	
-	@RequestMapping(value="/logout")
-	public String logout()
-	{
-		return "login";
-	}
+//	@RequestMapping(value="/logout")
+//	public String logout()
+//	{
+//		return "login";
+//	}
 }

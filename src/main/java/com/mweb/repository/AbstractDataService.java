@@ -37,21 +37,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(propagation=Propagation.REQUIRED)
 public abstract class AbstractDataService<T extends Serializable, PK extends Serializable>
 extends HibernateDaoSupport
-//extends HibernateTemplate
 {
 
 	private Class<T> clazz;
-
-//	@Resource(name = "localSessionFactory")
-//	SessionFactory localSessionFactory;
-	
-	/**
-	 * 
-	 */
-//	public AbstractDataService()
-//	{
-//		setSessionFactory(localSessionFactory);
-//	}
 	
 	public void setClazz(final Class<T> clazzToSet)
 	{
@@ -66,28 +54,19 @@ extends HibernateDaoSupport
 	public List<T> findByParameter(Map parameters)
 	{
 
-//		Session session = getCurrentSession();
-//		Transaction txn = session.beginTransaction();
 		DetachedCriteria criteria = DetachedCriteria.forClass(clazz);
-
-//		Criteria criteria = getCurrentSession().createCriteria(clazz);
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		criteria.add(Restrictions.allEq(parameters));
-//		List<T> results = criteria.list();
 		List<T> results = (List<T>) getHibernateTemplate().findByCriteria(criteria);
-//		txn.commit();
 		return results;
 
 	}
 
 	public List<T> findAll()
 	{
-//		Session session = getCurrentSession();
-//		Transaction txn = session.beginTransaction();
 		Criteria criteria = getCurrentSession().createCriteria(clazz);
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		List<T> results = criteria.list();
-//		txn.commit();
 		return results;
 	}
 

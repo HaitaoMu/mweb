@@ -97,7 +97,7 @@ public class UserInfo implements Serializable
 
 	//@formatter:off
 	@ManyToMany(targetEntity = UserRole.class,
-			cascade ={ CascadeType.PERSIST, CascadeType.MERGE,CascadeType.REMOVE },
+			cascade ={ CascadeType.ALL },
 			fetch=FetchType.EAGER)
 	@Cascade(value = { org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.DELETE})
 	@JoinTable(name="USER_WITH_ROLE",
@@ -123,4 +123,12 @@ public class UserInfo implements Serializable
 	// this.roleCollection = roleCollection;
 	// }
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString()
+	{
+		return String.format("[userId=%s] [userName=%s] and [userDescription=%s]",getUserId(), getUserName(),getUserDescription());
+	}
 }

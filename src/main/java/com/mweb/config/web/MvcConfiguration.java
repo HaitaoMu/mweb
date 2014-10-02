@@ -27,10 +27,11 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 import com.mweb.controller.interceptor.RequestProcessingTimeInterceptor;
+import static com.mweb.common.constats.Constants.*;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("com.mweb")
+@ComponentScan(SCAN_CONTROLLER_PACKAGE_NAME)
 public class MvcConfiguration extends WebMvcConfigurerAdapter {
 	private static final int YEAR_OF_SECONDS = 31556926;
 	private static final int MAX_FILE_SIZE = 100000000;

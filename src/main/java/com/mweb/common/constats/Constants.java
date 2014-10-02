@@ -22,7 +22,15 @@ public class Constants
 
 	public static final String DESTINATION_DB = "DESTINATION_DATABASE";
 	
+	public static final String PACKAGE_NAME = "com.mweb";
+	
 	public static final String SCAN_ENTITY_PACKAGE_NAME = "com.mweb.model";
+	
+	public static final String SCAN_CONFIG_PACKAGE_NAME = "com.mweb.config";
+	
+	public static final String SCAN_CONTROLLER_PACKAGE_NAME = "com.mweb.controller";
+	
+	public static final String SCAN_BATCH_PACKAGE_NAME = "com.mweb.batchservice";
 	
 	public static final String SCAN_REPOSITORY_PACKAGE_NAME = "com.mweb.repository";
 	
