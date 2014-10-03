@@ -4,6 +4,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import com.mweb.config.security.SecurityConfiguration;
+import com.mweb.config.socket.WebSocketConfiguration;
 
 
 @Order(1)
@@ -21,7 +22,7 @@ public class MvcWebInitializer extends AbstractAnnotationConfigDispatcherServlet
 	protected Class<?>[] getServletConfigClasses()
 	{
 		return new Class[]
-		{ MvcConfiguration.class, };
+		{ MvcConfiguration.class,WebSocketConfiguration.class };
 	}
 
 	@Override
