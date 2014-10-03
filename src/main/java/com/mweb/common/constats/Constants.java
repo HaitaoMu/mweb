@@ -35,4 +35,6 @@ public class Constants
 	public static final String SCAN_REPOSITORY_PACKAGE_NAME = "com.mweb.repository";
 	
 	public static final String DATABASE_PROPERTIES_FILE = "classpath:jdbc.properties";
+	
+	public static final String NOT_FOUND = "404";
 }

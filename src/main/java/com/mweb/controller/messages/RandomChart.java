@@ -37,7 +37,7 @@ public class RandomChart
 	}
 
 	@MessageMapping("/random")
-	@Scheduled(fixedDelay = 1000)
+	@Scheduled(fixedDelay = 30000)
 	public void sendMessage()
 	{
 		System.out.println("[send message]");

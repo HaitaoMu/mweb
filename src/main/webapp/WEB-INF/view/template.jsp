@@ -7,11 +7,6 @@
 
 <head>
   <jsp:include page="template/header.jsp"></jsp:include>
-<!--   <script type="text/javascript" src="resources/js/jquery.js" /></script> -->
-  <script type="text/javascript" src="resources/js/sockjs-0.3.4.js" /></script>
-  <script type="text/javascript" src="resources/js/highcharts.js" /></script>
-  <script type="text/javascript" src="resources/js/stomp.js" /></script>
-  <script type="text/javascript" src="resources/js/application.js" /></script>
 </head>
 
 <body>
@@ -32,9 +27,7 @@
             </div>
             <!-- /.row -->
             <div class="row">
-                 <div class="col-lg-12">
-                    <div id="randomDataChart"></div>
-                </div>
+               
             </div>
         </div>
         <!-- /#page-wrapper -->

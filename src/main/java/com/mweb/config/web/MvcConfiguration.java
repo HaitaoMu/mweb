@@ -27,6 +27,7 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
@@ -142,11 +143,12 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter
 	public SimpleMappingExceptionResolver simpleMappingExceptionResolver()
 	{
 		SimpleMappingExceptionResolver exceptionResolver = new SimpleMappingExceptionResolver();
-
-		exceptionResolver.setDefaultErrorView("404");
+		Properties exceptions = new Properties();
+		exceptions.put("NoSuchRequestHandlingMethodException", "404");
+		exceptionResolver.setExceptionMappings(exceptions);
+		
 		Properties statusCodes = new Properties();
-		statusCodes.put("404", "404");
-		statusCodes.put("error/error", "500");
+		statusCodes.put("404 Not Found", "404");
 		exceptionResolver.setStatusCodes(statusCodes);
 
 		return exceptionResolver;

@@ -1,53 +1,56 @@
-var randomData;
+$(function() {
 
-$('#randomDataChart').highcharts({
-  chart : {
-    type : 'line',
-    events : {
-      load : function() {
-        randomData = this.series[0];
-      }
-    }
-  },
-  title : {
-    text : false
-  },
-  xAxis : {
-    type : 'datetime',
-    minRange : 60 * 1000
-  },
-  yAxis : {
-    title : {
-      text : false
-    },
-    max: 100
-  },
-  legend : {
-    enabled : false
-  },
-  plotOptions : {
-    series : {
-      threshold : 0,
-      marker : {
-        enabled : false
-      }
-    }
-  },
-  series : [ {
-    name : 'Data',
-      data : [ ]
-    } ]
-});
+	var randomData;
 
-var socket = new SockJS('/mweb/random');
-var client = Stomp.over(socket);
+	$('#randomDataChart').highcharts({
+		chart : {
+			type : 'line',
+			events : {
+				load : function() {
+					randomData = this.series[0];
+				}
+			}
+		},
+		title : {
+			text : false
+		},
+		xAxis : {
+			type : 'datetime',
+			minRange : 60 * 1000
+		},
+		yAxis : {
+			title : {
+				text : false
+			},
+			max : 100
+		},
+		legend : {
+			enabled : false
+		},
+		plotOptions : {
+			series : {
+				threshold : 0,
+				marker : {
+					enabled : false
+				}
+			}
+		},
+		series : [ {
+			name : 'Data',
+			data : []
+		} ]
+	});
 
-client.connect({}, function(frame) {
+	var socket = new SockJS('/mweb/random');
+	var client = Stomp.over(socket);
 
-  client.subscribe("/topic/data", function(message) {
-    var point = [ (new Date()).getTime(), parseInt(message.body) ];
-    var shift = randomData.data.length > 60;
-    randomData.addPoint(point, true, shift);
-  });
+	client.connect({}, function(frame) {
 
+		client.subscribe("/topic/data", function(message) {
+			var point = [ (new Date()).getTime(), parseInt(message.body) ];
+			var shift = randomData.data.length > 60;
+			randomData.addPoint(point, true, shift);
+		});
+
+	});
 });
