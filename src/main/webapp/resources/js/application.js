@@ -39,12 +39,12 @@ $('#randomDataChart').highcharts({
     } ]
 });
 
-var socket = new SockJS('/random');
+var socket = new SockJS('/mweb/random');
 var client = Stomp.over(socket);
 
 client.connect({}, function(frame) {
 
-  client.subscribe("/data", function(message) {
+  client.subscribe("/topic/data", function(message) {
     var point = [ (new Date()).getTime(), parseInt(message.body) ];
     var shift = randomData.data.length > 60;
     randomData.addPoint(point, true, shift);

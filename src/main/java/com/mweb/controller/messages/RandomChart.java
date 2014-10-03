@@ -14,13 +14,10 @@ import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.mweb.controller.HelloMessage;
 
 /**
  * @author jet
@@ -36,27 +33,17 @@ public class RandomChart
 	public String randomChart()
 	{
 
-		return "messages";
+		return "data";
 	}
 
-	// @MessageMapping("/random")
-	// @SendTo("/topic/data")
-	// public HelloMessage randomData(HelloMessage message)
-	// {
-	// HelloMessage ms = new HelloMessage();
-	// ms.setName("Hello "+message.getName());
-	// System.out.println("Handle randomData");
-	// return ms;
-	// }
-	//
-//	@MessageMapping("/random")
-//	@Scheduled(fixedDelay = 1000)
-//	public void sendMessage()
-//	{
-//		System.out.println("[send message]");
-//		template.convertAndSend("/topic/data", new Random().nextInt(100));
-//	}
-	//
+	@MessageMapping("/random")
+	@Scheduled(fixedDelay = 1000)
+	public void sendMessage()
+	{
+		System.out.println("[send message]");
+		template.convertAndSend("/topic/data", new Random().nextInt(100));
+	}
+
 	// @RequestMapping(value = "/random", method = {RequestMethod.POST,RequestMethod.GET})
 	// public void greet(String greeting)
 	// {
