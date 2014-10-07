@@ -20,6 +20,9 @@
 <!-- Custom CSS -->
 <link href="resources/css/sb-admin-2.css" rel="stylesheet">
 
+<!-- Animate Css -->
+<link href="resources/css/animate.min.css" rel="stylesheet">
+
 <!-- Morris Charts CSS -->
 <link href="resources/css/plugins/morris.css" rel="stylesheet">
 

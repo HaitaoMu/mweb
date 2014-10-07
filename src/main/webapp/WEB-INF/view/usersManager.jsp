@@ -7,8 +7,6 @@
 
 <head>
 <jsp:include page="template/header.jsp"></jsp:include>
-</head>
-
 <body>
 
 	<div id="wrapper">
@@ -22,50 +20,58 @@
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1 class="page-header">Dashboard</h1>
+					<h1 class="page-header">UserManager</h1>
 				</div>
 				<!-- /.col-lg-12 -->
 			</div>
+			<div id="successAlert" class="alert alert-success" hidden="true"></div>
+			<div id="errorAlert" class="alert alert-danger" hidden="true"></div>
 			<!-- /.row -->
+			<!-- Operation url-->
+			<%-- 				<c:url id="createUserUrl" value="createUser"/> --%>
+			<%-- 				<c:url id="deleteUserUrl" value="deleteUser"/> --%>
+			<!-- Operation url -->
 			<div class="row">
 				<div class="panel panel-default">
-					<div class="panel-heading">DataTables Advanced Tables</div>
+					<div class="panel-heading">
+							 <button class="btn btn-success btn-normal" data-toggle="modal" data-target="#myModal">
+					             Create User
+					         </button>
+					</div>
 					<!-- /.panel-heading -->
+
 					<div class="panel-body">
 						<div class="table-responsive">
-							<table class="table table-striped table-bordered table-hover"
-								id="dataTables-example">
+							<table id="userTable"
+								class="table table-striped table-bordered table-hover">
 								<thead>
 									<tr>
-										<th>Rendering engine</th>
-										<th>Browser</th>
-										<th>Platform(s)</th>
-										<th>Engine version</th>
-										<th>CSS grade</th>
+										<c:forEach var="headValue" items="${tableHead}">
+											<td align="center">${ headValue }</td>
+										</c:forEach>
 									</tr>
 								</thead>
 								<tbody>
-									<tr class="odd gradeX">
-										<td>Trident</td>
-										<td>Internet Explorer 4.0</td>
-										<td>Win 95+</td>
-										<td class="center">4</td>
-										<td class="center">X</td>
-									</tr>
-									<tr class="even gradeC">
-										<td>Trident</td>
-										<td>Internet Explorer 5.0</td>
-										<td>Win 95+</td>
-										<td class="center">5</td>
-										<td class="center">C</td>
-									</tr>
-									<tr class="odd gradeA">
-										<td>Trident</td>
-										<td>Internet Explorer 5.5</td>
-										<td>Win 95+</td>
-										<td class="center">5.5</td>
-										<td class="center">A</td>
-									</tr>
+									<c:forEach var="user" items="${users}">
+										<tr id="${user.userId}">
+											<td name="userName" align="center">${user.userName}</td>
+											<td name="userPassword" align="center">${user.userPassword}</td>
+											<td name="userDescription" align="center">${user.userDescription}</td>
+											<td align="center">
+												<button type="button"
+													class="save btn btn-success btn-circle" name='<c:url value="/updateUser/${user.userId}"/>' value="${user.userId}">
+													<i class="fa fa-save"> </i>
+												</button>
+												<button type="button"
+													class="edit btn btn-success btn-circle" value="${user.userId}">
+													<i class="fa fa-edit"> </i>
+												</button>
+												<button type="button" class="delete btn btn-warning btn-circle" name='<c:url value="/deleteUser/${user.userId}"/>' value="${user.userId}">
+													<i class="fa fa-times"> </i>
+												</button>
+											</td>
+										</tr>
+									</c:forEach>
 								</tbody>
 							</table>
 						</div>
@@ -73,11 +79,51 @@
 				</div>
 			</div>
 		</div>
+		<!-- 		@formatter:on -->
 		<!-- /#page-wrapper -->
+         <!-- Button trigger modal -->
+         
+         <!-- Modal -->
+         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+             <div class="modal-dialog">
+                 <div class="modal-content">
+                     <div class="modal-header">
+                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                         <h4 class="modal-title" id="myModalLabel">Create User</h4>
+                     </div>
+                     <div class="modal-body">
+                  		  <form role="form">
+                                     <div class="form-group has-warning">
+                                         <input type="text" class="form-control" id="userName" placeholder="userName">
+                                     </div>
+                                     <div class="form-group has-warning">
+                                         <input type="text" class="form-control" id="userPassword" placeholder="userPassword">
+                                     </div>
+                                     <div class="form-group has-warning">
+                                         <input type="text" class="form-control" id="userDescription" placeholder="userDescription">
+                                     </div>
+                            </form>
+                     </div>
+                     <div class="modal-footer">
+                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                         <button id="submitUserBtn" type="button" class="btn btn-primary" value="<c:url value="/saveUser"/>">Save User</button>
+                     </div>
+                 </div>
+                 <!-- /.modal-content -->
+             </div>
+             <!-- /.modal-dialog -->
+         </div>
 
 	</div>
 	<!-- /#wrapper -->
 
+	<!-- <script type="text/javascript" src="resources/js/userManager.js" /> -->
+	<!-- DataTables JavaScript -->
+	<script src="resources/js/plugins/confirm/jquery.confirm.min.js"></script>
+	<script src="resources/js/plugins/jeditable/jquery.editable.min.js"></script>
+	<script src="resources/js/plugins/dataTables/jquery.dataTables.js"></script>
+	<script src="resources/js/plugins/dataTables/dataTables.bootstrap.js"></script>
+	<script type="text/javascript" src="resources/js/userManager.js"></script>
 </body>
 
 </html>

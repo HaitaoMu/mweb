@@ -7,6 +7,19 @@
 
 <head>
 	<jsp:include page="template/header.jsp"></jsp:include>
+	<script type="text/javascript">
+		$(function(){
+			$(".btn").keyup(function(event) 
+			{
+		        if (event.which == 13 || event.keyCode == 13)
+		        {
+					console.log("key enter");
+		        	return false;
+		        }
+		        return true;
+		    });	
+		});
+	</script>
 </head>
 
 <body>
@@ -50,5 +63,6 @@
 	</div>
 
 </body>
+
 
 </html>

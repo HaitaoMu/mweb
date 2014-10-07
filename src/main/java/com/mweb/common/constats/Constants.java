@@ -37,4 +37,9 @@ public class Constants
 	public static final String DATABASE_PROPERTIES_FILE = "classpath:jdbc.properties";
 	
 	public static final String NOT_FOUND = "404";
+	
+	public static final String SUCCESS = "success";
+	
+	public static final String FAIL = "fail";
+	
 }

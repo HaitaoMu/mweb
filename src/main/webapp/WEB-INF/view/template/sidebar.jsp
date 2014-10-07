@@ -17,7 +17,7 @@
                 <!-- /input-group -->
             </li>
             <li>
-                <a class="active" href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                <a class="active" href='<c:url value="/home" />'><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
             </li>
             <li>
                  <a href='<c:url value="/listUser" />'><i class="fa fa-files-o fa-fw"></i>用户管理<span class="fa arrow"></span></a>

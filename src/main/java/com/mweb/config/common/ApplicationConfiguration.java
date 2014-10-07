@@ -31,7 +31,7 @@ import static com.mweb.common.constats.Constants.*;
 @EnableTransactionManagement
 @PropertySource(DATABASE_PROPERTIES_FILE)
 //@ComponentScan({PACKAGE_NAME})
-@ComponentScan({SCAN_BATCH_PACKAGE_NAME,SCAN_CONTROLLER_PACKAGE_NAME,SCAN_ENTITY_PACKAGE_NAME,SCAN_REPOSITORY_PACKAGE_NAME})
+@ComponentScan({SCAN_BATCH_PACKAGE_NAME,SCAN_ENTITY_PACKAGE_NAME,SCAN_REPOSITORY_PACKAGE_NAME})
 public class ApplicationConfiguration 
 {
 	
