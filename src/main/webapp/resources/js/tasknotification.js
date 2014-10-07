@@ -6,7 +6,8 @@ $(function() {
 	client.connect({}, function(frame) {
 
 		client.subscribe("/topic/tasknotification", function(message) {
-			 $()
+			 $("#taskList").html(message);
+			 $("#task").dropdown();
 		});
 
 	});

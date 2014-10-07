@@ -10,11 +10,14 @@
  ***********************************************************************/
 package com.mweb.model;
 
+import org.springframework.messaging.Message;
+import org.springframework.messaging.MessageHeaders;
+
 /**
  * @author jet
  *
  */
-public class ProgressRateResult
+public class ProgressRateResult implements Message
 {
 
 	private int minValue;
@@ -75,6 +78,26 @@ public class ProgressRateResult
 	public void setTaskId(String taskId)
 	{
 		this.taskId = taskId;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.springframework.messaging.Message#getPayload()
+	 */
+	@Override
+	public Object getPayload()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.springframework.messaging.Message#getHeaders()
+	 */
+	@Override
+	public MessageHeaders getHeaders()
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
