@@ -21,26 +21,27 @@ import javax.annotation.Resource;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mweb.model.PageResult;
+
 /**
  * @author jet
  *
  */
 @Component
-@Transactional(propagation=Propagation.REQUIRED)
-public abstract class AbstractDataService<T extends Serializable, PK extends Serializable>
-extends HibernateDaoSupport
+@Transactional(propagation = Propagation.REQUIRED)
+public abstract class AbstractDataService<T extends Serializable, PK extends Serializable> extends HibernateDaoSupport
 {
 
 	private Class<T> clazz;
-	
+
 	public void setClazz(final Class<T> clazzToSet)
 	{
 		clazz = clazzToSet;
@@ -70,6 +71,33 @@ extends HibernateDaoSupport
 		return results;
 	}
 
+	public Long getTotalCount()
+	{
+
+		Criteria criteria = getCurrentSession().createCriteria(clazz);
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		Long totalSize = ((Long) criteria.setProjection(Projections.rowCount()).uniqueResult()).longValue();
+		criteria.setProjection(null);
+		return totalSize;
+	}
+
+	public PageResult findByPage(int pageNum, int pageSize)
+	{
+		PageResult<T> page = new PageResult<T>();
+
+		int firstResult = (pageNum - 1) * pageSize;
+		Criteria criteria = getCurrentSession().createCriteria(clazz);
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		if (firstResult >= 0)
+		{
+			criteria.setFirstResult(firstResult);
+			criteria.setMaxResults(pageSize);
+		}
+		page.setRows(criteria.list());
+		page.setTotal(getTotalCount());
+		return page;
+	}
+
 	public void save(final T entity)
 	{
 		getCurrentSession().save(entity);
@@ -95,11 +123,11 @@ extends HibernateDaoSupport
 	{
 		return currentSession();
 	}
-	
+
 	@Resource(name = "localSessionFactory")
 	public void setLocalSessionFactory(SessionFactory sessionFactory)
 	{
 		super.setSessionFactory(sessionFactory);
 	}
-	
+
 }

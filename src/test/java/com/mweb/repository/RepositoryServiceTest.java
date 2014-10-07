@@ -1,5 +1,6 @@
 package com.mweb.repository;
 
+import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -16,8 +17,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.mweb.config.common.ApplicationConfiguration;
+import com.mweb.model.PageResult;
 import com.mweb.model.UserInfo;
 import com.mweb.model.UserRole;
+import com.mweb.model.plugin.PK;
+import com.mweb.model.plugin.SAPEntity;
+import com.mweb.repository.plugin.SAPService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ApplicationConfiguration.class)
@@ -33,8 +38,11 @@ public class RepositoryServiceTest {
 	@Autowired
 	CustomUserDetailService customUserDetailsService;
 	
-	ShaPasswordEncoder passwordEncoder = new ShaPasswordEncoder();
+	@Autowired
+	SAPService sapService;
 	
+	ShaPasswordEncoder passwordEncoder = new ShaPasswordEncoder();
+	SecureRandom random = new SecureRandom();
 	
 	@Test
 	public void testSaveUser(){
@@ -75,11 +83,36 @@ public class RepositoryServiceTest {
 	}
 	
 	@Test
+	public void testGetByPage()
+	{
+		PageResult page = userInfoService.findByPage(2, 2);
+		for(Object user :page.getRows()){
+			System.out.println(user);
+		}
+	}
+	
+	@Test
 	public void testGetUserDetails(){
 		
 		UserDetails users = customUserDetailsService.loadUserByUsername("Jet");
 		System.out.println(users.getUsername());
 	}
 	
+	@Test
+	public void saveSAPEntity(){
+		
+		PK pk = new PK();
+		pk.setUserId("ABCDEFG");
+		for (int i = 0; i < 100; i++)
+		{
+			pk.setPropertyCode("SAP"+i);
+			SAPEntity entity = new SAPEntity();
+			entity.setPk(pk);
+			entity.setAmount(random.nextDouble());
+			entity.setPrice(random.nextDouble());
+			entity.setVolume(random.nextDouble());
+			sapService.save(entity);
+		}
+	}
 	
 }

@@ -28,6 +28,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author jet
  *
@@ -103,6 +105,7 @@ public class UserInfo implements Serializable
 	@JoinTable(name="USER_WITH_ROLE",
 			joinColumns={@JoinColumn(name="USER_ID")},
 			inverseJoinColumns={@JoinColumn(name="ROLE_ID")})
+	@JsonIgnore
 	//@formatter:on
 	public Set<UserRole> getRoles()
 	{

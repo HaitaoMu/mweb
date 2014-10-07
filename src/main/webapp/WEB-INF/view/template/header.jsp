@@ -10,6 +10,9 @@
 <!-- Bootstrap Core CSS -->
 <link href="resources/css/bootstrap.min.css" rel="stylesheet">
 
+<!-- Bootstrap Table CSS -->
+<link href="resources/css/plugins/bootstrap-table.min.css" rel="stylesheet">
+
 <!-- MetisMenu CSS -->
 <link href="resources/css/plugins/metisMenu/metisMenu.min.css"
 	rel="stylesheet">
@@ -49,6 +52,9 @@
 
 <!-- Bootstrap Core JavaScript -->
 <script src="resources/js/bootstrap.min.js"></script>
+
+<!-- Bootstrap Table JavaScript -->
+<script src="resources/js/plugins/dataTables/bootstrap-table.min.js"></script>
 
 <!-- Metis Menu Plugin JavaScript -->
 <script src="resources/js/plugins/metisMenu/metisMenu.min.js"></script>

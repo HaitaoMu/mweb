@@ -19,8 +19,16 @@
             <li>
                 <a class="active" href='<c:url value="/home" />'><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
             </li>
+             <li>
+                 <a href='<c:url value="/listUser" />'><i class="fa fa-cogs fa-fw"></i> Interface Manager<span class="fa arrow"></span></a>
+			     <ul class="nav nav-second-level">
+                     <li>
+                         <a href="<c:url value="/sapIndex" />">SAP Interface</a>
+                     </li>
+                 </ul>
+            </li>
             <li>
-                 <a href='<c:url value="/listUser" />'><i class="fa fa-files-o fa-fw"></i>用户管理<span class="fa arrow"></span></a>
+                 <a href='<c:url value="/listUser" />'><i class="fa fa-files-o fa-fw"></i> User Manager</span></a>
             </li>
             <li>
              	 <a  href='<c:url value="/chart" />'><i class="fa fa-star fa-fw"></i> Chart</a>
