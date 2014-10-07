@@ -21,6 +21,7 @@ public class WebSocketConfiguration extends AbstractWebSocketMessageBrokerConfig
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
 		registry.addEndpoint("/random").withSockJS();
+		registry.addEndpoint("/tasknotification").withSockJS();
 	}
 
 }

@@ -13,7 +13,10 @@
   		{
 			console.log("event trigger");
   		});
-  	}); 
+		$("#imediateImportBtn").click(function(){
+			console.log("dropdown");
+		});
+ 	}); 
   	
   	function queryParams(params) {
         return {
@@ -45,7 +48,7 @@
             <div class="row">
             	<div id="custom-toolbar">
 				    <div class="form-inline" role="form">
-				    	<button type="button" class="btn btn-success">Imediate Import</button>
+				    	<button id="imediateImportBtn" type="button" class="btn btn-success">Imediate Import</button>
 				    	<button type="button" class="btn btn-success">Schedule Import</button>
 				    	<button type="button" class="btn btn-success">Export As Excel</button>
 				    	<button type="button" class="btn btn-success">Release Data</button>
