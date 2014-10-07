@@ -1,6 +1,6 @@
 /***********************************************************************
  *
- * @file         SapController.java
+ * @file         DBController.java
  *
  * @copyright    Copyright: 2014-2016 Usee Co. Ltd.
  * @author       JetQin 
@@ -10,10 +10,6 @@
  ***********************************************************************/
 package com.mweb.controller.interfaces;
 
-import static com.mweb.common.constats.Constants.SUCCESS;
-
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,41 +17,32 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mweb.model.PageResult;
-import com.mweb.model.UserInfo;
-import com.mweb.model.plugin.SAPEntity;
+import com.mweb.repository.DBConfigService;
 import com.mweb.repository.plugin.SAPService;
 
 /**
  * @author jet
  *
  */
-
 @Controller
-public class SapController
+public class DBController
 {
 	@Autowired
-	SAPService sapService;
+	DBConfigService dbConfigService;
 	
-	@RequestMapping("/sapIndex")
-	public String Sap()
+	@RequestMapping("/dbConfigIndex")
+	public String dbConfigIndex()
 	{
-		return "SapInterface";
+		return "databaseManager";
 	}
 	
-	@RequestMapping(value = "/pageSapEntity")
+	@RequestMapping(value = "/pageDbConfig")
 	@ResponseBody
-	public PageResult pageSapEntity(
+	public PageResult pageDbConfig(
 			@RequestParam(value = "pageNum",defaultValue="1") int pageNum,
 			@RequestParam(value = "pageSize",defaultValue="10") int pageSize)
 	{
-		PageResult page = sapService.findByPage(pageNum, pageSize);
+		PageResult page = dbConfigService.findByPage(pageNum, pageSize);
 		return page;
-	}
-	
-	@RequestMapping(value="/sapImportData")
-	@ResponseBody
-	public String importDataImmediate()
-	{
-		return SUCCESS;
 	}
 }

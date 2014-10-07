@@ -23,6 +23,8 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 /**
  * @author jet
@@ -50,6 +52,7 @@ public class DBConfig  implements Serializable
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO,generator="id_generator")
 	@SequenceGenerator(name="id_generator",sequenceName="DB_ID_SEQ")
+	@JsonIgnore
 	public Long getId()
 	{
 		return id;
@@ -82,6 +85,8 @@ public class DBConfig  implements Serializable
 	{
 		this.username = username;
 	}
+	
+	@JsonIgnore
 	public String getPassword()
 	{
 		return password;

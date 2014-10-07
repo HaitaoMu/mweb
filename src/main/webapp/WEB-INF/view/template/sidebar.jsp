@@ -28,6 +28,9 @@
                  </ul>
             </li>
             <li>
+                 <a href='<c:url value="/dbConfigIndex" />'><i class="fa fa-files-o fa-fw"></i> Database Manager</span></a>
+            </li>
+            <li>
                  <a href='<c:url value="/listUser" />'><i class="fa fa-files-o fa-fw"></i> User Manager</span></a>
             </li>
             <li>

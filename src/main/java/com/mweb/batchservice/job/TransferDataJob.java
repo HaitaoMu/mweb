@@ -31,8 +31,6 @@ public abstract class TransferDataJob<T extends Serializable, K extends Serializ
 
 	private static final int CHUNCK_SIZE = 50;
 
-	private static final int INTERVAL_SIZE = 1000;
-
 	private static final int FETCH_SIZE = 1000;
 	
 	private static long time = 0;

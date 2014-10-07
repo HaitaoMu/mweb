@@ -9,7 +9,7 @@
   <jsp:include page="template/header.jsp"></jsp:include>
   <script type="text/javascript">
  	$(function(){
-  		$('#sapTable').bootstrapTable(function(event)
+  		$('#databaseTable').bootstrapTable(function(event)
   		{
 			console.log("event trigger");
   		});
@@ -43,23 +43,14 @@
                 </div>
             </div>
             <div class="row">
-            	<div id="custom-toolbar">
-				    <div class="form-inline" role="form">
-				    	<button type="button" class="btn btn-success">Imediate Import</button>
-				    	<button type="button" class="btn btn-success">Schedule Import</button>
-				    	<button type="button" class="btn btn-success">Export As Excel</button>
-				    	<button type="button" class="btn btn-success">Release Data</button>
-				    </div>
-				</div>
-               	<table id="sapTable" data-url="<c:url value="/pageSapEntity"/>" data-height="400" data-side-pagination="server" data-pagination="true" data-page-list="[5, 10, 20, 50, 100, 200]" 
-               		data-toolbar="#custom-toolbar" data-search="true" data-show-refresh="true" data-show-columns="true" data-query-params="queryParams">
+               	<table id="databaseTable" data-url="<c:url value="/pageDbConfig"/>" data-height="400" data-side-pagination="server" data-pagination="true" data-page-list="[5, 10, 20, 50, 100, 200]" data-search="true" data-show-refresh="true" data-show-columns="true" data-query-params="queryParams">
 				    <thead>
 				    <tr>
-				        <th data-field="userId" data-align="center">USER ID</th>
-				        <th data-field="propertyCode" data-align="center">PROPERTY CODE</th>
-				        <th data-field="amount" data-align="right" data-sortable="true">AMOUNT</th>
-				        <th data-field="price" data-align="center" data-sortable="true">PRICE</th>
-				        <th data-field="volume" data-sortable="true">VOLUME</th>
+				        <th data-field="dbName" data-align="center">Database Name</th>
+				        <th data-field="dbType" data-align="right" data-sortable="true">Database Type</th>
+				        <th data-field="driver" data-align="right" data-sortable="true">Database Driver</th>
+				        <th data-field="url" data-align="center" data-sortable="true">URL</th>
+				        <th data-field="username" data-align="center" data-sortable="true">User Name</th>
 				    </tr>
 				    </thead>
 				</table>
