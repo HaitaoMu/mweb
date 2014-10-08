@@ -94,7 +94,8 @@ public class TaskMessage
 //          </div>
 //      </a>
 //  </li>
-//		StringBuidler
+		StringBuffer builder = new StringBuffer();
+		return  builder.toString();
 	}
 	
 	public int getProgressRate()
