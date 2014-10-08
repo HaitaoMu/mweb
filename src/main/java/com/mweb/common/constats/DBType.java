@@ -10,7 +10,7 @@
  *
  *
  ***********************************************************************/
-package com.mweb.batchservice.job;
+package com.mweb.common.constats;
 
 /**
  * @author jet

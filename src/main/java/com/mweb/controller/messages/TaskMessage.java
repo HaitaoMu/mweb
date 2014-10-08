@@ -34,7 +34,7 @@ public class TaskMessage
 	
 
 	@MessageMapping("/tasknotification")
-	@Scheduled(fixedRate = 10000)
+	@Scheduled(fixedDelay = 1000)
 	public void sendMessage()
 	{
 		ProgressRateResult rateResult = new ProgressRateResult();
@@ -66,6 +66,7 @@ public class TaskMessage
 		builder.append("</li>");
 		return builder.toString();
 	}
+	
 	private String getProgressItem( ProgressRateResult result)
 	{
 		String message = String.format("%d%% Complete", result.getCurrentValue());
@@ -75,7 +76,7 @@ public class TaskMessage
 		builder.append(" <div> ");
 		builder.append(" <p> ");
 		builder.append(" <strong>"+result.getTaskId()+"</strong>");
-		builder.append(" <span class='pull-right text-muted'>"+message+"%</span>");
+		builder.append(" <span class='pull-right text-muted'>"+message+"</span>");
 		builder.append(" <div class='progress progress-striped active'>");
 		builder.append(" <div class='progress-bar progress-bar-success' role='progressbar' aria-valuenow='"+result.getCurrentValue()+"' aria-valuemin='0' aria-valuemax='"+result.getMaxValue()+"' style='width:"+result.getCurrentValue()+"%'>");
 		builder.append(" <span class='sr-only'>"+message+"</span>");

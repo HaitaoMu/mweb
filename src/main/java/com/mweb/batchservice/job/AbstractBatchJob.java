@@ -18,17 +18,27 @@ import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.launch.support.SimpleJobLauncher;
+import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.repository.dao.MapExecutionContextDao;
+import org.springframework.batch.core.repository.dao.MapJobExecutionDao;
+import org.springframework.batch.core.repository.dao.MapJobInstanceDao;
+import org.springframework.batch.core.repository.dao.MapStepExecutionDao;
+import org.springframework.batch.core.repository.support.SimpleJobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.Scope;
 import org.springframework.core.env.Environment;
+import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mweb.common.constats.DBType;
 import com.mweb.model.DBConfig;
 import com.mweb.repository.DBConfigService;
 
@@ -53,9 +63,32 @@ public abstract class AbstractBatchJob
 	
 	@Autowired
 	public StepBuilderFactory stepBuilderFactory;
+	
+	
+	
 
 	@Autowired
 	DBConfigService dbConfigService;
+	
+	@Bean
+	@Scope("prototype")
+	public JobRepository jobRepository()
+	{
+		JobRepository jobRepository = new SimpleJobRepository(new MapJobInstanceDao(), new MapJobExecutionDao(),
+				new MapStepExecutionDao(), new MapExecutionContextDao());
+		return jobRepository;
+	}
+	
+	@Bean
+	public SimpleJobLauncher jobLauncher()
+	{
+		SimpleJobLauncher launcher = new SimpleJobLauncher();
+		launcher.setJobRepository(jobRepository());
+		launcher.setTaskExecutor(new SimpleAsyncTaskExecutor());
+		return launcher;
+	}
+	
+	
 	
 	@Autowired
 	@Qualifier("localSessionFactory")
