@@ -66,3 +66,8 @@
 
 <!-- Custom Theme JavaScript -->
 <script src="resources/js/sb-admin-2.js"></script>
+
+<!-- Task Notification -->
+ <script type="text/javascript" src="resources/js/sockjs-0.3.4.js" /></script>
+ <script type="text/javascript" src="resources/js/stomp.js" /></script>
+ <script type="text/javascript" src="resources/js/tasknotification.js" /></script>

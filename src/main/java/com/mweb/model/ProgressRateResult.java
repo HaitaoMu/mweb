@@ -17,8 +17,7 @@ import org.springframework.messaging.MessageHeaders;
  * @author jet
  *
  */
-public class ProgressRateResult implements Message
-{
+public class ProgressRateResult implements Message {
 
 	private int minValue;
 
@@ -30,72 +29,76 @@ public class ProgressRateResult implements Message
 
 	private String taskId;
 
-	public int getMinValue()
-	{
+	private long totalCount;
+
+	public int getMinValue() {
 		return minValue;
 	}
 
-	public void setMinValue(int minValue)
-	{
+	public void setMinValue(int minValue) {
 		this.minValue = minValue;
 	}
 
-	public int getMaxValue()
-	{
+	public int getMaxValue() {
 		return maxValue;
 	}
 
-	public void setMaxValue(int maxValue)
-	{
+	public void setMaxValue(int maxValue) {
 		this.maxValue = maxValue;
 	}
 
-	public int getCurrentValue()
-	{
+	public int getCurrentValue() {
 		return currentValue;
 	}
 
-	public void setCurrentValue(int currentValue)
-	{
+	public void setCurrentValue(int currentValue) {
 		this.currentValue = currentValue;
 	}
 
-	public String getMesssage()
-	{
+	public String getMesssage() {
 		return messsage;
 	}
 
-	public void setMesssage(String messsage)
-	{
+	public void setMesssage(String messsage) {
 		this.messsage = messsage;
 	}
 
-	public String getTaskId()
-	{
+	public String getTaskId() {
 		return taskId;
 	}
 
-	public void setTaskId(String taskId)
-	{
+	public void setTaskId(String taskId) {
 		this.taskId = taskId;
 	}
 
-	/* (non-Javadoc)
+	public long getTotalCount() 
+	{
+		return totalCount;
+	}
+
+	public void setTotalCount(long totalCount) 
+	{
+		this.totalCount = totalCount;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.springframework.messaging.Message#getPayload()
 	 */
 	@Override
-	public Object getPayload()
-	{
+	public Object getPayload() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.springframework.messaging.Message#getHeaders()
 	 */
 	@Override
-	public MessageHeaders getHeaders()
-	{
+	public MessageHeaders getHeaders() {
 		// TODO Auto-generated method stub
 		return null;
 	}

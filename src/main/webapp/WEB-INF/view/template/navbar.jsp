@@ -2,10 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-  <script type="text/javascript" src="resources/js/sockjs-0.3.4.js" /></script>
-  <script type="text/javascript" src="resources/js/stomp.js" /></script>
-  <script type="text/javascript" src="resources/js/tasknotification.js" /></script>
-
 <div class="navbar-header">
     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
         <span class="sr-only">Toggle navigation</span>
@@ -24,7 +20,7 @@
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
             <i class="fa fa-tasks fa-fw"></i>  <i class="fa fa-caret-down"></i>
         </a>
-        <ul id="taskList" class="dropdown-menu dropdown-tasks">
+         <ul id="taskList" class="dropdown-menu dropdown-tasks">
             
         </ul>
         <!-- /.dropdown-tasks -->

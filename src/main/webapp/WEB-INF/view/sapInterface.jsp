@@ -15,6 +15,9 @@
   		});
 		$("#imediateImportBtn").click(function(){
 			console.log("dropdown");
+			 $("#taskList").html("<li> <a href='#'><div><p><strong>SAP IMPORT</strong> <span class='pull-right text-muted'>null</span> <div class='progress progress-striped active'> <div class='progress-bar progress-bar-success' role='progressbar' aria-valuenow='57' aria-valuemin='0' aria-valuemax='100' style='width:57%'> <span class='sr-only'>null</span> </div> </div> </div> </a> </li> <li class='divider'></li><li><a class='text-center' href='#'> <strong>See All Tasks</strong>  <i class='fa fa-angle-right'></i></a></li>");
+			 $("#task").removeClass("dropdown");
+			 $("#task").addClass("dropdown open");
 		});
  	}); 
   	

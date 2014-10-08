@@ -30,12 +30,11 @@ public class TaskMessage
 	@Autowired
 	private SimpMessagingTemplate template;
 	
-	private AtomicInteger progressRate = new AtomicInteger();
+	private static AtomicInteger progressRate = new AtomicInteger();
 	
-	private ProgressRateResult result ;
 
 	@MessageMapping("/tasknotification")
-	@Scheduled(fixedDelay = 3000)
+	@Scheduled(fixedDelay = 1000)
 	public void sendMessage()
 	{
 		ProgressRateResult rateResult = new ProgressRateResult();
@@ -44,58 +43,50 @@ public class TaskMessage
 		rateResult.setMaxValue(100);
 		rateResult.setMinValue(0);
 		rateResult.setTaskId("SAP IMPORT");
-		rateResult.setMesssage(getProgressMessage(currentValue));
+		rateResult.setMesssage(getProgressMessage(rateResult));
 		template.convertAndSend("/topic/tasknotification", rateResult);
 	}
 	
-	public String getProgressMessage(int process)
+	public String getProgressMessage(ProgressRateResult result)
 	{
-//		<li>
-//        <a href="#">
-//            <div>
-//                <p>
-//                    <strong>Task 1</strong>
-//                    <span class="pull-right text-muted">40% Complete</span>
-//                </p>
-//                <div class="progress progress-striped active">
-//                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-//                        <span class="sr-only">40% Complete (success)</span>
-//                    </div>
-//                </div>
-//            </div>
-//        </a>
-//    </li>
-//    <li class="divider"></li>
-//    <li>
-//        <a class="text-center" href="#">
-//            <strong>See All Tasks</strong>
-//            <i class="fa fa-angle-right"></i>
-//        </a>
-//    </li>
 		StringBuilder builder = new StringBuilder();
-		builder.append("");
-		return String.format("%d%%( complete success )",process);
+		builder.append(getProgressItem(result));
+		builder.append(getDetails());
+		return builder.toString();
 	}
 	
-	private String getProgressItem()
+	public String getDetails()
 	{
-//		<li>
-//      <a href="#">
-//          <div>
-//              <p>
-//                  <strong>Task 1</strong>
-//                  <span class="pull-right text-muted">40% Complete</span>
-//              </p>
-//              <div class="progress progress-striped active">
-//                  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-//                      <span class="sr-only">40% Complete (success)</span>
-//                  </div>
-//              </div>
-//          </div>
-//      </a>
-//  </li>
-		StringBuffer builder = new StringBuffer();
-		return  builder.toString();
+		StringBuilder builder = new StringBuilder();
+		builder.append("<li>");
+		builder.append("<a class='text-center' href='#'>");
+		builder.append(" <strong>See All Tasks</strong>");
+		builder.append("  <i class='fa fa-angle-right'></i>");
+		builder.append("</a>");
+		builder.append("</li>");
+		return builder.toString();
+	}
+	
+	private String getProgressItem( ProgressRateResult result)
+	{
+		String message = String.format("%d%% Complete", result.getCurrentValue());
+		StringBuilder builder = new StringBuilder();
+		builder.append("<li>");
+		builder.append(" <a href='#'>");
+		builder.append(" <div> ");
+		builder.append(" <p> ");
+		builder.append(" <strong>"+result.getTaskId()+"</strong>");
+		builder.append(" <span class='pull-right text-muted'>"+message+"</span>");
+		builder.append(" <div class='progress progress-striped active'>");
+		builder.append(" <div class='progress-bar progress-bar-success' role='progressbar' aria-valuenow='"+result.getCurrentValue()+"' aria-valuemin='0' aria-valuemax='"+result.getMaxValue()+"' style='width:"+result.getCurrentValue()+"%'>");
+		builder.append(" <span class='sr-only'>"+message+"</span>");
+		builder.append(" </div>");
+		builder.append(" </div>");
+		builder.append(" </div>");
+		builder.append(" </a>");
+		builder.append(" </li>");
+		builder.append(" <li class='divider'></li>");
+		return builder.toString();
 	}
 	
 	public int getProgressRate()
@@ -103,10 +94,6 @@ public class TaskMessage
 		return progressRate.getAndIncrement();
 	}
 
-	public void setProgressRate(AtomicInteger progressRate)
-	{
-		this.progressRate = progressRate;
-	}
 	
 	
 }

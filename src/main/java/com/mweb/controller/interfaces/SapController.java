@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mweb.batchservice.plugins.SAPJob;
 import com.mweb.model.PageResult;
 import com.mweb.model.UserInfo;
 import com.mweb.model.plugin.SAPEntity;
@@ -36,10 +37,13 @@ public class SapController
 	@Autowired
 	SAPService sapService;
 	
+	@Autowired
+	SAPJob job;
+	
 	@RequestMapping("/sapIndex")
 	public String Sap()
 	{
-		return "SapInterface";
+		return "sapInterface";
 	}
 	
 	@RequestMapping(value = "/pageSapEntity")

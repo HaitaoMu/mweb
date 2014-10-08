@@ -33,35 +33,25 @@ public class StepListener implements StepExecutionListener
 {
     private static Log log = LogFactory.getLog(StepListener.class);
 	
-    private static AtomicLong staticsCount = new AtomicLong(0);
-    
 	private static long STEP_START_TIME = 0;
 	
-	@BeforeRead
-    public void beforeRead()
-    {
-    	log.info("[START LOAD DATA]");
-    }
-    
-	@AfterRead
-	public void afterRead()
-    {
-		staticsCount.incrementAndGet();
-		log.info(String.format("[AFTER LOAD DATA READ %d ITEMS]",getStaticsCount()));
-    }
+    private static AtomicLong staticsCount = new AtomicLong();
     
 	public void beforeStep(StepExecution stepExecution)
 	{
 		STEP_START_TIME = System.currentTimeMillis();
 		log.info(String.format("[ STEP start at %s]", STEP_START_TIME));
+		log.info("[Before Step Count]"+ stepExecution.getReadCount());
+		log.info("[Before Step Count]"+ stepExecution.getWriteCount());
 	}
 
 	public ExitStatus afterStep(StepExecution stepExecution)
 	{
-		log.info(String.format("[ STEP end at %s]", System.currentTimeMillis() ));
 		log.info(String.format("[ STEP cost %s]", (System.currentTimeMillis() - STEP_START_TIME)));
 
 		stepExecution.setStatus(BatchStatus.COMPLETED);
+		log.info("[After Step Count]"+ stepExecution.getReadCount());
+		log.info("[After Step Count]"+ stepExecution.getWriteCount());
 		return stepExecution.getExitStatus();
 
 	}
@@ -73,5 +63,6 @@ public class StepListener implements StepExecutionListener
 	{
 		return staticsCount.longValue();
 	}
+
 
 }
