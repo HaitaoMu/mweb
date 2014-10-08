@@ -34,7 +34,7 @@ public class TaskMessage
 	
 
 	@MessageMapping("/tasknotification")
-	@Scheduled(fixedDelay = 10000)
+	@Scheduled(fixedRate = 10000)
 	public void sendMessage()
 	{
 		ProgressRateResult rateResult = new ProgressRateResult();
@@ -68,16 +68,17 @@ public class TaskMessage
 	}
 	private String getProgressItem( ProgressRateResult result)
 	{
+		String message = String.format("%d%% Complete", result.getCurrentValue());
 		StringBuilder builder = new StringBuilder();
 		builder.append("<li>");
 		builder.append(" <a href='#'>");
 		builder.append(" <div> ");
 		builder.append(" <p> ");
 		builder.append(" <strong>"+result.getTaskId()+"</strong>");
-		builder.append(" <span class='pull-right text-muted'>"+result.getMesssage()+"</span>");
+		builder.append(" <span class='pull-right text-muted'>"+message+"%</span>");
 		builder.append(" <div class='progress progress-striped active'>");
 		builder.append(" <div class='progress-bar progress-bar-success' role='progressbar' aria-valuenow='"+result.getCurrentValue()+"' aria-valuemin='0' aria-valuemax='"+result.getMaxValue()+"' style='width:"+result.getCurrentValue()+"%'>");
-		builder.append(" <span class='sr-only'>"+result.getMesssage()+"</span>");
+		builder.append(" <span class='sr-only'>"+message+"</span>");
 		builder.append(" </div>");
 		builder.append(" </div>");
 		builder.append(" </div>");
