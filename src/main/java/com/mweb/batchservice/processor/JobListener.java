@@ -32,7 +32,7 @@ import com.mweb.service.WatchService;
  *
  */
 @Component
-public class JobListener 
+public class JobListener implements JobExecutionListener
 {
 	private static Log log = LogFactory.getLog(JobListener.class);
 
@@ -42,30 +42,31 @@ public class JobListener
 	@BeforeRead
 	public void beforeRead()
 	{
-		
+		log.info(String.format("[before read]", null));
 	}
 	
 	@BeforeWrite
 	public void beforeWrite()
 	{
-		
+		log.info(String.format("[before write]", null));
 	}
 	
 	@AfterRead
 	public void afterRead()
 	{
-		
+		log.info(String.format("[after read]", null));
 	}
 	
 	@AfterWrite
 	public void afterWrite()
 	{
-		
+		log.info(String.format("[before write]", null));
 	}
 	
 	
     @BeforeJob
     public void beforeJob(JobExecution jobExecution){
+    	log.info(String.format("[before job]", null));
     	ProgressRateResult result = new ProgressRateResult();
     	result.setTaskId(String.valueOf(jobExecution.getJobId()));
     	WatchService.putTask(result);
@@ -78,6 +79,7 @@ public class JobListener
 
     @AfterJob
     public void afterJob(JobExecution jobExecution){
+    	log.info(String.format("[after job]", null));
 //        log.info("*********Afetr Job*********");
 //		log.info(String.format("[Job cost %s]", (System.currentTimeMillis() - STEP_START_TIME)));
     }

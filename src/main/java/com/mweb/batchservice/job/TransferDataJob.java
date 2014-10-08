@@ -29,8 +29,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mweb.batchservice.processor.EntityItemWriter;
 
 @Component
-public abstract class TransferDataJob<T extends Serializable, K extends Serializable>
-		extends AbstractBatchJob {
+public abstract class TransferDataJob<T extends Serializable, K extends Serializable> extends AbstractBatchJob
+{
 
 	private static final int CHUNCK_SIZE = 50;
 
@@ -58,7 +58,8 @@ public abstract class TransferDataJob<T extends Serializable, K extends Serializ
 	 * @return
 	 */
 	@Bean
-	public ItemReader<T> sourceReader() {
+	public ItemReader<T> sourceReader()
+	{
 		SessionFactory sessionFactory = getSessionFactory(SOURCE_DB);
 		HibernateCursorItemReader<T> reader = new HibernateCursorItemReader<T>();
 		reader.setFetchSize(FETCH_SIZE);
@@ -73,7 +74,8 @@ public abstract class TransferDataJob<T extends Serializable, K extends Serializ
 	 * @return
 	 */
 	@Bean
-	public ItemReader<K> localReader() {
+	public ItemReader<K> localReader()
+	{
 		HibernateCursorItemReader<K> reader = new HibernateCursorItemReader<K>();
 		reader.setFetchSize(FETCH_SIZE);
 		reader.setQueryString("from " + clacc.getName());
@@ -85,7 +87,8 @@ public abstract class TransferDataJob<T extends Serializable, K extends Serializ
 	 * Write source database data to local database
 	 */
 	@Bean
-	public ItemWriter<T> localWriter() {
+	public ItemWriter<T> localWriter()
+	{
 		HibernateItemWriter<T> writer = new HibernateItemWriter<T>();
 		writer.setSessionFactory(localSessionFactory);
 		return writer;
@@ -95,7 +98,8 @@ public abstract class TransferDataJob<T extends Serializable, K extends Serializ
 	 * Write source database data to local database
 	 */
 	@Bean
-	public ItemWriter<K> localCopyWriter() {
+	public ItemWriter<K> localCopyWriter()
+	{
 		HibernateItemWriter<K> writer = new HibernateItemWriter<K>();
 		writer.setSessionFactory(localSessionFactory);
 		return writer;
@@ -106,18 +110,21 @@ public abstract class TransferDataJob<T extends Serializable, K extends Serializ
 	 */
 	@Bean
 	@Transactional(propagation = Propagation.NESTED, readOnly = true)
-	public ItemWriter<T> destinationWriter() {
+	public ItemWriter<T> destinationWriter()
+	{
 		SessionFactory sessionFactory = getSessionFactory(DESTINATION_DB);
 		EntityItemWriter<T> writer = new EntityItemWriter<T>(sessionFactory);
 		return writer;
 	}
 
+//	@formatter:off
 	@Bean
 	@Scope("prototype")
 	public Step loadDataStep() {
 		return stepBuilderFactory.get("loadDataStep").<T, T> chunk(CHUNCK_SIZE)
 				.reader(sourceReader()).writer(localWriter())
-				.listener(stepListener).build();
+//				.listener(stepListener)
+				.build();
 	}
 
 	@Bean
@@ -125,7 +132,9 @@ public abstract class TransferDataJob<T extends Serializable, K extends Serializ
 	public Step copyDataStep() {
 		return stepBuilderFactory.get("copyDataStep").<T, K> chunk(CHUNCK_SIZE)
 				.reader(sourceReader()).processor(getExpressionProcessor())
-				.writer(localCopyWriter()).listener(stepListener).build();
+				.writer(localCopyWriter())
+//				.listener(stepListener)
+				.build();
 	}
 
 	@Bean
@@ -134,7 +143,8 @@ public abstract class TransferDataJob<T extends Serializable, K extends Serializ
 		return stepBuilderFactory.get("releaseDataStep")
 				.<K, T> chunk(CHUNCK_SIZE).reader(localReader())
 				.processor(getConvertProcessor()).writer(destinationWriter())
-				.listener(stepListener).build();
+//				.listener(stepListener)
+				.build();
 	}
 
 	@Bean
@@ -142,7 +152,9 @@ public abstract class TransferDataJob<T extends Serializable, K extends Serializ
 	public Job dataTransferJob() {
 		return jobBuilderFactory.get("dataTransferJob")
 				.incrementer(new RunIdIncrementer()).flow(loadDataStep())
-				.next(copyDataStep()).end().listener(jobListener).build();
+				.next(copyDataStep()).end()
+				.listener(jobListener)
+				.build();
 	}
 
 	@Bean
@@ -154,37 +166,35 @@ public abstract class TransferDataJob<T extends Serializable, K extends Serializ
 				.listener(jobListener).build();
 	}
 
-	@BeforeJob
-	public void initializeState(JobExecution jobExecution) {
-		time = System.currentTimeMillis();
-	}
+//	@formatter:on
 
-	@AfterJob
-	public void exploitState(JobExecution jobExecution) {
-		System.out.println(System.currentTimeMillis() - time);
-	}
-
-	public ItemProcessor<T, K> getExpressionProcessor() {
+	public ItemProcessor<T, K> getExpressionProcessor()
+	{
 		return expressionProcessor;
 	}
 
-	public void setExpressionProcessor(ItemProcessor<T, K> expressionProcessor) {
+	public void setExpressionProcessor(ItemProcessor<T, K> expressionProcessor)
+	{
 		this.expressionProcessor = expressionProcessor;
 	}
 
-	public ItemProcessor<K, T> getConvertProcessor() {
+	public ItemProcessor<K, T> getConvertProcessor()
+	{
 		return convertProcessor;
 	}
 
-	public void setConvertProcessor(ItemProcessor<K, T> convertProcessor) {
+	public void setConvertProcessor(ItemProcessor<K, T> convertProcessor)
+	{
 		this.convertProcessor = convertProcessor;
 	}
 
-	public void setClazz(final Class<T> clazz) {
+	public void setClazz(final Class<T> clazz)
+	{
 		this.clazz = clazz;
 	}
 
-	public void setClacc(final Class<K> clacc) {
+	public void setClacc(final Class<K> clacc)
+	{
 		this.clacc = clacc;
 	}
 

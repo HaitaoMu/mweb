@@ -17,18 +17,6 @@ public class SAPLoadProcessor implements ItemProcessor<SAPEntity, SAPEntityModif
 
     private static AtomicLong staticsCount = new AtomicLong(0);
     
-//	@BeforeRead
-//    public void beforeRead()
-//    {
-//    	log.info("[START LOAD DATA]");
-//    }
-//    
-//	@AfterRead
-//	public void afterRead()
-//    {
-//		staticsCount.incrementAndGet();
-//		log.info(String.format("[AFTER LOAD DATA READ %d ITEMS]",getStaticsCount()));
-//    }
 	
 	@Override
 	public SAPEntityModified process(SAPEntity item) throws Exception 
