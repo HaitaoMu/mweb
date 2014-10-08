@@ -39,7 +39,7 @@ public class SapController
 	@RequestMapping("/sapIndex")
 	public String Sap()
 	{
-		return "SapInterface";
+		return "sapInterface";
 	}
 	
 	@RequestMapping(value = "/pageSapEntity")
