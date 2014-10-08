@@ -25,6 +25,7 @@ import org.springframework.batch.core.annotation.BeforeWrite;
 import org.springframework.stereotype.Component;
 
 import com.mweb.model.ProgressRateResult;
+import com.mweb.service.WatchService;
 
 /**
  * @author jet
@@ -67,7 +68,7 @@ public class JobListener
     public void beforeJob(JobExecution jobExecution){
     	ProgressRateResult result = new ProgressRateResult();
     	result.setTaskId(String.valueOf(jobExecution.getJobId()));
-    	
+    	WatchService.putTask(result);
 //        log.info("*********Before Job*********");
 //        STEP_START_TIME = System.currentTimeMillis();
 //        log.info(String.format("[Job start at %s]", STEP_START_TIME));
