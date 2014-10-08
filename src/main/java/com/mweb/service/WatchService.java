@@ -1,6 +1,10 @@
 package com.mweb.service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Vector;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.stereotype.Service;
 
@@ -9,15 +13,25 @@ import com.mweb.model.ProgressRateResult;
 @Service
 public class WatchService 
 {
-	private static final Vector<ProgressRateResult> taskVector = new Vector<ProgressRateResult>();
+	private static final ConcurrentHashMap<String,ProgressRateResult> taskMap = new ConcurrentHashMap<String,ProgressRateResult>();
 	
 	public static void putTask(ProgressRateResult result)
 	{
-		taskVector.add(result);
+		taskMap.put(result.getTaskId(),result);
 	}
 	
-	public static Vector<ProgressRateResult> getTaskvector() 
+	public static ProgressRateResult getProgressResult(String taskId)
 	{
-		return taskVector;
+		return taskMap.get(taskId);
+	}
+	
+	public synchronized static List<ProgressRateResult> getTaskList()
+	{
+		List<ProgressRateResult> taskList = new ArrayList<ProgressRateResult>();
+		for(Map.Entry<String,ProgressRateResult> e: taskMap.entrySet() )
+		{
+			taskList.add(e.getValue());
+		}
+		return taskList;
 	}
 }

@@ -64,9 +64,6 @@ public abstract class AbstractBatchJob
 	@Autowired
 	public StepBuilderFactory stepBuilderFactory;
 	
-	
-	
-
 	@Autowired
 	DBConfigService dbConfigService;
 	
