@@ -14,6 +14,14 @@ import static com.mweb.common.constats.Constants.SUCCESS;
 
 import java.util.List;
 
+import org.springframework.batch.core.JobParameters;
+import org.springframework.batch.core.JobParametersInvalidException;
+import org.springframework.batch.core.launch.support.SimpleJobLauncher;
+import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
+import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
+import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.repository.JobRestartException;
+import org.springframework.batch.core.repository.support.SimpleJobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,11 +42,19 @@ import com.mweb.repository.plugin.SAPService;
 @Controller
 public class SapController
 {
-	@Autowired
-	SAPService sapService;
 	
 	@Autowired
 	SAPJob job;
+	
+	@Autowired
+	SAPService sapService;
+
+	@Autowired
+	SimpleJobLauncher jobLauncher;
+
+	@Autowired
+	SimpleJobRepository jobRepository;
+	
 	
 	@RequestMapping("/sapIndex")
 	public String Sap()
@@ -60,6 +76,30 @@ public class SapController
 	@ResponseBody
 	public String importDataImmediate()
 	{
+		try
+		{
+			jobLauncher.run(job.dataTransferJob(), new JobParameters());
+		}
+		catch (JobExecutionAlreadyRunningException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (JobRestartException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (JobInstanceAlreadyCompleteException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (JobParametersInvalidException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return SUCCESS;
 	}
 }

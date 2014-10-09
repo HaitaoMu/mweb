@@ -40,7 +40,6 @@ public class RandomChart
 	@Scheduled(fixedDelay = 30000)
 	public void sendMessage()
 	{
-		System.out.println("[send message]");
 		template.convertAndSend("/topic/data", new Random().nextInt(100));
 	}
 

@@ -1,25 +1,23 @@
 package com.mweb.batchservice.job;
 
-import static com.mweb.common.constats.Constants.DESTINATION_DB;
-import static com.mweb.common.constats.Constants.SOURCE_DB;
+import static com.mweb.common.constats.Constants.*;
 
 import java.io.Serializable;
+import java.util.concurrent.atomic.AtomicLong;
 
 import org.hibernate.SessionFactory;
+import org.springframework.batch.core.ChunkListener;
 import org.springframework.batch.core.Job;
-import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobExecutionListener;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.StepExecutionListener;
-import org.springframework.batch.core.annotation.AfterJob;
-import org.springframework.batch.core.annotation.BeforeJob;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.HibernateCursorItemReader;
-import org.springframework.batch.item.database.HibernateItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -27,6 +25,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mweb.batchservice.processor.EntityItemWriter;
+import com.mweb.batchservice.processor.HibernateItemWriterProcessor;
 
 @Component
 public abstract class TransferDataJob<T extends Serializable, K extends Serializable> extends AbstractBatchJob
@@ -35,8 +34,8 @@ public abstract class TransferDataJob<T extends Serializable, K extends Serializ
 	private static final int CHUNCK_SIZE = 50;
 
 	private static final int FETCH_SIZE = 1000;
-
-	private static long time = 0;
+	
+	private static final AtomicLong COUNT = new AtomicLong(0);
 
 	private Class<T> clazz;
 
@@ -49,8 +48,33 @@ public abstract class TransferDataJob<T extends Serializable, K extends Serializ
 	@Autowired
 	private StepExecutionListener stepListener;
 
+	
 	@Autowired
 	private JobExecutionListener jobListener;
+	
+//	@Autowired
+//	@Qualifier("TaskListener")
+//	private ItemReadListener<T> itemReaderListener;
+
+//	@Autowired
+//	@Qualifier("TaskListener")
+//	private ItemReadListener<? super T> taskReadListener;
+//	
+//	@Autowired
+//	@Qualifier("TaskListener")
+//	private ItemWriteListener<? super T> taskWriterListener;
+//	
+//	@Autowired
+//	@Qualifier("TaskListener")
+//	private ItemWriteListener<? super K> taskTargetWriterListener;
+//	
+//	@Autowired
+//	@Qualifier("TaskListener")
+//	private ItemProcessListener<T, K> taskProcessListener;
+	
+	@Autowired
+	@Qualifier("TaskListener")
+	private ChunkListener chunkListener;
 
 	/**
 	 * read data from source database to local database
@@ -89,7 +113,7 @@ public abstract class TransferDataJob<T extends Serializable, K extends Serializ
 	@Bean
 	public ItemWriter<T> localWriter()
 	{
-		HibernateItemWriter<T> writer = new HibernateItemWriter<T>();
+		HibernateItemWriterProcessor<T> writer = new HibernateItemWriterProcessor<T>();
 		writer.setSessionFactory(localSessionFactory);
 		return writer;
 	}
@@ -100,7 +124,7 @@ public abstract class TransferDataJob<T extends Serializable, K extends Serializ
 	@Bean
 	public ItemWriter<K> localCopyWriter()
 	{
-		HibernateItemWriter<K> writer = new HibernateItemWriter<K>();
+		HibernateItemWriterProcessor<K> writer = new HibernateItemWriterProcessor<K>();
 		writer.setSessionFactory(localSessionFactory);
 		return writer;
 	}
@@ -121,38 +145,50 @@ public abstract class TransferDataJob<T extends Serializable, K extends Serializ
 	@Bean
 	@Scope("prototype")
 	public Step loadDataStep() {
-		return stepBuilderFactory.get("loadDataStep").<T, T> chunk(CHUNCK_SIZE)
-				.reader(sourceReader()).writer(localWriter())
-//				.listener(stepListener)
+		return stepBuilderFactory.get(LOAD_DATA_STEP).<T, T> chunk(CHUNCK_SIZE)
+				.reader(sourceReader())
+//				.listener(taskReadListener)
+				.writer(localWriter())
+//				.listener(chunkListener)
+				.listener(stepListener)
 				.build();
 	}
 
 	@Bean
 	@Scope("prototype")
 	public Step copyDataStep() {
-		return stepBuilderFactory.get("copyDataStep").<T, K> chunk(CHUNCK_SIZE)
-				.reader(sourceReader()).processor(getExpressionProcessor())
+		return stepBuilderFactory.get(COPY_DATA_STEP).<T, K> chunk(CHUNCK_SIZE)
+				.reader(sourceReader())
+//				.listener(taskReadListener)
+				.processor(getExpressionProcessor())
+//				.listener(taskProcessListener)
 				.writer(localCopyWriter())
-//				.listener(stepListener)
+//				.listener(chunkListener)
+//				.listener(taskTargetWriterListener)
+				.listener(stepListener)
 				.build();
 	}
 
 	@Bean
 	@Scope("prototype")
 	public Step releaseDataStep() {
-		return stepBuilderFactory.get("releaseDataStep")
-				.<K, T> chunk(CHUNCK_SIZE).reader(localReader())
-				.processor(getConvertProcessor()).writer(destinationWriter())
-//				.listener(stepListener)
+		return stepBuilderFactory.get(RELEASE_DATA_STEP)
+				.<K, T> chunk(CHUNCK_SIZE)
+				.reader(localReader())
+				.processor(getConvertProcessor())
+				.writer(destinationWriter())
+				.listener(stepListener)
 				.build();
 	}
 
 	@Bean
 	@Scope("prototype")
 	public Job dataTransferJob() {
-		return jobBuilderFactory.get("dataTransferJob")
-				.incrementer(new RunIdIncrementer()).flow(loadDataStep())
-				.next(copyDataStep()).end()
+		return jobBuilderFactory.get(DATA_TRANSFER_JOB)
+				.incrementer(new RunIdIncrementer())
+				.flow(loadDataStep())
+				.next(copyDataStep())
+				.end()
 				.listener(jobListener)
 				.build();
 	}
@@ -160,10 +196,13 @@ public abstract class TransferDataJob<T extends Serializable, K extends Serializ
 	@Bean
 	@Scope("prototype")
 	public Job autoDataTransferJob() {
-		return jobBuilderFactory.get("autoDataTransferJob")
+		return jobBuilderFactory.get(AUTO_DATA_TRANSFER_JOB)
 				.incrementer(new RunIdIncrementer()).flow(loadDataStep())
-				.next(copyDataStep()).next(releaseDataStep()).end()
-				.listener(jobListener).build();
+				.next(copyDataStep())
+				.next(releaseDataStep())
+				.end()
+				.listener(jobListener)
+				.build();
 	}
 
 //	@formatter:on
