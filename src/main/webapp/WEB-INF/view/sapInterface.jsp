@@ -13,11 +13,14 @@
   		{
 			console.log("event trigger");
   		});
-		$("#imediateImportBtn").click(function(){
-			console.log("dropdown");
-			 $("#taskList").html("<li> <a href='#'><div><p><strong>SAP IMPORT</strong> <span class='pull-right text-muted'>null</span> <div class='progress progress-striped active'> <div class='progress-bar progress-bar-success' role='progressbar' aria-valuenow='57' aria-valuemin='0' aria-valuemax='100' style='width:57%'> <span class='sr-only'>null</span> </div> </div> </div> </a> </li> <li class='divider'></li><li><a class='text-center' href='#'> <strong>See All Tasks</strong>  <i class='fa fa-angle-right'></i></a></li>");
-			 $("#task").removeClass("dropdown");
-			 $("#task").addClass("dropdown open");
+		$("#imediateImportBtn").click(function(event){
+			
+			$.ajax({
+				url:event.currentTarget.value,
+				success:function(){
+				  console.log("imediate import success!");	
+				}
+			});
 		});
  	}); 
   	
@@ -51,7 +54,7 @@
             <div class="row">
             	<div id="custom-toolbar">
 				    <div class="form-inline" role="form">
-				    	<button id="imediateImportBtn" type="button" class="btn btn-success">Imediate Import</button>
+				    	<button id="imediateImportBtn" type="button" value="<c:url value="/sapImportData"/>" class="btn btn-success">Imediate Import</button>
 				    	<button type="button" class="btn btn-success">Schedule Import</button>
 				    	<button type="button" class="btn btn-success">Export As Excel</button>
 				    	<button type="button" class="btn btn-success">Release Data</button>

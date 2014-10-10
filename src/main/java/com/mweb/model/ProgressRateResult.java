@@ -19,11 +19,24 @@ import org.springframework.messaging.MessageHeaders;
  */
 public class ProgressRateResult implements Message {
 
+	/**
+	 * 
+	 */
+	private static final int MAX = 100;
+	private static final int MIN = 0;
+	public ProgressRateResult()
+	{
+		setMinValue(MIN);
+		setMaxValue(MAX);
+	}
+	
 	private int minValue;
 
 	private int maxValue;
 
-	private int currentValue;
+	private long currentValue;
+	
+	private String title;
 
 	private String messsage;
 
@@ -47,11 +60,11 @@ public class ProgressRateResult implements Message {
 		this.maxValue = maxValue;
 	}
 
-	public int getCurrentValue() {
+	public long getCurrentValue() {
 		return currentValue;
 	}
 
-	public void setCurrentValue(int currentValue) {
+	public void setCurrentValue(long currentValue) {
 		this.currentValue = currentValue;
 	}
 
@@ -79,6 +92,16 @@ public class ProgressRateResult implements Message {
 	public void setTotalCount(long totalCount) 
 	{
 		this.totalCount = totalCount;
+	}
+
+	public String getTitle()
+	{
+		return title;
+	}
+
+	public void setTitle(String title)
+	{
+		this.title = title;
 	}
 
 	/*

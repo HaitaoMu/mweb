@@ -24,8 +24,7 @@ public class WatchService
 		return taskMap.get(taskId);
 	}
 	
-	public static void removeTask(String taskId)
-	{
+	public static void removeTask(String taskId){
 		 taskMap.remove(taskId);
 	}
 	

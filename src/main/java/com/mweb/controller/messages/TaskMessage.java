@@ -10,6 +10,7 @@
  ***********************************************************************/
 package com.mweb.controller.messages;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 
 import com.mweb.model.ProgressRateResult;
+import com.mweb.service.WatchService;
 
 /**
  * @author jet
@@ -36,13 +38,18 @@ public class TaskMessage
 	
 
 	@MessageMapping("/tasknotification")
-	@Scheduled(fixedDelay = 1000)
-	public void sendMessage()
+	@Scheduled(fixedDelay = 500)
+	public synchronized void sendMessage()
 	{
-		template.convertAndSend("/topic/tasknotification", getProgressMessage(rateResult));
+		List<ProgressRateResult> results = WatchService.getTaskList();
+		for (ProgressRateResult progressRateResult : results)
+		{
+			progressRateResult.setMesssage(getProgressMessage(progressRateResult));
+			template.convertAndSend("/topic/tasknotification", progressRateResult);
+		}
 	}
 	
-	private String getProgressMessage(ProgressRateResult result)
+	public synchronized String getProgressMessage(ProgressRateResult result)
 	{
 		StringBuilder builder = new StringBuilder();
 		builder.append(getProgressItem(rateResult));
@@ -50,7 +57,7 @@ public class TaskMessage
 		return builder.toString();
 	}
 	
-	private String getDetails()
+	public synchronized String getDetails()
 	{
 		StringBuilder builder = new StringBuilder();
 		builder.append("<li>");
@@ -62,7 +69,7 @@ public class TaskMessage
 		return builder.toString();
 	}
 	
-	private String getProgressItem( ProgressRateResult result)
+	private synchronized String getProgressItem( ProgressRateResult result)
 	{
 		String message = String.format("%d%% Complete", result.getCurrentValue());
 		StringBuilder builder = new StringBuilder();

@@ -42,6 +42,16 @@ public class Constants
 	
 	public static final String FAIL = "fail";
 	
+	
+	
+	/**
+	 * Batch job parameters
+	 */
+	
+	public static final String DATA_TRANSFER_JOB = "dataTransferJob";
+
+	public static final String AUTO_DATA_TRANSFER_JOB = "autoDataTransferJob";
+	
 	public static final String LOAD_DATA_STEP = "loadDataStep";
 
 	public static final String COPY_DATA_STEP = "copyDataStep";
