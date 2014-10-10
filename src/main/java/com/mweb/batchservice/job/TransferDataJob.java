@@ -141,15 +141,6 @@ public abstract class TransferDataJob<T extends Serializable, K extends Serializ
 		return writer;
 	}
 
-<<<<<<< HEAD
-	//@formatter:off
-	@Bean
-	@Scope("prototype")
-	public Step loadDataStep() {
-		return stepBuilderFactory.get("loadDataStep").<T, T> chunk(CHUNCK_SIZE)
-				.reader(sourceReader())
-				.writer(localWriter())
-=======
 //	@formatter:off
 	@Bean
 	@Scope("prototype")
@@ -159,7 +150,6 @@ public abstract class TransferDataJob<T extends Serializable, K extends Serializ
 //				.listener(taskReadListener)
 				.writer(localWriter())
 //				.listener(chunkListener)
->>>>>>> 09da55d3286dfaf2c040c18af9b20099baa188a1
 				.listener(stepListener)
 				.build();
 	}
@@ -167,12 +157,6 @@ public abstract class TransferDataJob<T extends Serializable, K extends Serializ
 	@Bean
 	@Scope("prototype")
 	public Step copyDataStep() {
-<<<<<<< HEAD
-		return stepBuilderFactory.get("copyDataStep").<T, K> chunk(CHUNCK_SIZE)
-				.reader(sourceReader())
-				.processor(getExpressionProcessor())
-				.writer(localCopyWriter())
-=======
 		return stepBuilderFactory.get(COPY_DATA_STEP).<T, K> chunk(CHUNCK_SIZE)
 				.reader(sourceReader())
 //				.listener(taskReadListener)
@@ -181,7 +165,6 @@ public abstract class TransferDataJob<T extends Serializable, K extends Serializ
 				.writer(localCopyWriter())
 //				.listener(chunkListener)
 //				.listener(taskTargetWriterListener)
->>>>>>> 09da55d3286dfaf2c040c18af9b20099baa188a1
 				.listener(stepListener)
 				.build();
 	}
@@ -189,14 +172,9 @@ public abstract class TransferDataJob<T extends Serializable, K extends Serializ
 	@Bean
 	@Scope("prototype")
 	public Step releaseDataStep() {
-<<<<<<< HEAD
-		return stepBuilderFactory.get("releaseDataStep")
-				.<K, T> chunk(CHUNCK_SIZE).reader(localReader())
-=======
 		return stepBuilderFactory.get(RELEASE_DATA_STEP)
 				.<K, T> chunk(CHUNCK_SIZE)
 				.reader(localReader())
->>>>>>> 09da55d3286dfaf2c040c18af9b20099baa188a1
 				.processor(getConvertProcessor())
 				.writer(destinationWriter())
 				.listener(stepListener)
@@ -206,11 +184,7 @@ public abstract class TransferDataJob<T extends Serializable, K extends Serializ
 	@Bean
 	@Scope("prototype")
 	public Job dataTransferJob() {
-<<<<<<< HEAD
-		return jobBuilderFactory.get("dataTransferJob")
-=======
 		return jobBuilderFactory.get(DATA_TRANSFER_JOB)
->>>>>>> 09da55d3286dfaf2c040c18af9b20099baa188a1
 				.incrementer(new RunIdIncrementer())
 				.flow(loadDataStep())
 				.next(copyDataStep())
@@ -230,22 +204,8 @@ public abstract class TransferDataJob<T extends Serializable, K extends Serializ
 				.listener(jobListener)
 				.build();
 	}
-<<<<<<< HEAD
 	//@formatter:on
 	
-	@BeforeJob
-	public void initializeState(JobExecution jobExecution) {
-		time = System.currentTimeMillis();
-	}
-
-	@AfterJob
-	public void exploitState(JobExecution jobExecution) {
-		System.out.println(System.currentTimeMillis() - time);
-	}
-=======
-
-//	@formatter:on
->>>>>>> 09da55d3286dfaf2c040c18af9b20099baa188a1
 
 	public ItemProcessor<T, K> getExpressionProcessor()
 	{
