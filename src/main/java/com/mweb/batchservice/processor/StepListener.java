@@ -55,7 +55,6 @@ public class StepListener implements StepExecutionListener
 		if (LOAD_DATA_STEP.endsWith(stepExecution.getStepName()))
 		{
 			result.setTotalCount(result.getTotalCount() * stepExecution.getReadCount());
-			log.info("[TOTAL]" + result);
 		}
 		else
 		{
@@ -64,12 +63,10 @@ public class StepListener implements StepExecutionListener
 				double left = Double.parseDouble(String.valueOf(result.getTotalCount() - stepExecution.getReadCount()));
 				double count = left / result.getTotalCount();
 				String rate = FormatUtil.formatDouble(count * result.getMaxValue());
-				log.info("[LEFT]" + rate + "," + left + "," + count);
 				long value = Long.parseLong(rate);
 				result.setCurrentValue(value);
 			}
 		}
-		log.info(result);
 		stepExecution.setStatus(BatchStatus.COMPLETED);
 		return stepExecution.getExitStatus();
 

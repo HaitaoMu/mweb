@@ -28,6 +28,10 @@ $(function(){
 			$("#taskList").html(tasks);
 			$("#task").removeClass("dropdown");
 			$("#task").addClass("dropdown open");
+			if(null!=$("#sapTable"))
+			{
+				$('#sapTable').bootstrapTable("load");
+			}
 		});
 	});
 });
