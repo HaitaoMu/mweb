@@ -12,16 +12,11 @@ package com.mweb.controller.interfaces;
 
 import static com.mweb.common.constats.Constants.SUCCESS;
 
-import java.util.List;
-
-import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersInvalidException;
 import org.springframework.batch.core.launch.support.SimpleJobLauncher;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
-import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.repository.JobRestartException;
-import org.springframework.batch.core.repository.support.SimpleJobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,9 +25,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mweb.batchservice.plugins.SAPJob;
 import com.mweb.model.PageResult;
-import com.mweb.model.UserInfo;
-import com.mweb.model.plugin.SAPEntity;
 import com.mweb.repository.plugin.SAPService;
+import com.mweb.service.WatchService;
 
 /**
  * @author jet
@@ -52,10 +46,6 @@ public class SapController
 	@Autowired
 	SimpleJobLauncher jobLauncher;
 
-	@Autowired
-	SimpleJobRepository jobRepository;
-	
-	
 	@RequestMapping("/sapIndex")
 	public String Sap()
 	{
@@ -78,7 +68,7 @@ public class SapController
 	{
 		try
 		{
-			jobLauncher.run(job.dataTransferJob(), new JobParameters());
+			jobLauncher.run(job.dataTransferJob(), WatchService.getCurrentParameter());
 		}
 		catch (JobExecutionAlreadyRunningException e)
 		{

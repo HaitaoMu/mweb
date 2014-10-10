@@ -59,15 +59,8 @@
 <!-- Metis Menu Plugin JavaScript -->
 <script src="resources/js/plugins/metisMenu/metisMenu.min.js"></script>
 
-<!-- Morris Charts JavaScript -->
-<!-- <script src="resources/js/plugins/morris/raphael.min.js"></script> -->
-<!-- <script src="resources/js/plugins/morris/morris.min.js"></script> -->
-<!-- <script src="resources/js/plugins/morris/morris-data.js"></script> -->
 
 <!-- Custom Theme JavaScript -->
 <script src="resources/js/sb-admin-2.js"></script>
 
-<!-- Task Notification -->
- <script type="text/javascript" src="resources/js/sockjs-0.3.4.js" /></script>
- <script type="text/javascript" src="resources/js/stomp.js" /></script>
- <script type="text/javascript" src="resources/js/tasknotification.js" /></script>
+

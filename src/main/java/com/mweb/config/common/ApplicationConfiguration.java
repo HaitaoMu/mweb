@@ -1,6 +1,11 @@
 package com.mweb.config.common;
 
 
+import static com.mweb.common.constats.Constants.DATABASE_PROPERTIES_FILE;
+import static com.mweb.common.constats.Constants.SCAN_BATCH_PACKAGE_NAME;
+import static com.mweb.common.constats.Constants.SCAN_ENTITY_PACKAGE_NAME;
+import static com.mweb.common.constats.Constants.SCAN_REPOSITORY_PACKAGE_NAME;
+
 import java.util.Properties;
 
 import org.apache.commons.dbcp.BasicDataSource;
@@ -24,7 +29,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import static com.mweb.common.constats.Constants.*;
 
 @Configuration
 @EnableBatchProcessing
@@ -52,8 +56,6 @@ public class ApplicationConfiguration
 		dataSource.setPassword(env.getProperty("jdbc.password"));
 		return dataSource;
 	}
-	
-	
 	
 	/**
 	 * Spring batch configuration about 
@@ -106,6 +108,7 @@ public class ApplicationConfiguration
 	{
 		return  new JobParametersBuilder();
 	}
+	
 	/**
 	 * 
 	 * Hibernate Configuartion
@@ -139,7 +142,7 @@ public class ApplicationConfiguration
 		return sessionFactory;
 	}
 	
-	
+	//@formatter:off
 	Properties hibernateProperties()
 	{
 		return new Properties()
@@ -158,5 +161,6 @@ public class ApplicationConfiguration
 			}
 		};
 	}
+	//@formatter:on
 
 }

@@ -58,5 +58,9 @@ public class Constants
 
 	public static final String RELEASE_DATA_STEP = "releaseDataStep";
 	
+	public static final String CURRENT_TASK_NO = "CURRENT_NO";
+	
+	public static final long MAX_PROCESS_VALUE = 100;
+	
 	
 }

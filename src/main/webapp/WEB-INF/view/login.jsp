@@ -6,7 +6,7 @@
 <html lang="en">
 
 <head>
-	<jsp:include page="template/header.jsp"></jsp:include>
+<jsp:include page="template/header.jsp"></jsp:include>
 	<script type="text/javascript">
 		$(function(){
 			$(".btn").keyup(function(event) 

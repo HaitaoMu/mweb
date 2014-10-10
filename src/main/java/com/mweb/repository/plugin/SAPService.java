@@ -1,6 +1,6 @@
 /***********************************************************************
  *
- * @file         SAPService.java
+	private static Log log = LogFactory.getLog(TaskListener.class); * @file         SAPService.java
  *
  * @copyright    Copyright: 2014-2016 Usee Co. Ltd.
  * @author       JetQin 
@@ -10,8 +10,11 @@
  ***********************************************************************/
 package com.mweb.repository.plugin;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Repository;
 
+import com.mweb.batchservice.job.TaskListener;
 import com.mweb.model.plugin.PK;
 import com.mweb.model.plugin.SAPEntity;
 import com.mweb.repository.AbstractDataService;

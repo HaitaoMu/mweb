@@ -1,20 +1,35 @@
-$(function() {
-
+$(function(){
+//	var stompClient = null;
+//
+//	function connect() {
+//		var socket = new SockJS('/mweb/tasknotification');
+//		stompClient = Stomp.over(socket);
+//		stompClient.connect({}, function(frame) {
+//			stompClient.subscribe("/topic/tasknotification", function(message) {
+//		
+//			});
+//		});
+//	}
+	
+//	var tasks="<li> <a href='#'> <div>  <p>  <strong>dataTransferJob-0</strong> <span class='pull-right text-muted'>100% Complete</span> <div class='progress progress-striped active'> <div class='progress-bar progress-bar-success' role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width:100%'> <span class='sr-only'>100% Complete</span> </div> </div> </div> </a> </li> <li class='divider'></li><li><a class='text-center' href='#'> <strong>See All Tasks</strong>  <i class='fa fa-angle-right'></i></a></li>"
+//	$("#taskList").html(tasks);
+//	$("#task").removeClass("dropdown");
+//	$("#task").addClass("dropdown open");
+	
 	var socket = new SockJS('/mweb/tasknotification');
 	var client = Stomp.over(socket);
-
+//
 	client.connect({}, function(frame) {
 
+		
 		client.subscribe("/topic/tasknotification", function(message) {
-			 var task = JSON.parse(message.body);
-//			 $("#taskList").html("");
-			 $("#taskList").html(task.messsage);
-//			 $("#task").dropdown();
-			 
-//			 $("#taskList").html("<li> <a href='#'><div><p><strong>SAP IMPORT</strong> <span class='pull-right text-muted'>null</span> <div class='progress progress-striped active'> <div class='progress-bar progress-bar-success' role='progressbar' aria-valuenow='57' aria-valuemin='0' aria-valuemax='100' style='width:57%'> <span class='sr-only'>null</span> </div> </div> </div> </a> </li> <li class='divider'></li><li><a class='text-center' href='#'> <strong>See All Tasks</strong>  <i class='fa fa-angle-right'></i></a></li>");
-			 $("#task").removeClass("dropdown");
-			 $("#task").addClass("dropdown open");
+			var tasks = message.body;
+//			var task = JSON.parse(message.body);
+			$("#taskList").html(tasks);
+			$("#task").removeClass("dropdown");
+			$("#task").addClass("dropdown open");
 		});
-
 	});
 });
+
+

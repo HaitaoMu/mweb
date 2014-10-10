@@ -42,6 +42,7 @@ import com.mweb.model.UserRole;
 public class CustomUserDetailService implements UserDetailsService
 {
 	
+	private static final int ZERO = 0;
 	@Autowired
 	public UserInfoService userInfoService;
 
@@ -51,8 +52,10 @@ public class CustomUserDetailService implements UserDetailsService
 		Map<String,String> parameters = new HashMap<String,String>();
 		parameters.put("userName", username);
 		List<UserInfo> users = userInfoService.findByParameter(parameters);
-		
-		return createUser(users.get(0));
+		if(null!=users && users.size() > ZERO)
+			return createUser(users.get(0));
+
+		return null;
 	}
 
 	private User createUser(UserInfo userInfo)

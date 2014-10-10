@@ -48,29 +48,8 @@ public abstract class TransferDataJob<T extends Serializable, K extends Serializ
 	@Autowired
 	private StepExecutionListener stepListener;
 
-	
 	@Autowired
 	private JobExecutionListener jobListener;
-	
-//	@Autowired
-//	@Qualifier("TaskListener")
-//	private ItemReadListener<T> itemReaderListener;
-
-//	@Autowired
-//	@Qualifier("TaskListener")
-//	private ItemReadListener<? super T> taskReadListener;
-//	
-//	@Autowired
-//	@Qualifier("TaskListener")
-//	private ItemWriteListener<? super T> taskWriterListener;
-//	
-//	@Autowired
-//	@Qualifier("TaskListener")
-//	private ItemWriteListener<? super K> taskTargetWriterListener;
-//	
-//	@Autowired
-//	@Qualifier("TaskListener")
-//	private ItemProcessListener<T, K> taskProcessListener;
 	
 	@Autowired
 	@Qualifier("TaskListener")
