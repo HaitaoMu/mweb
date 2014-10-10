@@ -32,53 +32,28 @@ import com.mweb.service.WatchService;
  *
  */
 @Component
-public class JobListener 
+public class JobListener implements JobExecutionListener
 {
 	private static Log log = LogFactory.getLog(JobListener.class);
 
-	private static long STEP_START_TIME = 0;
-	
-	
-	@BeforeRead
-	public void beforeRead()
-	{
-		
-	}
-	
-	@BeforeWrite
-	public void beforeWrite()
-	{
-		
-	}
-	
-	@AfterRead
-	public void afterRead()
-	{
-		
-	}
-	
-	@AfterWrite
-	public void afterWrite()
-	{
-		
-	}
+//	private static long STEP_START_TIME = 0;
 	
 	
     @BeforeJob
     public void beforeJob(JobExecution jobExecution){
+    	
     	ProgressRateResult result = new ProgressRateResult();
-    	result.setTaskId(String.valueOf(jobExecution.getJobId()));
+    	result.setTaskId(String.valueOf(jobExecution.getJobId().toString()));
+    	
     	WatchService.putTask(result);
-//        log.info("*********Before Job*********");
-//        STEP_START_TIME = System.currentTimeMillis();
-//        log.info(String.format("[Job start at %s]", STEP_START_TIME));
-//        log.info("[Job Count]"+jobExecution.getJobId());
+    	log.info(String.format("[Before Job][%s]",result));
+//        log.info("[Before Job]"+jobExecution.toString()+",["+jobExecution.getStepExecutions().size()+"]");
     }
 
 
     @AfterJob
     public void afterJob(JobExecution jobExecution){
-//        log.info("*********Afetr Job*********");
-//		log.info(String.format("[Job cost %s]", (System.currentTimeMillis() - STEP_START_TIME)));
+		log.info("[After Job]"+jobExecution.toString()+",["+jobExecution.getStepExecutions().size()+"]");
+    	log.info(String.format("[Before Job][%s]",WatchService.getProgressResult(jobExecution.getJobId().toString())));
     }
 }

@@ -112,20 +112,26 @@ public abstract class TransferDataJob<T extends Serializable, K extends Serializ
 		return writer;
 	}
 
+	//@formatter:off
 	@Bean
 	@Scope("prototype")
 	public Step loadDataStep() {
 		return stepBuilderFactory.get("loadDataStep").<T, T> chunk(CHUNCK_SIZE)
-				.reader(sourceReader()).writer(localWriter())
-				.listener(stepListener).build();
+				.reader(sourceReader())
+				.writer(localWriter())
+				.listener(stepListener)
+				.build();
 	}
 
 	@Bean
 	@Scope("prototype")
 	public Step copyDataStep() {
 		return stepBuilderFactory.get("copyDataStep").<T, K> chunk(CHUNCK_SIZE)
-				.reader(sourceReader()).processor(getExpressionProcessor())
-				.writer(localCopyWriter()).listener(stepListener).build();
+				.reader(sourceReader())
+				.processor(getExpressionProcessor())
+				.writer(localCopyWriter())
+				.listener(stepListener)
+				.build();
 	}
 
 	@Bean
@@ -133,16 +139,22 @@ public abstract class TransferDataJob<T extends Serializable, K extends Serializ
 	public Step releaseDataStep() {
 		return stepBuilderFactory.get("releaseDataStep")
 				.<K, T> chunk(CHUNCK_SIZE).reader(localReader())
-				.processor(getConvertProcessor()).writer(destinationWriter())
-				.listener(stepListener).build();
+				.processor(getConvertProcessor())
+				.writer(destinationWriter())
+				.listener(stepListener)
+				.build();
 	}
 
 	@Bean
 	@Scope("prototype")
 	public Job dataTransferJob() {
 		return jobBuilderFactory.get("dataTransferJob")
-				.incrementer(new RunIdIncrementer()).flow(loadDataStep())
-				.next(copyDataStep()).end().listener(jobListener).build();
+				.incrementer(new RunIdIncrementer())
+				.flow(loadDataStep())
+				.next(copyDataStep())
+				.end()
+				.listener(jobListener)
+				.build();
 	}
 
 	@Bean
@@ -150,10 +162,14 @@ public abstract class TransferDataJob<T extends Serializable, K extends Serializ
 	public Job autoDataTransferJob() {
 		return jobBuilderFactory.get("autoDataTransferJob")
 				.incrementer(new RunIdIncrementer()).flow(loadDataStep())
-				.next(copyDataStep()).next(releaseDataStep()).end()
-				.listener(jobListener).build();
+				.next(copyDataStep())
+				.next(releaseDataStep())
+				.end()
+				.listener(jobListener)
+				.build();
 	}
-
+	//@formatter:on
+	
 	@BeforeJob
 	public void initializeState(JobExecution jobExecution) {
 		time = System.currentTimeMillis();

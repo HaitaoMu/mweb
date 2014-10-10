@@ -68,7 +68,6 @@ public abstract class AbstractBatchJob
 	DBConfigService dbConfigService;
 	
 	@Bean
-	@Scope("prototype")
 	public JobRepository jobRepository()
 	{
 		JobRepository jobRepository = new SimpleJobRepository(new MapJobInstanceDao(), new MapJobExecutionDao(),

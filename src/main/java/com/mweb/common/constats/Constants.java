@@ -42,5 +42,11 @@ public class Constants
 	
 	public static final String FAIL = "fail";
 	
+	public static final String LOAD_DATA_STEP = "loadDataStep";
+
+	public static final String COPY_DATA_STEP = "copyDataStep";
+
+	public static final String RELEASE_DATA_STEP = "releaseDataStep";
+	
 	
 }

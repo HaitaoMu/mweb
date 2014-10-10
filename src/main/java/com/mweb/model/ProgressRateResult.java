@@ -103,4 +103,8 @@ public class ProgressRateResult implements Message {
 		return null;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("[TaskId=%s,CurrentValue=%d,Message=%s]", getTaskId(),getCurrentValue(),getMesssage());
+	}
 }

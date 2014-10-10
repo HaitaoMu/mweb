@@ -3,6 +3,7 @@ package com.mweb.batch;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersInvalidException;
 import org.springframework.batch.core.launch.JobLauncher;
@@ -32,14 +33,20 @@ public class BatchServiceTest {
 	SAPJob sapJob;
 
 	@Autowired
+	SimpleJobRepository jobRepository;
+	
+	@Autowired
 	SimpleJobLauncher jobLauncher;
 
 
 	@Test
 	public void testTransferDataJob() {
 
-		try {
-			jobLauncher.run(sapJob.dataTransferJob(), new JobParameters());
+		try
+		{
+			JobExecution execution = jobLauncher.run(sapJob.dataTransferJob(), new JobParameters());
+			
+			
 		} catch (JobExecutionAlreadyRunningException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

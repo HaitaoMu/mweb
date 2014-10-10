@@ -30,6 +30,8 @@ public class TaskMessage
 	@Autowired
 	private SimpMessagingTemplate template;
 	
+	private ProgressRateResult rateResult;
+	
 	private static AtomicInteger progressRate = new AtomicInteger();
 	
 
@@ -37,25 +39,18 @@ public class TaskMessage
 	@Scheduled(fixedDelay = 1000)
 	public void sendMessage()
 	{
-		ProgressRateResult rateResult = new ProgressRateResult();
-		int currentValue = getProgressRate();
-		rateResult.setCurrentValue(currentValue);
-		rateResult.setMaxValue(100);
-		rateResult.setMinValue(0);
-		rateResult.setTaskId("SAP IMPORT");
-		rateResult.setMesssage(getProgressMessage(rateResult));
-		template.convertAndSend("/topic/tasknotification", rateResult);
+		template.convertAndSend("/topic/tasknotification", getProgressMessage(rateResult));
 	}
 	
-	public String getProgressMessage(ProgressRateResult result)
+	private String getProgressMessage(ProgressRateResult result)
 	{
 		StringBuilder builder = new StringBuilder();
-		builder.append(getProgressItem(result));
+		builder.append(getProgressItem(rateResult));
 		builder.append(getDetails());
 		return builder.toString();
 	}
 	
-	public String getDetails()
+	private String getDetails()
 	{
 		StringBuilder builder = new StringBuilder();
 		builder.append("<li>");
