@@ -36,13 +36,6 @@ public class StepListener implements StepExecutionListener
 	public void beforeStep(StepExecution stepExecution)
 	{
 		log.info("[Before Step]"+ stepExecution.toString());
-		
-		if(LOAD_DATA_STEP == stepExecution.getStepName())
-		{
-			String taskId = String.valueOf(stepExecution.getJobExecution().getJobId());
-			ProgressRateResult result = WatchService.getProgressResult(taskId);
-			result.setTotalCount(stepExecution.getReadCount());
-		}
 	}
 
 	public ExitStatus afterStep(StepExecution stepExecution)
@@ -60,7 +53,12 @@ public class StepListener implements StepExecutionListener
 		{
 			if (result.getTotalCount() > 0)
 			{
-				double left = Double.parseDouble(String.valueOf(result.getTotalCount() - stepExecution.getReadCount()));
+				int processCount = stepExecution.getWriteCount() 
+									+ stepExecution.getFilterCount() 
+									+ stepExecution.getProcessSkipCount() 
+									+ stepExecution.getWriteSkipCount();
+				
+				double left = Double.parseDouble(String.valueOf(result.getTotalCount() - processCount ));
 				double count = left / result.getTotalCount();
 				String rate = FormatUtil.formatDouble(count * result.getMaxValue());
 				long value = Long.parseLong(rate);

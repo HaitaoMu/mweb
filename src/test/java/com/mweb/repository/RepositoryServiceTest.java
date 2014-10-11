@@ -127,7 +127,7 @@ public class RepositoryServiceTest {
 		destConfig.setUrl("jdbc:oracle:thin:@localhost:1521:XE");
 		
 		dbconfigService.save(sourceConfig);
-//		dbconfigService.save(destConfig);
+		dbconfigService.save(destConfig);
 	}
 	
 	@Test
@@ -140,7 +140,7 @@ public class RepositoryServiceTest {
 		System.out.println(entity);
 	}
 	
-	//@Test
+	@Test
 	public void saveSAPEntity(){
 		
 		PK pk = new PK();

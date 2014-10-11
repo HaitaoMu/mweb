@@ -18,7 +18,7 @@ import com.mweb.model.ProgressRateResult;
 @Service
 public class WatchService 
 {
-	private static final ConcurrentHashMap<String,ProgressRateResult> taskMap = new ConcurrentHashMap<String,ProgressRateResult>();
+	private static ConcurrentHashMap<String,ProgressRateResult> taskMap = new ConcurrentHashMap<String,ProgressRateResult>();
 	private static final AtomicLong atomicLong = new AtomicLong();
 	
 	public static void putTask(ProgressRateResult result)

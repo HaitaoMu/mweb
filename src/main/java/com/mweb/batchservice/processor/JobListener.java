@@ -35,9 +35,9 @@ public class JobListener implements JobExecutionListener
 {
 	private static Log log = LogFactory.getLog(JobListener.class);
 
-	private static final int TRANSFER_DATA_JOB_STEPS = 2;
+	private static final Long TRANSFER_DATA_JOB_STEPS = 2L;
 
-	private static final int AUTO_TRANSFER_DATA_JOB_STEPS = 3;
+	private static final Long AUTO_TRANSFER_DATA_JOB_STEPS = 3L;
 
 	@BeforeJob
 	public void beforeJob(JobExecution jobExecution)
