@@ -38,9 +38,9 @@ public class HibernateItemWriterProcessor<T extends Serializable> extends Hibern
 //	}
 	
 	
-	@AfterWrite
-	public void afterWriter()
-	{
-		log.info("[After Writer]");
-	}
+//	@AfterWrite
+//	public void afterWriter()
+//	{
+//		log.info("[After Writer]");
+//	}
 }
