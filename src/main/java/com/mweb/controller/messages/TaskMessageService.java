@@ -40,17 +40,9 @@ public class TaskMessageService
 	private static Log log = LogFactory.getLog(TaskMessageService.class);
 
 	@MessageMapping("/tasknotification")
-	@Scheduled(fixedDelay=1000)
+	@Scheduled(fixedDelay=500)
 	public synchronized void sendMessage()
 	{
-		// log.info("[Send Notification]");
-		// ProgressRateResult progressRateResult = new ProgressRateResult();
-		// progressRateResult.setCurrentValue(progressRate.getAndIncrement());
-		// progressRateResult.setTitle("SAP IMPORT");
-		// progressRateResult.setMesssage(getProgressMessage(progressRateResult));
-		// template.convertAndSend("/topic/tasknotification",
-		// progressRateResult);
-
 		String message = getProgressMessage();
 		if (null != message && message.length() > 0)
 		{

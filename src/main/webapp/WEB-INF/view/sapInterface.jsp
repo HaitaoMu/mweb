@@ -11,15 +11,15 @@
 
 <script type="text/javascript">
 	$(function() {
-		$('#sapTable').bootstrapTable(function(event) {
+	 	$('#sapTable').bootstrapTable(function(event) {
 			console.log("event trigger");
-		});
+		}); 
 		$("#imediateImportBtn").click(function(event) {
 
 			$.ajax({
 				url : event.currentTarget.value,
 				success : function() {
-					console.log("imediate import success!");
+					$('#sapTable').load();
 				}
 			});
 		});

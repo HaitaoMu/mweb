@@ -63,6 +63,5 @@ public class JobListener implements JobExecutionListener
 		ProgressRateResult result = WatchService.getProgressResult(taskId);
 		result.setCurrentValue(result.getMaxValue());
 		log.info(result);
-//		WatchService.removeTask(taskId);
 	}
 }

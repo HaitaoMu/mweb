@@ -145,7 +145,7 @@ public class RepositoryServiceTest {
 		
 		PK pk = new PK();
 		pk.setUserId("ABCDEFG");
-		for (int i = 0; i < 2000; i++)
+		for (int i = 0; i < 500; i++)
 		{
 			pk.setPropertyCode("SAP"+i);
 			SAPEntity entity = new SAPEntity();
