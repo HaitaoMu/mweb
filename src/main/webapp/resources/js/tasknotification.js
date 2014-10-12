@@ -30,7 +30,7 @@ $(function(){
 			$("#task").addClass("dropdown open");
 			if(null!=$("#sapTable"))
 			{
-				$('#sapTable').bootstrapTable("load");
+				$('#sapTable').bootstrapTable("load",{ url:"/mweb/pageSapEntity"});
 			}
 		});
 	});
