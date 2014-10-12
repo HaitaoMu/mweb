@@ -56,7 +56,8 @@ public class SapController
 	@ResponseBody
 	public PageResult pageSapEntity(
 			@RequestParam(value = "pageNum",defaultValue="1") int pageNum,
-			@RequestParam(value = "pageSize",defaultValue="10") int pageSize)
+			@RequestParam(value = "pageSize",defaultValue="10") int pageSize,
+			@RequestParam(value = "order",defaultValue="asc") String asc)
 	{
 		PageResult page = sapService.findByPage(pageNum, pageSize);
 		return page;

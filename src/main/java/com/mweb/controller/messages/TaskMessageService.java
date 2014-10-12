@@ -48,7 +48,7 @@ public class TaskMessageService
 		{
 			template.convertAndSend("/topic/tasknotification", message);
 		}
-		cleanProgressMessage();
+		//cleanProgressMessage();
 	}
 	
 	private synchronized void cleanProgressMessage()

@@ -16,13 +16,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.mweb.common.constats.DBType;
 import com.mweb.config.common.ApplicationConfiguration;
+import com.mweb.model.DBConfig;
 import com.mweb.model.PageResult;
 import com.mweb.model.UserInfo;
 import com.mweb.model.UserRole;
 import com.mweb.model.plugin.PK;
 import com.mweb.model.plugin.SAPEntity;
 import com.mweb.repository.plugin.SAPService;
+
+import static com.mweb.common.constats.Constants.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ApplicationConfiguration.class)
@@ -40,6 +44,9 @@ public class RepositoryServiceTest {
 	
 	@Autowired
 	SAPService sapService;
+	
+	@Autowired
+	DBConfigService dbconfigService;
 	
 	ShaPasswordEncoder passwordEncoder = new ShaPasswordEncoder();
 	SecureRandom random = new SecureRandom();
@@ -96,6 +103,41 @@ public class RepositoryServiceTest {
 		
 		UserDetails users = customUserDetailsService.loadUserByUsername("Jet");
 		System.out.println(users.getUsername());
+	}
+	
+	
+	@Test
+	public void saveDbConfigService()
+	{
+		DBConfig sourceConfig = new DBConfig();
+		sourceConfig.setDbName(SOURCE_DB);
+		sourceConfig.setDbType(DBType.ORACLE);
+		sourceConfig.setDriver("oracle.jdbc.OracleDriver");
+		sourceConfig.setPassword("12345678");
+		sourceConfig.setUsername("source");
+		sourceConfig.setUrl("jdbc:oracle:thin:@localhost:1521:XE");
+
+		
+		DBConfig destConfig = new DBConfig();
+		destConfig.setDbName(DESTINATION_DB);
+		destConfig.setDbType(DBType.ORACLE);
+		destConfig.setDriver("oracle.jdbc.OracleDriver");
+		destConfig.setPassword("12345678");
+		destConfig.setUsername("destination");
+		destConfig.setUrl("jdbc:oracle:thin:@localhost:1521:XE");
+		
+		dbconfigService.save(sourceConfig);
+		dbconfigService.save(destConfig);
+	}
+	
+	@Test
+	public void testGetSAP()
+	{
+		PK pk = new PK();
+		pk.setPropertyCode("SAP1");
+		pk.setUserId("ABCDEFG");
+		SAPEntity entity = sapService.findOne(pk);
+		System.out.println(entity);
 	}
 	
 	@Test

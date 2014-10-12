@@ -24,13 +24,16 @@ $(function(){
 		
 		client.subscribe("/topic/tasknotification", function(message) {
 			var tasks = message.body;
-//			var task = JSON.parse(message.body);
 			$("#taskList").html(tasks);
 			$("#task").removeClass("dropdown");
 			$("#task").addClass("dropdown open");
 			if(null!=$("#sapTable"))
 			{
-				$('#sapTable').bootstrapTable("load",{ url:"/mweb/pageSapEntity"});
+//				$('#sapTable').bootstrapTable("load",{ url:"/mweb/pageSapEntity"});
+				 $table = $('#sapTable').bootstrapTable();
+				 $table.bootstrapTable('refresh', {
+                    url: $("sapTable").attr("data-url")
+                });
 			}
 		});
 	});

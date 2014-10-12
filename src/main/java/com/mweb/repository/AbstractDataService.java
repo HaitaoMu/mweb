@@ -37,7 +37,8 @@ import com.mweb.model.PageResult;
  */
 @Component
 @Transactional(propagation = Propagation.REQUIRED)
-public abstract class AbstractDataService<T extends Serializable, PK extends Serializable> extends HibernateDaoSupport
+public abstract class AbstractDataService<T extends Serializable, PK extends Serializable>
+		extends HibernateDaoSupport
 {
 
 	private Class<T> clazz;
@@ -58,7 +59,8 @@ public abstract class AbstractDataService<T extends Serializable, PK extends Ser
 		DetachedCriteria criteria = DetachedCriteria.forClass(clazz);
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		criteria.add(Restrictions.allEq(parameters));
-		List<T> results = (List<T>) getHibernateTemplate().findByCriteria(criteria);
+		List<T> results = (List<T>) getHibernateTemplate().findByCriteria(
+				criteria);
 		return results;
 
 	}
@@ -76,7 +78,8 @@ public abstract class AbstractDataService<T extends Serializable, PK extends Ser
 
 		Criteria criteria = getCurrentSession().createCriteria(clazz);
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-		Long totalSize = ((Long) criteria.setProjection(Projections.rowCount()).uniqueResult()).longValue();
+		Long totalSize = ((Long) criteria.setProjection(Projections.rowCount())
+				.uniqueResult()).longValue();
 		criteria.setProjection(null);
 		return totalSize;
 	}
@@ -93,8 +96,11 @@ public abstract class AbstractDataService<T extends Serializable, PK extends Ser
 			criteria.setFirstResult(firstResult);
 			criteria.setMaxResults(pageSize);
 		}
-		page.setRows(criteria.list());
-		page.setTotal(getTotalCount());
+		if (null != criteria.list() && criteria.list().size() > 0)
+		{
+			page.setRows(criteria.list());
+			page.setTotal(getTotalCount());
+		}
 		return page;
 	}
 

@@ -19,7 +19,6 @@
 			$.ajax({
 				url : event.currentTarget.value,
 				success : function() {
-					$('#sapTable').load();
 				}
 			});
 		});

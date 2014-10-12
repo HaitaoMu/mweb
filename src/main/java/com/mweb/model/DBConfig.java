@@ -22,7 +22,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
+import com.mweb.common.constats.DBType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 

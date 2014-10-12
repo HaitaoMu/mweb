@@ -22,19 +22,21 @@ public class ProgressRateResult implements Message {
 	/**
 	 * 
 	 */
-	private static final int MAX = 100;
-	private static final int MIN = 0;
+	private static final Long MAX = 100L;
+	private static final Long MIN = 0L;
 	public ProgressRateResult()
 	{
 		setMinValue(MIN);
 		setMaxValue(MAX);
+		setCurrentValue(MIN);
+		setTotalCount(MAX);
 	}
 	
-	private int minValue;
+	private Long minValue;
 
-	private int maxValue;
+	private Long maxValue;
 
-	private long currentValue;
+	private Long currentValue;
 	
 	private String title;
 
@@ -42,29 +44,29 @@ public class ProgressRateResult implements Message {
 
 	private String taskId;
 
-	private long totalCount;
+	private Long totalCount;
 
-	public int getMinValue() {
+	public Long getMinValue() {
 		return minValue;
 	}
 
-	public void setMinValue(int minValue) {
+	public void setMinValue(Long minValue) {
 		this.minValue = minValue;
 	}
 
-	public int getMaxValue() {
+	public Long getMaxValue() {
 		return maxValue;
 	}
 
-	public void setMaxValue(int maxValue) {
+	public void setMaxValue(Long maxValue) {
 		this.maxValue = maxValue;
 	}
 
-	public long getCurrentValue() {
+	public Long getCurrentValue() {
 		return currentValue;
 	}
 
-	public void setCurrentValue(long currentValue) {
+	public void setCurrentValue(Long currentValue) {
 		this.currentValue = currentValue;
 	}
 
@@ -84,12 +86,12 @@ public class ProgressRateResult implements Message {
 		this.taskId = taskId;
 	}
 
-	public long getTotalCount() 
+	public Long getTotalCount() 
 	{
 		return totalCount;
 	}
 
-	public void setTotalCount(long totalCount) 
+	public void setTotalCount(Long totalCount) 
 	{
 		this.totalCount = totalCount;
 	}
