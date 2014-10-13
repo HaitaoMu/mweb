@@ -24,6 +24,8 @@ import org.springframework.stereotype.Component;
 import com.mweb.common.util.FormatUtil;
 import com.mweb.model.ProgressRateResult;
 import com.mweb.service.WatchService;
+import com.mweb.service.event.NotificationProgressEvent;
+import com.mweb.service.publisher.NotificationProgressPublisher;
 
 /**
  * @author jet
@@ -35,7 +37,11 @@ public class StepListener implements StepExecutionListener
 	private static Log log = LogFactory.getLog(StepListener.class);
 
 	@Autowired
+<<<<<<< HEAD
 	WatchService watchService;
+=======
+	private NotificationProgressPublisher publisher;
+>>>>>>> 1e68479322f7c85e1e0ee031a0ce3b9276be1366
 	
 	public void beforeStep(StepExecution stepExecution)
 	{
@@ -69,6 +75,8 @@ public class StepListener implements StepExecutionListener
 				result.setCurrentValue(value);
 			}
 		}
+		
+		publisher.notifyProgress();
 		stepExecution.setStatus(BatchStatus.COMPLETED);
 		return stepExecution.getExitStatus();
 

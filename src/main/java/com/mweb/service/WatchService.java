@@ -53,27 +53,7 @@ public class WatchService
 		return taskList;
 	}
 	
-	public synchronized JobParameters getCurrentParameter()
-	{
-		JobParameter parameter = new JobParameter(getCurrentTask());
-		Map params = new HashMap<String,String>();
-		params.put(CURRENT_TASK_NO, parameter);
-		JobParameters parameters = new JobParameters(params);
-		return parameters;
-	}
-	
-	@MessageMapping("/tasknotification")
-	public synchronized void sendMessage()
-	{
-		String message = getProgressMessage();
-		if (null != message && message.length() > 0)
-		{
-			template.convertAndSend("/topic/tasknotification", message);
-		}
-		cleanProgressMessage();
-	}
-	
-	private synchronized void cleanProgressMessage()
+	private  synchronized void cleanProgressMessage()
 	{
 		List<ProgressRateResult> results = getTaskList();
 		for (ProgressRateResult progressRateResult : results)
@@ -85,7 +65,7 @@ public class WatchService
 		}
 	}
 
-	public synchronized String getProgressMessage()
+	public  synchronized String getProgressMessage()
 	{
 		StringBuilder builder = new StringBuilder();
 		List<ProgressRateResult> results = getTaskList();
@@ -100,7 +80,7 @@ public class WatchService
 		return builder.toString();
 	}
 
-	private  synchronized String getDetails()
+	private static synchronized String getDetails()
 	{
 		StringBuilder builder = new StringBuilder();
 		builder.append("<li>");
@@ -112,7 +92,7 @@ public class WatchService
 		return builder.toString();
 	}
 
-	private  synchronized String getProgressItem(ProgressRateResult result)
+	private static synchronized String getProgressItem(ProgressRateResult result)
 	{
 		String message = String.format("%d%% Complete",
 				result.getCurrentValue());
@@ -140,7 +120,17 @@ public class WatchService
 		builder.append(" <li class='divider'></li>");
 		return builder.toString();
 	}
-
+	
+	
+	public synchronized static JobParameters getCurrentParameter()
+	{
+		JobParameter parameter = new JobParameter(getCurrentTask());
+		Map params = new HashMap<String,String>();
+		params.put(CURRENT_TASK_NO, parameter);
+		JobParameters parameters = new JobParameters(params);
+		return parameters;
+	}
+	
 	public static long getCurrentTask()
 	{
 		return atomicLong.getAndIncrement();
