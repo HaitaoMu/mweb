@@ -18,6 +18,7 @@ import org.springframework.batch.core.BatchStatus;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.StepExecutionListener;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mweb.common.util.FormatUtil;
@@ -33,6 +34,9 @@ public class StepListener implements StepExecutionListener
 {
 	private static Log log = LogFactory.getLog(StepListener.class);
 
+	@Autowired
+	WatchService watchService;
+	
 	public void beforeStep(StepExecution stepExecution)
 	{
 		log.info("[Before Step]"+ stepExecution.toString());
@@ -44,7 +48,7 @@ public class StepListener implements StepExecutionListener
 		log.info("[After Step]"+ stepExecution.toString());
 	
 		String taskId = stepExecution.getJobExecution().getId().toString();
-		ProgressRateResult result = WatchService.getProgressResult(taskId);
+		ProgressRateResult result = watchService.getProgressResult(taskId);
 		if (LOAD_DATA_STEP.endsWith(stepExecution.getStepName()))
 		{
 			result.setTotalCount(result.getTotalCount() * stepExecution.getReadCount());

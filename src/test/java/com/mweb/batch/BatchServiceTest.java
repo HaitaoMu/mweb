@@ -23,6 +23,9 @@ public class BatchServiceTest
 
 	@Autowired
 	SAPJob sapJob;
+	
+	@Autowired
+	WatchService watchService;
 
 	@Autowired
 	SimpleJobLauncher jobLauncher;
@@ -34,7 +37,7 @@ public class BatchServiceTest
 		try
 		{
 			JobExecution execution = jobLauncher.run(sapJob.dataTransferJob(),
-					WatchService.getCurrentParameter());
+					watchService.getCurrentParameter());
 
 			System.out.println("[execution]"
 					+ execution.getStepExecutions().size());

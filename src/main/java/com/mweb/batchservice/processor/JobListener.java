@@ -20,6 +20,7 @@ import org.springframework.batch.core.JobExecutionListener;
 import org.springframework.batch.core.annotation.AfterJob;
 import org.springframework.batch.core.annotation.BeforeJob;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
 import com.mweb.controller.messages.TaskMessageService;
@@ -38,6 +39,9 @@ public class JobListener implements JobExecutionListener
 	private static final Long TRANSFER_DATA_JOB_STEPS = 2L;
 
 	private static final Long AUTO_TRANSFER_DATA_JOB_STEPS = 3L;
+	
+	@Autowired
+	WatchService watchService;
 
 	@BeforeJob
 	public void beforeJob(JobExecution jobExecution)
@@ -53,15 +57,18 @@ public class JobListener implements JobExecutionListener
 		{
 			result.setTotalCount(AUTO_TRANSFER_DATA_JOB_STEPS);
 		}
-		WatchService.putTask(result);
+		watchService.putTask(result);
+		watchService.sendMessage();
+		
 	}
 
 	@AfterJob
 	public void afterJob(JobExecution jobExecution)
 	{
 		String taskId = String.valueOf(jobExecution.getJobId());
-		ProgressRateResult result = WatchService.getProgressResult(taskId);
+		ProgressRateResult result = watchService.getProgressResult(taskId);
 		result.setCurrentValue(result.getMaxValue());
 		log.info(result);
+		watchService.sendMessage();
 	}
 }
