@@ -18,11 +18,14 @@ import org.springframework.batch.core.BatchStatus;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.StepExecutionListener;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mweb.common.util.FormatUtil;
 import com.mweb.model.ProgressRateResult;
 import com.mweb.service.WatchService;
+import com.mweb.service.event.NotificationProgressEvent;
+import com.mweb.service.publisher.NotificationProgressPublisher;
 
 /**
  * @author jet
@@ -33,6 +36,9 @@ public class StepListener implements StepExecutionListener
 {
 	private static Log log = LogFactory.getLog(StepListener.class);
 
+	@Autowired
+	private NotificationProgressPublisher publisher;
+	
 	public void beforeStep(StepExecution stepExecution)
 	{
 		log.info("[Before Step]"+ stepExecution.toString());
@@ -65,6 +71,8 @@ public class StepListener implements StepExecutionListener
 				result.setCurrentValue(value);
 			}
 		}
+		
+		publisher.notifyProgress();
 		stepExecution.setStatus(BatchStatus.COMPLETED);
 		return stepExecution.getExitStatus();
 

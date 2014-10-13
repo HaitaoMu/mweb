@@ -36,6 +36,10 @@ $(function(){
 			}
 		});
 	});
+	
+//	client.disconnect(function() {
+//	    console.log("See you next time!");
+//	});
 });
 
 

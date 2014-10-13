@@ -19,17 +19,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
 import com.mweb.model.ProgressRateResult;
 import com.mweb.service.WatchService;
+
 import static com.mweb.common.constats.Constants.*;
 
 /**
  * @author jet
  *
  */
-@Controller
+@Component
 public class TaskMessageService
 {
 	@Autowired
@@ -39,16 +41,17 @@ public class TaskMessageService
 
 	private static Log log = LogFactory.getLog(TaskMessageService.class);
 
-	@MessageMapping("/tasknotification")
-	@Scheduled(fixedDelay=500)
+//	@MessageMapping("/tasknotification")
+	@Scheduled(fixedDelay=1000)
 	public synchronized void sendMessage()
 	{
-		String message = getProgressMessage();
-		if (null != message && message.length() > 0)
-		{
-			template.convertAndSend("/topic/tasknotification", message);
-		}
-		//cleanProgressMessage();
+		template.convertAndSend("/topic/tasknotification", "Hello");
+//		String message = getProgressMessage();
+//		if (null != message && message.length() > 0)
+//		{
+//			template.convertAndSend("/topic/tasknotification", message);
+//		}
+//		cleanProgressMessage();
 	}
 	
 	private synchronized void cleanProgressMessage()

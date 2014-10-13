@@ -1,6 +1,7 @@
 package com.mweb.service;
 
 import static com.mweb.common.constats.Constants.CURRENT_TASK_NO;
+import static com.mweb.common.constats.Constants.MAX_PROCESS_VALUE;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,6 +46,75 @@ public class WatchService
 		return taskList;
 	}
 	
+	private static synchronized void cleanProgressMessage()
+	{
+		List<ProgressRateResult> results = WatchService.getTaskList();
+		for (ProgressRateResult progressRateResult : results)
+		{
+			if(MAX_PROCESS_VALUE == progressRateResult.getCurrentValue())
+			{
+				removeTask(progressRateResult.getTaskId());
+			}
+		}
+	}
+
+	public static synchronized String getProgressMessage()
+	{
+		StringBuilder builder = new StringBuilder();
+		List<ProgressRateResult> results = getTaskList();
+		for (ProgressRateResult progressRateResult : results)
+		{
+			builder.append(getProgressItem(progressRateResult));
+		}
+		if (null != results && results.size() > 0)
+		{
+			builder.append(getDetails());
+		}
+		return builder.toString();
+	}
+
+	private static synchronized String getDetails()
+	{
+		StringBuilder builder = new StringBuilder();
+		builder.append("<li>");
+		builder.append("<a class='text-center' href='#'>");
+		builder.append(" <strong>See All Tasks</strong>");
+		builder.append("  <i class='fa fa-angle-right'></i>");
+		builder.append("</a>");
+		builder.append("</li>");
+		return builder.toString();
+	}
+
+	private static synchronized String getProgressItem(ProgressRateResult result)
+	{
+		String message = String.format("%d%% Complete",
+				result.getCurrentValue());
+		StringBuilder builder = new StringBuilder();
+		builder.append("<li>");
+		builder.append(" <a href='#'>");
+		builder.append(" <div> ");
+		builder.append(" <p> ");
+		builder.append(" <strong>" + result.getTitle() + "-"
+				+ result.getTaskId() + "</strong>");
+		builder.append(" <span class='pull-right text-muted'>" + message
+				+ "</span>");
+		builder.append(" <div class='progress progress-striped active'>");
+		builder.append(" <div class='progress-bar progress-bar-success' role='progressbar' aria-valuenow='"
+				+ result.getCurrentValue()
+				+ "' aria-valuemin='0' aria-valuemax='"
+				+ result.getMaxValue()
+				+ "' style='width:" + result.getCurrentValue() + "%'>");
+		builder.append(" <span class='sr-only'>" + message + "</span>");
+		builder.append(" </div>");
+		builder.append(" </div>");
+		builder.append(" </div>");
+		builder.append(" </a>");
+		builder.append(" </li>");
+		builder.append(" <li class='divider'></li>");
+		return builder.toString();
+	}
+	
+	
 	public synchronized static JobParameters getCurrentParameter()
 	{
 		JobParameter parameter = new JobParameter(getCurrentTask());
@@ -53,6 +123,7 @@ public class WatchService
 		JobParameters parameters = new JobParameters(params);
 		return parameters;
 	}
+	
 	
 	public static long getCurrentTask()
 	{
