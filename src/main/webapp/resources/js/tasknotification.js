@@ -29,6 +29,7 @@ $(function(){
 			$("#task").addClass("dropdown open");
 			if(null!=$("#sapTable"))
 			{
+//				$('#sapTable').bootstrapTable("load",{ url:"/mweb/pageSapEntity"});
 				 $table = $('#sapTable').bootstrapTable();
 				 $table.bootstrapTable('refresh', {
                     url: $("sapTable").attr("data-url")
