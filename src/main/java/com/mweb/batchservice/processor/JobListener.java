@@ -20,19 +20,10 @@ import org.springframework.batch.core.JobExecutionListener;
 import org.springframework.batch.core.annotation.AfterJob;
 import org.springframework.batch.core.annotation.BeforeJob;
 import org.springframework.beans.factory.annotation.Autowired;
-<<<<<<< HEAD
-import org.springframework.messaging.simp.SimpMessagingTemplate;
-=======
-import org.springframework.context.ApplicationListener;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.messaging.simp.broker.BrokerAvailabilityEvent;
->>>>>>> 1e68479322f7c85e1e0ee031a0ce3b9276be1366
 import org.springframework.stereotype.Component;
 
-import com.mweb.controller.messages.TaskMessageService;
 import com.mweb.model.ProgressRateResult;
 import com.mweb.service.WatchService;
-import com.mweb.service.event.NotificationProgressEvent;
 import com.mweb.service.publisher.NotificationProgressPublisher;
 
 /**
@@ -48,14 +39,8 @@ public class JobListener implements JobExecutionListener
 
 	private static final Long AUTO_TRANSFER_DATA_JOB_STEPS = 3L;
 	
-	@Autowired
-<<<<<<< HEAD
-	WatchService watchService;
-
-=======
 	NotificationProgressPublisher publisher;
 	
->>>>>>> 1e68479322f7c85e1e0ee031a0ce3b9276be1366
 	@BeforeJob
 	public void beforeJob(JobExecution jobExecution)
 	{
@@ -70,30 +55,18 @@ public class JobListener implements JobExecutionListener
 		{
 			result.setTotalCount(AUTO_TRANSFER_DATA_JOB_STEPS);
 		}
-<<<<<<< HEAD
-		watchService.putTask(result);
-		watchService.sendMessage();
-		
-=======
 		WatchService.putTask(result);
-		
 		publisher.notifyProgress();
->>>>>>> 1e68479322f7c85e1e0ee031a0ce3b9276be1366
 	}
 
 	@AfterJob
 	public void afterJob(JobExecution jobExecution)
 	{
 		String taskId = String.valueOf(jobExecution.getJobId());
-		ProgressRateResult result = watchService.getProgressResult(taskId);
+		ProgressRateResult result = WatchService.getProgressResult(taskId);
 		result.setCurrentValue(result.getMaxValue());
 		log.info(result);
-<<<<<<< HEAD
-		watchService.sendMessage();
-=======
-		
 		publisher.notifyProgress();
->>>>>>> 1e68479322f7c85e1e0ee031a0ce3b9276be1366
 	}
 
 }

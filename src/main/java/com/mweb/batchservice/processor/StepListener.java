@@ -36,12 +36,7 @@ public class StepListener implements StepExecutionListener
 {
 	private static Log log = LogFactory.getLog(StepListener.class);
 
-	@Autowired
-<<<<<<< HEAD
-	WatchService watchService;
-=======
 	private NotificationProgressPublisher publisher;
->>>>>>> 1e68479322f7c85e1e0ee031a0ce3b9276be1366
 	
 	public void beforeStep(StepExecution stepExecution)
 	{
@@ -54,7 +49,7 @@ public class StepListener implements StepExecutionListener
 		log.info("[After Step]"+ stepExecution.toString());
 	
 		String taskId = stepExecution.getJobExecution().getId().toString();
-		ProgressRateResult result = watchService.getProgressResult(taskId);
+		ProgressRateResult result = WatchService.getProgressResult(taskId);
 		if (LOAD_DATA_STEP.endsWith(stepExecution.getStepName()))
 		{
 			result.setTotalCount(result.getTotalCount() * stepExecution.getReadCount());

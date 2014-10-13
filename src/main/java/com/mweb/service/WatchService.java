@@ -13,10 +13,8 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.batch.core.JobParameter;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 
 import com.mweb.model.ProgressRateResult;
 
@@ -29,21 +27,21 @@ public class WatchService
 	@Autowired
 	private  SimpMessagingTemplate template;
 	
-	public  void putTask(ProgressRateResult result)
+	public static void putTask(ProgressRateResult result)
 	{
 		taskMap.put(result.getTaskId(),result);
 	}
 	
-	public  ProgressRateResult getProgressResult(String taskId)
+	public static ProgressRateResult getProgressResult(String taskId)
 	{
 		return taskMap.get(taskId);
 	}
 	
-	public void removeTask(String taskId){
+	public static void removeTask(String taskId){
 		 taskMap.remove(taskId);
 	}
 	
-	public synchronized  List<ProgressRateResult> getTaskList()
+	public static synchronized  List<ProgressRateResult> getTaskList()
 	{
 		List<ProgressRateResult> taskList = new ArrayList<ProgressRateResult>();
 		for(Map.Entry<String,ProgressRateResult> e: taskMap.entrySet() )
@@ -65,7 +63,7 @@ public class WatchService
 		}
 	}
 
-	public  synchronized String getProgressMessage()
+	public static synchronized String getProgressMessage()
 	{
 		StringBuilder builder = new StringBuilder();
 		List<ProgressRateResult> results = getTaskList();

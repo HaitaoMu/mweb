@@ -1,5 +1,6 @@
 package com.mweb.service.publisher;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.stereotype.Component;
@@ -14,6 +15,7 @@ public class NotificationProgressPublisher implements ApplicationEventPublisherA
 	private ApplicationEventPublisher publisher;
 	
 	private NotificationProgressEvent event;
+	
 	
 	@Override
 	public void setApplicationEventPublisher(
