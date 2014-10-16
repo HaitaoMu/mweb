@@ -42,84 +42,17 @@ public class TaskMessageService
 	private static Log log = LogFactory.getLog(TaskMessageService.class);
 
 //	@MessageMapping("/tasknotification")
-//	@Scheduled(fixedDelay=1000)
+//	@Scheduled(fixedDelay=500)
 	public synchronized void sendMessage()
 	{
+		log.info("Get Task Notification Request");
 		template.convertAndSend("/topic/tasknotification", "Hello");
 //		String message = getProgressMessage();
 //		if (null != message && message.length() > 0)
 //		{
 //			template.convertAndSend("/topic/tasknotification", message);
 //		}
-//		cleanProgressMessage();
 	}
 	
-	private synchronized void cleanProgressMessage()
-	{
-		List<ProgressRateResult> results = WatchService.getTaskList();
-		for (ProgressRateResult progressRateResult : results)
-		{
-			if(MAX_PROCESS_VALUE == progressRateResult.getCurrentValue())
-			{
-				WatchService.removeTask(progressRateResult.getTaskId());
-			}
-		}
-	}
-
-	private  synchronized String getProgressMessage()
-	{
-		StringBuilder builder = new StringBuilder();
-		List<ProgressRateResult> results = WatchService.getTaskList();
-		for (ProgressRateResult progressRateResult : results)
-		{
-			builder.append(getProgressItem(progressRateResult));
-		}
-		if (null != results && results.size() > 0)
-		{
-			builder.append(getDetails());
-		}
-		return builder.toString();
-	}
-
-	private  synchronized String getDetails()
-	{
-		StringBuilder builder = new StringBuilder();
-		builder.append("<li>");
-		builder.append("<a class='text-center' href='#'>");
-		builder.append(" <strong>See All Tasks</strong>");
-		builder.append("  <i class='fa fa-angle-right'></i>");
-		builder.append("</a>");
-		builder.append("</li>");
-		return builder.toString();
-	}
-
-	private  synchronized String getProgressItem(ProgressRateResult result)
-	{
-		String message = String.format("%d%% Complete",
-				result.getCurrentValue());
-		StringBuilder builder = new StringBuilder();
-		builder.append("<li>");
-		builder.append(" <a href='#'>");
-		builder.append(" <div> ");
-		builder.append(" <p> ");
-		builder.append(" <strong>" + result.getTitle() + "-"
-				+ result.getTaskId() + "</strong>");
-		builder.append(" <span class='pull-right text-muted'>" + message
-				+ "</span>");
-		builder.append(" <div class='progress progress-striped active'>");
-		builder.append(" <div class='progress-bar progress-bar-success' role='progressbar' aria-valuenow='"
-				+ result.getCurrentValue()
-				+ "' aria-valuemin='0' aria-valuemax='"
-				+ result.getMaxValue()
-				+ "' style='width:" + result.getCurrentValue() + "%'>");
-		builder.append(" <span class='sr-only'>" + message + "</span>");
-		builder.append(" </div>");
-		builder.append(" </div>");
-		builder.append(" </div>");
-		builder.append(" </a>");
-		builder.append(" </li>");
-		builder.append(" <li class='divider'></li>");
-		return builder.toString();
-	}
-
+	
 }

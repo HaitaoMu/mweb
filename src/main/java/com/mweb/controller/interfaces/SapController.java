@@ -41,6 +41,9 @@ public class SapController
 	SAPJob job;
 	
 	@Autowired
+	WatchService watchService;
+	
+	@Autowired
 	SAPService sapService;
 
 	@Autowired
@@ -69,7 +72,7 @@ public class SapController
 	{
 		try
 		{
-			jobLauncher.run(job.dataTransferJob(), WatchService.getCurrentParameter());
+			jobLauncher.run(job.dataTransferJob(), watchService.getCurrentParameter());
 		}
 		catch (JobExecutionAlreadyRunningException e)
 		{

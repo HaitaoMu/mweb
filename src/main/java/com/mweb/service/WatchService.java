@@ -12,15 +12,20 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.batch.core.JobParameter;
 import org.springframework.batch.core.JobParameters;
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.stereotype.Controller;
 
 import com.mweb.model.ProgressRateResult;
 
-@Service
+@Controller
 public class WatchService 
 {
 	private static ConcurrentHashMap<String,ProgressRateResult> taskMap = new ConcurrentHashMap<String,ProgressRateResult>();
 	private static final AtomicLong atomicLong = new AtomicLong();
+	
+	@Autowired
+	private  SimpMessagingTemplate template;
 	
 	public static void putTask(ProgressRateResult result)
 	{
@@ -36,7 +41,7 @@ public class WatchService
 		 taskMap.remove(taskId);
 	}
 	
-	public synchronized static List<ProgressRateResult> getTaskList()
+	public static synchronized  List<ProgressRateResult> getTaskList()
 	{
 		List<ProgressRateResult> taskList = new ArrayList<ProgressRateResult>();
 		for(Map.Entry<String,ProgressRateResult> e: taskMap.entrySet() )
@@ -46,9 +51,9 @@ public class WatchService
 		return taskList;
 	}
 	
-	private static synchronized void cleanProgressMessage()
+	private  synchronized void cleanProgressMessage()
 	{
-		List<ProgressRateResult> results = WatchService.getTaskList();
+		List<ProgressRateResult> results = getTaskList();
 		for (ProgressRateResult progressRateResult : results)
 		{
 			if(MAX_PROCESS_VALUE == progressRateResult.getCurrentValue())
@@ -123,7 +128,6 @@ public class WatchService
 		JobParameters parameters = new JobParameters(params);
 		return parameters;
 	}
-	
 	
 	public static long getCurrentTask()
 	{

@@ -20,15 +20,10 @@ import org.springframework.batch.core.JobExecutionListener;
 import org.springframework.batch.core.annotation.AfterJob;
 import org.springframework.batch.core.annotation.BeforeJob;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationListener;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.messaging.simp.broker.BrokerAvailabilityEvent;
 import org.springframework.stereotype.Component;
 
-import com.mweb.controller.messages.TaskMessageService;
 import com.mweb.model.ProgressRateResult;
 import com.mweb.service.WatchService;
-import com.mweb.service.event.NotificationProgressEvent;
 import com.mweb.service.publisher.NotificationProgressPublisher;
 
 /**
@@ -44,7 +39,6 @@ public class JobListener implements JobExecutionListener
 
 	private static final Long AUTO_TRANSFER_DATA_JOB_STEPS = 3L;
 	
-	@Autowired
 	NotificationProgressPublisher publisher;
 	
 	@BeforeJob
@@ -62,8 +56,7 @@ public class JobListener implements JobExecutionListener
 			result.setTotalCount(AUTO_TRANSFER_DATA_JOB_STEPS);
 		}
 		WatchService.putTask(result);
-		
-		publisher.notifyProgress();
+//		publisher.notifyProgress();
 	}
 
 	@AfterJob
@@ -73,8 +66,7 @@ public class JobListener implements JobExecutionListener
 		ProgressRateResult result = WatchService.getProgressResult(taskId);
 		result.setCurrentValue(result.getMaxValue());
 		log.info(result);
-		
-		publisher.notifyProgress();
+//		publisher.notifyProgress();
 	}
 
 }
