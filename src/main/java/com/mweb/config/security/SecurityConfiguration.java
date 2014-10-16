@@ -63,6 +63,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 			.defaultSuccessUrl("/home")
 			.and()
 			.logout().permitAll();
+//		http.sessionManagement().
 //		@formatter:on
 
 	}

@@ -42,7 +42,7 @@ public class TaskMessageService
 	private static Log log = LogFactory.getLog(TaskMessageService.class);
 
 //	@MessageMapping("/tasknotification")
-	@Scheduled(fixedDelay=1000)
+//	@Scheduled(fixedDelay=1000)
 	public synchronized void sendMessage()
 	{
 		template.convertAndSend("/topic/tasknotification", "Hello");
