@@ -40,8 +40,8 @@ public class RequestProcessingTimeInterceptor extends HandlerInterceptorAdapter 
 			HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
 		long startTime = (Long) request.getAttribute("startTime");
-		logger.info("Request URL::" + request.getRequestURL().toString()
-				+ ":: End Time=" + System.currentTimeMillis());
+//		logger.info("Request URL::" + request.getRequestURL().toString()
+//				+ ":: End Time=" + System.currentTimeMillis());
 		logger.info("Request URL::" + request.getRequestURL().toString()
 				+ ":: Time Taken=" + (System.currentTimeMillis() - startTime));
 	}

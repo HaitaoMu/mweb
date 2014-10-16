@@ -44,6 +44,7 @@ $(function() {
 	var socket = new SockJS('/mweb/random');
 	var client = Stomp.over(socket);
 
+//	client.connect("guest","guest", function(frame) {
 	client.connect({}, function(frame) {
 
 		client.subscribe("/topic/data", function(message) {

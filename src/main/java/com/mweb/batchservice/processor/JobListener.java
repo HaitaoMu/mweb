@@ -39,6 +39,7 @@ public class JobListener implements JobExecutionListener
 
 	private static final Long AUTO_TRANSFER_DATA_JOB_STEPS = 3L;
 	
+	@Autowired
 	NotificationProgressPublisher publisher;
 	
 	@BeforeJob

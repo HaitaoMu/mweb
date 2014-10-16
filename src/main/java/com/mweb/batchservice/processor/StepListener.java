@@ -36,6 +36,7 @@ public class StepListener implements StepExecutionListener
 {
 	private static Log log = LogFactory.getLog(StepListener.class);
 
+	@Autowired
 	private NotificationProgressPublisher publisher;
 	
 	public void beforeStep(StepExecution stepExecution)

@@ -10,7 +10,6 @@
  ***********************************************************************/
 package com.mweb.controller.messages;
 
-import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.logging.Log;
@@ -20,12 +19,6 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
-
-import com.mweb.model.ProgressRateResult;
-import com.mweb.service.WatchService;
-
-import static com.mweb.common.constats.Constants.*;
 
 /**
  * @author jet
@@ -42,11 +35,11 @@ public class TaskMessageService
 	private static Log log = LogFactory.getLog(TaskMessageService.class);
 
 //	@MessageMapping("/tasknotification")
-//	@Scheduled(fixedDelay=500)
+//	@Scheduled(fixedDelay=1000)
 	public synchronized void sendMessage()
 	{
-		log.info("Get Task Notification Request");
-		template.convertAndSend("/topic/tasknotification", "Hello");
+//		log.info("Get Task Notification Request");
+//		template.convertAndSend("/topic/tasknotification", "Hello");
 //		String message = getProgressMessage();
 //		if (null != message && message.length() > 0)
 //		{
