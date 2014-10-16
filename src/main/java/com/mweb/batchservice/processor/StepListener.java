@@ -72,7 +72,7 @@ public class StepListener implements StepExecutionListener
 			}
 		}
 		
-		publisher.notifyProgress();
+//		publisher.notifyProgress();
 		stepExecution.setStatus(BatchStatus.COMPLETED);
 		return stepExecution.getExitStatus();
 

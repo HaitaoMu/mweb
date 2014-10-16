@@ -57,7 +57,7 @@ public class JobListener implements JobExecutionListener
 			result.setTotalCount(AUTO_TRANSFER_DATA_JOB_STEPS);
 		}
 		WatchService.putTask(result);
-		publisher.notifyProgress();
+//		publisher.notifyProgress();
 	}
 
 	@AfterJob
@@ -67,7 +67,7 @@ public class JobListener implements JobExecutionListener
 		ProgressRateResult result = WatchService.getProgressResult(taskId);
 		result.setCurrentValue(result.getMaxValue());
 		log.info(result);
-		publisher.notifyProgress();
+//		publisher.notifyProgress();
 	}
 
 }

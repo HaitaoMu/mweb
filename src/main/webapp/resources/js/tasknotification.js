@@ -31,10 +31,10 @@ $(function(){
 			if(null!=$("#sapTable"))
 			{
 //				$('#sapTable').bootstrapTable("load",{ url:"/mweb/pageSapEntity"});
-				 $table = $('#sapTable').bootstrapTable();
-				 $table.bootstrapTable('refresh', {
-                    url: $("sapTable").attr("data-url")
-                });
+//				 $table = $('#sapTable').bootstrapTable();
+//				 $table.bootstrapTable('refresh', {
+//                    url: $("sapTable").attr("data-url")
+//                });
 			}
 		});
 	});
