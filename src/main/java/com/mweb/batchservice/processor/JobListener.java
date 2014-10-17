@@ -20,6 +20,7 @@ import org.springframework.batch.core.JobExecutionListener;
 import org.springframework.batch.core.annotation.AfterJob;
 import org.springframework.batch.core.annotation.BeforeJob;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.mweb.model.ProgressRateResult;
@@ -39,7 +40,9 @@ public class JobListener implements JobExecutionListener
 
 	private static final Long AUTO_TRANSFER_DATA_JOB_STEPS = 3L;
 	
+	@Autowired
 	NotificationProgressPublisher publisher;
+	
 	
 	@BeforeJob
 	public void beforeJob(JobExecution jobExecution)
@@ -56,7 +59,7 @@ public class JobListener implements JobExecutionListener
 			result.setTotalCount(AUTO_TRANSFER_DATA_JOB_STEPS);
 		}
 		WatchService.putTask(result);
-//		publisher.notifyProgress();
+		publisher.notifyProgress();
 	}
 
 	@AfterJob
@@ -66,7 +69,7 @@ public class JobListener implements JobExecutionListener
 		ProgressRateResult result = WatchService.getProgressResult(taskId);
 		result.setCurrentValue(result.getMaxValue());
 		log.info(result);
-//		publisher.notifyProgress();
+		publisher.notifyProgress();
 	}
 
 }

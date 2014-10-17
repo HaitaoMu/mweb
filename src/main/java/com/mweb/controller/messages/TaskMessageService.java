@@ -42,7 +42,7 @@ public class TaskMessageService
 	private static Log log = LogFactory.getLog(TaskMessageService.class);
 
 //	@MessageMapping("/tasknotification")
-//	@Scheduled(fixedDelay=500)
+//	@Scheduled(fixedDelay=1000)
 	public synchronized void sendMessage()
 	{
 		log.info("Get Task Notification Request");

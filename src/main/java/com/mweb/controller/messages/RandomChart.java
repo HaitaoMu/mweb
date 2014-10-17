@@ -37,7 +37,7 @@ public class RandomChart
 	}
 
 	@MessageMapping("/random")
-	@Scheduled(fixedDelay = 30000)
+//	@Scheduled(fixedDelay = 30000)
 	public void sendMessage()
 	{
 		template.convertAndSend("/topic/data", new Random().nextInt(100));
