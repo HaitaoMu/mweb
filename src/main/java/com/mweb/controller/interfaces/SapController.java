@@ -11,21 +11,34 @@
 package com.mweb.controller.interfaces;
 
 import static com.mweb.common.constats.Constants.SUCCESS;
+import static com.mweb.common.constats.Constants.PLUGIN_LOCK_TYPE;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersInvalidException;
 import org.springframework.batch.core.launch.support.SimpleJobLauncher;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
 import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mweb.batchservice.plugins.SAPJob;
+import com.mweb.common.constats.LockStatus;
+import com.mweb.common.constats.MessageInfo;
+import com.mweb.common.constats.PluginType;
+import com.mweb.controller.AbstractController;
+import com.mweb.model.BatchLock;
 import com.mweb.model.PageResult;
+import com.mweb.repository.BatchLockService;
 import com.mweb.repository.plugin.SAPService;
+import com.mweb.service.LockService;
 import com.mweb.service.WatchService;
 
 /**
@@ -34,20 +47,22 @@ import com.mweb.service.WatchService;
  */
 
 @Controller
-public class SapController
+public class SapController extends AbstractController
 {
 	
 	@Autowired
 	SAPJob job;
 	
 	@Autowired
-	WatchService watchService;
-	
-	@Autowired
 	SAPService sapService;
 
 	@Autowired
+	LockService lockService;
+	
+	@Autowired
 	SimpleJobLauncher jobLauncher;
+	
+	private static final String  LOCKTYPE = "LOCK";
 
 	@RequestMapping("/sapIndex")
 	public String Sap()
@@ -72,7 +87,16 @@ public class SapController
 	{
 		try
 		{
-			jobLauncher.run(job.dataTransferJob(), watchService.getCurrentParameter());
+			if(lockService.checkRunningJob(PluginType.SAP.toString()))
+			{
+			  Map params = new HashMap<String,String>();
+			  params.put(PLUGIN_LOCK_TYPE, PluginType.SAP.toString());
+			  jobLauncher.run(job.dataTransferJob(),WatchService.getCurrentParameter(params));
+			}
+			else
+			{
+				return getMessage(MessageInfo.ALREADY_RUNNING);
+			}
 		}
 		catch (JobExecutionAlreadyRunningException e)
 		{
@@ -96,4 +120,6 @@ public class SapController
 		}
 		return SUCCESS;
 	}
+	
+	
 }

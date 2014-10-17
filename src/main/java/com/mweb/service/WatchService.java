@@ -2,6 +2,7 @@ package com.mweb.service;
 
 import static com.mweb.common.constats.Constants.CURRENT_TASK_NO;
 import static com.mweb.common.constats.Constants.MAX_PROCESS_VALUE;
+import static com.mweb.common.constats.Constants.PLUGIN_LOCK_TYPE;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,44 +20,45 @@ import org.springframework.stereotype.Controller;
 import com.mweb.model.ProgressRateResult;
 
 @Controller
-public class WatchService 
+public class WatchService
 {
-	private static ConcurrentHashMap<String,ProgressRateResult> taskMap = new ConcurrentHashMap<String,ProgressRateResult>();
+	private static ConcurrentHashMap<String, ProgressRateResult> taskMap = new ConcurrentHashMap<String, ProgressRateResult>();
 	private static final AtomicLong atomicLong = new AtomicLong();
-	
+
 	@Autowired
-	private  SimpMessagingTemplate template;
-	
+	private SimpMessagingTemplate template;
+
 	public static void putTask(ProgressRateResult result)
 	{
-		taskMap.put(result.getTaskId(),result);
+		taskMap.put(result.getTaskId(), result);
 	}
-	
+
 	public static ProgressRateResult getProgressResult(String taskId)
 	{
 		return taskMap.get(taskId);
 	}
-	
-	public static void removeTask(String taskId){
-		 taskMap.remove(taskId);
+
+	public static void removeTask(String taskId)
+	{
+		taskMap.remove(taskId);
 	}
-	
-	public static synchronized  List<ProgressRateResult> getTaskList()
+
+	public static synchronized List<ProgressRateResult> getTaskList()
 	{
 		List<ProgressRateResult> taskList = new ArrayList<ProgressRateResult>();
-		for(Map.Entry<String,ProgressRateResult> e: taskMap.entrySet() )
+		for (Map.Entry<String, ProgressRateResult> e : taskMap.entrySet())
 		{
 			taskList.add(e.getValue());
 		}
 		return taskList;
 	}
-	
-	private  synchronized void cleanProgressMessage()
+
+	private synchronized void cleanProgressMessage()
 	{
 		List<ProgressRateResult> results = getTaskList();
 		for (ProgressRateResult progressRateResult : results)
 		{
-			if(MAX_PROCESS_VALUE == progressRateResult.getCurrentValue())
+			if (MAX_PROCESS_VALUE == progressRateResult.getCurrentValue())
 			{
 				removeTask(progressRateResult.getTaskId());
 			}
@@ -118,17 +120,23 @@ public class WatchService
 		builder.append(" <li class='divider'></li>");
 		return builder.toString();
 	}
-	
-	
-	public synchronized static JobParameters getCurrentParameter()
+
+	public synchronized static JobParameters getCurrentParameter(Map typeParam)
 	{
 		JobParameter parameter = new JobParameter(getCurrentTask());
-		Map params = new HashMap<String,String>();
+
+		Map params = new HashMap<String, String>();
 		params.put(CURRENT_TASK_NO, parameter);
+		if (null != typeParam && null != typeParam.get(PLUGIN_LOCK_TYPE))
+		{
+			JobParameter type = new JobParameter(typeParam
+					.get(PLUGIN_LOCK_TYPE).toString());
+			params.put(PLUGIN_LOCK_TYPE, type);
+		}
 		JobParameters parameters = new JobParameters(params);
 		return parameters;
 	}
-	
+
 	public static long getCurrentTask()
 	{
 		return atomicLong.getAndIncrement();

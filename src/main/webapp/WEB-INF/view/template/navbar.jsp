@@ -20,9 +20,11 @@
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
             <i class="fa fa-tasks fa-fw"></i>  <i class="fa fa-caret-down"></i>
         </a>
-         <ul id="taskList" class="dropdown-menu dropdown-tasks">
+        <div data-spy="scroll" data-target="#taskList">
+			<ul id="taskList" class="dropdown-menu dropdown-tasks">
             
-        </ul>
+        	</ul>
+        </div>
         <!-- /.dropdown-tasks -->
     </li>
     <!-- /.dropdown -->

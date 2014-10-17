@@ -1,5 +1,10 @@
 package com.mweb.batch;
 
+import static com.mweb.common.constats.Constants.PLUGIN_LOCK_TYPE;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.batch.core.JobExecution;
@@ -13,6 +18,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.mweb.batchservice.plugins.SAPJob;
+import com.mweb.common.constats.PluginType;
 import com.mweb.config.common.ApplicationConfiguration;
 import com.mweb.service.WatchService;
 
@@ -23,7 +29,7 @@ public class BatchServiceTest
 
 	@Autowired
 	SAPJob sapJob;
-	
+
 	@Autowired
 	WatchService watchService;
 
@@ -36,8 +42,10 @@ public class BatchServiceTest
 
 		try
 		{
+			Map params = new HashMap<String, Object>();
+			params.put(PLUGIN_LOCK_TYPE, PluginType.SAP);
 			JobExecution execution = jobLauncher.run(sapJob.dataTransferJob(),
-					watchService.getCurrentParameter());
+					watchService.getCurrentParameter(params));
 
 			System.out.println("[execution]"
 					+ execution.getStepExecutions().size());

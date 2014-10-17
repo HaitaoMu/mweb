@@ -16,6 +16,7 @@ import org.springframework.core.Ordered;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
@@ -116,20 +117,22 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter
 	 * 
 	 * 国际化资源
 	 */
-	@Bean
-	public ResourceBundleMessageSource resourceBundleMessageSource()
-	{
-		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-		messageSource.setBasename("messages");
-		return messageSource;
-	}
+	
+//	@Bean
+//	public ResourceBundleMessageSource resourceBundleMessageSource()
+//	{
+//		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+//		messageSource.setBasename("messages");
+//		return messageSource;
+//	}
 
 	@Bean
 	public MessageSource messageSource()
 	{
 
 		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-		messageSource.setBasenames("classpath:messages/messages", "classpath:messages/validation");
+		messageSource.setBasenames("classpath:/messages");
+//		messageSource.setBasenames("classpath:messages/messages", "classpath:messages/validation");
 		// if true, the key of the message will be displayed if the key is not
 		// found, instead of throwing a NoSuchMessageException
 		messageSource.setUseCodeAsDefaultMessage(true);
@@ -176,17 +179,4 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter
 		configurer.enable();
 	}
 
-	protected Filter[] getServletFilters()
-	{
-		CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
-		characterEncodingFilter.setEncoding("UTF-8");
-		characterEncodingFilter.setForceEncoding(true);
-
-		OpenEntityManagerInViewFilter openEntityManagerInViewFilter = new OpenEntityManagerInViewFilter();
-		openEntityManagerInViewFilter.setBeanName("openEntityManagerInViewFilter");
-		openEntityManagerInViewFilter.setPersistenceUnitName("HSQL");
-
-		return new javax.servlet.Filter[]
-		{ characterEncodingFilter, openEntityManagerInViewFilter };
-	}
 }

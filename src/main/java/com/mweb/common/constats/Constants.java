@@ -65,4 +65,6 @@ public class Constants
 	public static final long MAX_PROCESS_VALUE = 100;
 	
 	
+	public static final String PLUGIN_LOCK_TYPE = "TYPE";
+	
 }

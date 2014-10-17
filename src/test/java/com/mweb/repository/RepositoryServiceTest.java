@@ -1,5 +1,8 @@
 package com.mweb.repository;
 
+import static com.mweb.common.constats.Constants.DESTINATION_DB;
+import static com.mweb.common.constats.Constants.SOURCE_DB;
+
 import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -9,15 +12,12 @@ import java.util.Map;
 import java.util.Set;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.mweb.AbstractServiceTest;
 import com.mweb.common.constats.DBType;
-import com.mweb.config.common.ApplicationConfiguration;
 import com.mweb.model.DBConfig;
 import com.mweb.model.PageResult;
 import com.mweb.model.UserInfo;
@@ -26,11 +26,7 @@ import com.mweb.model.plugin.PK;
 import com.mweb.model.plugin.SAPEntity;
 import com.mweb.repository.plugin.SAPService;
 
-import static com.mweb.common.constats.Constants.*;
-
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = ApplicationConfiguration.class)
-public class RepositoryServiceTest {
+public class RepositoryServiceTest extends AbstractServiceTest {
 	
 	private static final String SALT = null;
 	@Autowired

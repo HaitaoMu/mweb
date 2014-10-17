@@ -1,6 +1,7 @@
 package com.mweb.config.common;
 
 
+import static com.mweb.common.constats.Constants.PACKAGE_NAME;
 import static com.mweb.common.constats.Constants.DATABASE_PROPERTIES_FILE;
 import static com.mweb.common.constats.Constants.SCAN_SERVICE_PACKAGE_NAME;
 import static com.mweb.common.constats.Constants.SCAN_BATCH_PACKAGE_NAME;
@@ -36,8 +37,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @PropertySource(DATABASE_PROPERTIES_FILE)
 //@ComponentScan({PACKAGE_NAME})
-@ComponentScan({SCAN_SERVICE_PACKAGE_NAME,SCAN_BATCH_PACKAGE_NAME,SCAN_ENTITY_PACKAGE_NAME,SCAN_REPOSITORY_PACKAGE_NAME})
-//@ComponentScan({SCAN_ENTITY_PACKAGE_NAME,SCAN_REPOSITORY_PACKAGE_NAME})
+//@ComponentScan({SCAN_SERVICE_PACKAGE_NAME,SCAN_BATCH_PACKAGE_NAME,SCAN_ENTITY_PACKAGE_NAME,SCAN_REPOSITORY_PACKAGE_NAME})
+@ComponentScan({SCAN_ENTITY_PACKAGE_NAME,SCAN_REPOSITORY_PACKAGE_NAME})
 public class ApplicationConfiguration 
 {
 	

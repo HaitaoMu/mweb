@@ -59,8 +59,7 @@ public abstract class AbstractDataService<T extends Serializable, PK extends Ser
 		DetachedCriteria criteria = DetachedCriteria.forClass(clazz);
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		criteria.add(Restrictions.allEq(parameters));
-		List<T> results = (List<T>) getHibernateTemplate().findByCriteria(
-				criteria);
+		List<T> results = (List<T>) getHibernateTemplate().findByCriteria(criteria);
 		return results;
 
 	}
