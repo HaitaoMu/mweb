@@ -44,7 +44,10 @@
 
 		<!-- JSON -->
 		<fasterxml.version>2.4.2</fasterxml.version>
-
+		
+		<!-- Reactor -->
+		<reactor.version>1.1.4.RELEASE</reactor.version>
+		
 		<!-- Test -->
 		<junit.version>4.11</junit.version>
 
@@ -251,6 +254,19 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>${fasterxml.version}</version>
 		</dependency>
+		
+		<!-- Reactor -->
+		<dependency>
+			<groupId>org.projectreactor</groupId>
+			<artifactId>reactor-core</artifactId>
+			<version>${reactor.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.projectreactor</groupId>
+			<artifactId>reactor-net</artifactId>
+			<version>${reactor.version}</version>
+		</dependency>
+				
 
 
 		<!-- Test Artifacts -->

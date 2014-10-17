@@ -19,6 +19,7 @@ $(function(){
 	var socket = new SockJS('/mweb/tasknotification');
 	var client = Stomp.over(socket);
 //
+//	client.connect("guest","guest", function(frame) {
 	client.connect({}, function(frame) {
 
 		

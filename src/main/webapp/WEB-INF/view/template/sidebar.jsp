@@ -33,6 +33,9 @@
             <li>
                  <a href='<c:url value="/listUser" />'><i class="fa fa-files-o fa-fw"></i> User Manager</span></a>
             </li>
+             <li>
+                 <a href='<c:url value="/listRole" />'><i class="fa fa-files-o fa-fw"></i> Role Manager</span></a>
+            </li>
             <li>
              	 <a  href='<c:url value="/chart" />'><i class="fa fa-star fa-fw"></i> Chart</a>
             </li>
