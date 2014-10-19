@@ -76,6 +76,15 @@ public class JobListener implements JobExecutionListener
 			}
 			WatchService.putTask(result);
 			publisher.notifyProgress();
+			try
+			{
+				Thread.sleep(5000L);
+			}
+			catch (InterruptedException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -86,7 +95,7 @@ public class JobListener implements JobExecutionListener
 		if (null != param)
 		{
 			String type = param.getString(PLUGIN_LOCK_TYPE);
-			lockService.lockRunningJob(type);
+			lockService.unlockRunningJob(type);
 
 			String taskId = String.valueOf(jobExecution.getJobId());
 			ProgressRateResult result = WatchService.getProgressResult(taskId);

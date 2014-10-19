@@ -23,11 +23,7 @@ public class LockService
 		try
 		{
 			lock = lockService.findByType(type);
-			if(null == lock)
-			{
-				isRunning = true;
-			}
-			if(LockStatus.UNLOCK.equals(lock.getLockStatus()))
+			if(null == lock || LockStatus.UNLOCK.equals(lock.getLockStatus()))
 			{
 				isRunning = true;
 			}
@@ -53,7 +49,7 @@ public class LockService
 			lock.setLockName(type+"LOCK");
 			lock.setLockStatus(LockStatus.LOCKED);
 			lock.setLockType(PluginType.parseType(type));
-			lockService.save(lock);
+			lockService.update(lock);
 
 		} 
 		catch (Exception e)
@@ -62,16 +58,16 @@ public class LockService
 		}
 	}
 	
-	public synchronized void unlockRunningJob(PluginType type)
+	public synchronized void unlockRunningJob(String type)
 	{
 		BatchLock lock = null;
 		try
 		{
-			lock = lockService.findByType(type.toString());
+			lock = lockService.findByType(type);
 			if(null != lock)
 			{
 				lock.setLockStatus(LockStatus.UNLOCK);
-				lockService.save(lock);
+				lockService.update(lock);
 			}
 		} 
 		catch (Exception e)

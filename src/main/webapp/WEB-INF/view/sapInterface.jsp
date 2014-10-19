@@ -17,8 +17,26 @@
 		$("#imediateImportBtn").click(function(event) {
 
 			$.ajax({
+			    type: "post",
 				url : event.currentTarget.value,
-				success : function() {
+				success : function(data) {
+					if("success" == data.status && null!=data.message)
+					{
+						$(".modal-body").html(data.message);
+						$("#myModal").modal("show");
+					}
+				}
+			});
+		});
+		$("#submitJobBtn").click(function(event){
+			$.ajax({
+			    type: "post",
+				url : event.currentTarget.value,
+				success : function(data) {
+					if("success" == data.status)
+					{
+						$("#myModal").modal("hide");
+					}
 				}
 			});
 		});
@@ -56,7 +74,7 @@
 				<div id="custom-toolbar">
 					<div class="form-inline" role="form">
 						<button id="imediateImportBtn" type="button"
-							value="<c:url value="/sapImportData"/>" class="btn btn-success">Imediate
+							value="<c:url value="/sapImportData/lock"/>" class="btn btn-success">Imediate
 							Import</button>
 						<button type="button" class="btn btn-success">Schedule
 							Import</button>
@@ -86,7 +104,26 @@
 			</div>
 		</div>
 		<!-- /#page-wrapper -->
-
+		
+		      <!-- Modal -->
+         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+             <div class="modal-dialog">
+                 <div class="modal-content">
+                     <div class="modal-header">
+                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                         <h4 class="modal-title" id="myModalLabel">Operation Result</h4>
+                     </div>
+                     <div class="modal-body">
+                     </div>
+                     <div class="modal-footer">
+                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                         <button id="submitJobBtn" type="button" class="btn btn-primary" value=<c:url value="/sapImportData/Run"/>>Run Again</button>
+                     </div>
+                 </div>
+                 <!-- /.modal-content -->
+             </div>
+             <!-- /.modal-dialog -->
+         </div>
 	</div>
 	<!-- /#wrapper -->
 

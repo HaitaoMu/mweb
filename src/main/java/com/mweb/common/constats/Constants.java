@@ -67,4 +67,6 @@ public class Constants
 	
 	public static final String PLUGIN_LOCK_TYPE = "TYPE";
 	
+	public static final String RUN_AGAIN = "Run";
+	
 }

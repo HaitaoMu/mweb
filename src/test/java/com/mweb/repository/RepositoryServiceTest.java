@@ -54,16 +54,23 @@ public class RepositoryServiceTest extends AbstractServiceTest {
 		user.setUserName("Jet");
 		user.setUserPassword(passwordEncoder.encodePassword("123456", SALT));
 		user.setUserDescription("User for test");
+		
+		UserInfo userone = new UserInfo();
+		userone.setUserName("Bruce");
+		userone.setUserPassword(passwordEncoder.encodePassword("123456", SALT));
+		userone.setUserDescription("User for test");
 	
 	
 		UserRole role = new UserRole();
 		role.setRoleDescription("Role for test");
-		role.setRoleName("Administrator");
+		role.setRoleName("USER");
 		
 		Set<UserRole> roles = new HashSet<UserRole>();
 		roles.add(role);
 		
 		user.setRoles(roles);
+		userone.setRoles(roles);
+		userInfoService.save(userone);
 		userInfoService.save(user);
 	}
 	
