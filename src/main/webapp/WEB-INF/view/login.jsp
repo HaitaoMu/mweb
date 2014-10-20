@@ -7,19 +7,18 @@
 
 <head>
 <jsp:include page="template/header.jsp"></jsp:include>
-	<script type="text/javascript">
-		$(function(){
-			$(".btn").keyup(function(event) 
-			{
-		        if (event.which == 13 || event.keyCode == 13)
-		        {
-					console.log("key enter");
-		        	return false;
-		        }
-		        return true;
-		    });	
+<script type="text/javascript">
+	$(function() {
+		$("input[name='password']").keyup(function(event) {
+			if (event.which == 13 || event.keyCode == 13) {
+				console.log("key enter");
+				$("#form").submit();
+				return false;
+			}
+			return true;
 		});
-	</script>
+	});
+</script>
 </head>
 
 <body>
@@ -32,14 +31,19 @@
 						<h3 class="panel-title">Please Sign In</h3>
 					</div>
 					<div class="panel-body">
-						<form role="form" action="<c:url value="/login" />" method="post">
+						<form id="form" role="form" action="<c:url value="/login" />" method="post">
 							<fieldset>
+								<div class="form-group">
+									<c:if test="${not empty error}">
+										<div class="error">${error}</div>
+									</c:if>
+								</div>
 								<div class="form-group">
 									<input class="form-control" placeholder="username"
 										name="username" type="text" autofocus>
 								</div>
 								<div class="form-group">
-									<input class="form-control" placeholder="Password"
+									<input  class="form-control" placeholder="Password"
 										name="password" type="password" value="">
 								</div>
 								<div class="form-group">
@@ -52,7 +56,7 @@
 									</label>
 								</div>
 								<!-- Change this to a button or input when using this as a form -->
-								<input type="submit" value="Login"
+								<input id="loginBtn" type="submit" value="Login"
 									class="btn btn-lg btn-success btn-block" />
 							</fieldset>
 						</form>

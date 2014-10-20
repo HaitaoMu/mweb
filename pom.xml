@@ -27,7 +27,7 @@
 		<spring.security.version>3.2.5.RELEASE</spring.security.version>
 
 		<!-- Hibernate / JPA -->
-		<hibernate.version>4.3.6.Final</hibernate.version>
+		<hibernate.version>4.2.1.Final</hibernate.version>
 		<mysql.version>5.1.19</mysql.version>
 		<oracle.version>11.2.0.3</oracle.version>
 <!-- 		<oracle.version>1.0.0</oracle.version> -->

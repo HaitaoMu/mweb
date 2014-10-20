@@ -20,13 +20,17 @@
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
             <i class="fa fa-tasks fa-fw"></i>  <i class="fa fa-caret-down"></i>
         </a>
-<!--         <div data-spy="scroll" data-target="#taskList"> -->
-			<ul id="taskList" class="dropdown-menu dropdown-tasks">
-            
-        	</ul>
-<!--         </div> -->
+        
+<!-- 		<ul id="taskList" class="dropdown-menu dropdown-tasks"> -->
+<!-- 			 <div class="chat-panel panel dropdown-menu"> -->
+<!--       			 <div class="panel-body">  -->
+      			 	<ul id="taskList" class="dropdown-menu dropdown-tasks"></ul>
+<!--               	</div> -->
+<!--              </div>    -->
+<!--        	</ul> -->
         <!-- /.dropdown-tasks -->
     </li>
+    
     <!-- /.dropdown -->
     <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">

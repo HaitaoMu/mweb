@@ -24,6 +24,7 @@ public class WatchService
 {
 	private static ConcurrentHashMap<String, ProgressRateResult> taskMap = new ConcurrentHashMap<String, ProgressRateResult>();
 	private static final AtomicLong atomicLong = new AtomicLong();
+	private static final int ZERO = 0;
 
 	@Autowired
 	private SimpMessagingTemplate template;
@@ -77,6 +78,7 @@ public class WatchService
 		{
 			builder.append(getDetails());
 		}
+		
 		return builder.toString();
 	}
 

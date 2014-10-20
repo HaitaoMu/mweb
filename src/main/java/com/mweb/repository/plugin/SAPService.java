@@ -1,6 +1,6 @@
 /***********************************************************************
  *
-	private static Log log = LogFactory.getLog(TaskListener.class); * @file         SAPService.java
+ * @file         SAPService.java
  *
  * @copyright    Copyright: 2014-2016 Usee Co. Ltd.
  * @author       JetQin 

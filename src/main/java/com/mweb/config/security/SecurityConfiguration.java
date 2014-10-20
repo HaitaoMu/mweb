@@ -56,7 +56,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 			.antMatchers("/home").hasAnyAuthority("USER")
 			.anyRequest().authenticated();
 		http.formLogin()
-			.loginPage("/login").permitAll()
+			.loginPage("/login")
+			.permitAll()
 			.usernameParameter(USERNAME)
 			.passwordParameter(PASSWORD)
 			.loginProcessingUrl("/login")

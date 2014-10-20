@@ -45,6 +45,8 @@ public class ProgressRateResult implements Message {
 	private String taskId;
 
 	private Long totalCount;
+	
+	private String type;
 
 	public Long getMinValue() {
 		return minValue;
@@ -126,6 +128,17 @@ public class ProgressRateResult implements Message {
 	public MessageHeaders getHeaders() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+
+	public String getType()
+	{
+		return type;
+	}
+
+	public void setType(String type)
+	{
+		this.type = type;
 	}
 
 	@Override
