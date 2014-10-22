@@ -43,4 +43,10 @@ public class PageController
 	{
 		return "login";
 	}
+	
+	@RequestMapping(value="/404")
+	public String notFound()
+	{
+		return "404";
+	}
 }

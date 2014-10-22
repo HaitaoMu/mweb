@@ -25,6 +25,7 @@ import com.mweb.model.UserRole;
 import com.mweb.model.plugin.PK;
 import com.mweb.model.plugin.SAPEntity;
 import com.mweb.repository.plugin.SAPService;
+import com.mweb.repository.security.dao.CustomUserDetailService;
 
 public class RepositoryServiceTest extends AbstractServiceTest {
 	

@@ -8,7 +8,7 @@
  *
  *
  ***********************************************************************/
-package com.mweb.repository;
+package com.mweb.repository.security.dao;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -32,6 +32,7 @@ import org.springframework.util.Assert;
 
 import com.mweb.model.UserInfo;
 import com.mweb.model.UserRole;
+import com.mweb.repository.UserInfoService;
 
 /**
  * @author jet

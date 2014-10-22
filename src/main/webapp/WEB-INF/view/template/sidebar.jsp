@@ -20,7 +20,7 @@
                 <a class="active" href='<c:url value="/home" />'><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
             </li>
              <li>
-                 <a href='<c:url value="/listUser" />'><i class="fa fa-cogs fa-fw"></i> Interface Manager<span class="fa arrow"></span></a>
+                 <a href='<c:url value="/listUserTest" />'><i class="fa fa-cogs fa-fw"></i> Interface Manager<span class="fa arrow"></span></a>
 			     <ul class="nav nav-second-level">
                      <li>
                          <a href="<c:url value="/sapIndex" />">SAP Interface</a>
