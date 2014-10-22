@@ -70,8 +70,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry)
 	{
-		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/")
-				.setCachePeriod(YEAR_OF_SECONDS);
+		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/").setCachePeriod(YEAR_OF_SECONDS);
 	}
 
 	/**
@@ -132,12 +131,8 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter
 
 		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
 		messageSource.setBasenames("classpath:/messages");
-//		messageSource.setBasenames("classpath:messages/messages", "classpath:messages/validation");
-		// if true, the key of the message will be displayed if the key is not
-		// found, instead of throwing a NoSuchMessageException
 		messageSource.setUseCodeAsDefaultMessage(true);
 		messageSource.setDefaultEncoding("UTF-8");
-		// # -1 : never reload, 0 always reload
 		messageSource.setCacheSeconds(0);
 		return messageSource;
 	}

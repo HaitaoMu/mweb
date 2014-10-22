@@ -1,6 +1,7 @@
 package com.mweb.config.common;
 
 import static com.mweb.common.constats.Constants.SCAN_BATCH_PACKAGE_NAME;
+
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;

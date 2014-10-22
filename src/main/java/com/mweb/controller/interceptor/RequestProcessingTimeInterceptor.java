@@ -42,8 +42,7 @@ public class RequestProcessingTimeInterceptor extends HandlerInterceptorAdapter 
 		long startTime = (Long) request.getAttribute("startTime");
 //		logger.info("Request URL::" + request.getRequestURL().toString()
 //				+ ":: End Time=" + System.currentTimeMillis());
-		logger.info("Request URL::" + request.getRequestURL().toString()
-				+ ":: Time Taken=" + (System.currentTimeMillis() - startTime));
+		logger.info("Request URL::" + request.getRequestURL().toString() + ":: Time Taken=" + (System.currentTimeMillis() - startTime));
 	}
 
 }

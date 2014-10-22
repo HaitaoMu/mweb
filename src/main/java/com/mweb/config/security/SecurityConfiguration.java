@@ -10,7 +10,8 @@ import org.springframework.security.config.annotation.web.servlet.configuration.
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import com.mweb.common.util.EncoderUtil;
-import com.mweb.repository.CustomUserDetailService;
+import com.mweb.repository.security.AuthenticateHandler;
+import com.mweb.repository.security.CustomUserDetailService;
 
 import static com.mweb.common.constats.Constants.*;
 
@@ -22,6 +23,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 	private static final String USERNAME = "username";
 	private static final String PASSWORD = "password";
 	
+	@Autowired
+	private AuthenticateHandler authenticateHandler;
 //	@Resource(name="customUserDetailsService")
 	
 	@Autowired
@@ -53,18 +56,24 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 		
 		http.authorizeRequests()
 			.antMatchers("/resources/**").permitAll()
-			.antMatchers("/home").hasAnyAuthority("USER")
-			.anyRequest().authenticated();
+			.antMatchers("/404").hasRole("USER")
+			.antMatchers("/home").hasRole("USER")
+			.anyRequest()
+			.authenticated();
 		http.formLogin()
 			.loginPage("/login")
+			.failureHandler(authenticateHandler)
 			.permitAll()
 			.usernameParameter(USERNAME)
 			.passwordParameter(PASSWORD)
 			.loginProcessingUrl("/login")
 			.defaultSuccessUrl("/home")
 			.and()
-			.logout().permitAll();
-		http.sessionManagement().maximumSessions(1).maxSessionsPreventsLogin(true);
+			.logout()
+			.logoutUrl("/logout")
+			.permitAll()
+			.and()
+		    .sessionManagement().maximumSessions(1);
 //		@formatter:on
 
 	}
