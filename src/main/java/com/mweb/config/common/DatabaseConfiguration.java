@@ -20,7 +20,7 @@ import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 
 @Configuration
 @PropertySource(DATABASE_PROPERTIES_FILE)
-@ComponentScan({SCAN_SERVICE_PACKAGE_NAME,SCAN_ENTITY_PACKAGE_NAME,SCAN_REPOSITORY_PACKAGE_NAME})
+@ComponentScan({SCAN_ENTITY_PACKAGE_NAME,SCAN_REPOSITORY_PACKAGE_NAME})
 public class DatabaseConfiguration
 {
 	/**
@@ -83,6 +83,7 @@ public class DatabaseConfiguration
 				setProperty("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
 				setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
 				setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
+//				setProperty("hibernate.current_session_context_class", env.getProperty("hibernate.current_session_context_class"));
 
 				setProperty("hibernate.c3p0.minPoolSize", env.getProperty("hibernate.c3p0.minPoolSize"));
 				setProperty("hibernate.c3p0.maxPoolSize", env.getProperty("hibernate.c3p0.maxPoolSize"));

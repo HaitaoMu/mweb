@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableBatchProcessing
 @EnableTransactionManagement
 @EnableScheduling
-@EnableAspectJAutoProxy
+//@EnableAspectJAutoProxy
 @EnableCaching
 
 @Import(

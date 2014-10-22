@@ -103,6 +103,7 @@ public abstract class AbstractDataService<T extends Serializable, PK extends Ser
 		return page;
 	}
 
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void save(final T entity)
 	{
 		getCurrentSession().save(entity);
