@@ -8,7 +8,7 @@
  *
  *
  ***********************************************************************/
-package com.mweb.repository.security;
+package com.mweb.repository.security.dao;
 
 import java.util.HashMap;
 import java.util.HashSet;

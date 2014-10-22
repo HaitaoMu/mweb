@@ -1,4 +1,4 @@
-package com.mweb.repository.security;
+package com.mweb.repository.security.dao;
 
 import java.io.IOException;
 

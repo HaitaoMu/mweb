@@ -10,8 +10,8 @@ import org.springframework.security.config.annotation.web.servlet.configuration.
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import com.mweb.common.util.EncoderUtil;
-import com.mweb.repository.security.AuthenticateHandler;
-import com.mweb.repository.security.CustomUserDetailService;
+import com.mweb.repository.security.dao.AuthenticateHandler;
+import com.mweb.repository.security.dao.CustomUserDetailService;
 
 import static com.mweb.common.constats.Constants.*;
 
@@ -40,6 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 //			auth.inMemoryAuthentication()
 //				.withUser("username").password("password")
 //				.roles("USER");
+//			auth.authenticationProvider(authenticationProvider);
 			auth.userDetailsService(customUserDetailsService).passwordEncoder(EncoderUtil.passwordEncoder);
 //			@formatter:on
 		}
