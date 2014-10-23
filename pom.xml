@@ -25,6 +25,7 @@
 		<spring-framework.version>4.0.7.RELEASE</spring-framework.version>
 		<spring.batch.version>2.2.1.RELEASE</spring.batch.version>
 		<spring.security.version>3.2.5.RELEASE</spring.security.version>
+		<spring.ldap.version>2.0.2.RELEASE</spring.ldap.version>
 
 		<!-- Hibernate / JPA -->
 		<hibernate.version>4.2.1.Final</hibernate.version>
@@ -139,6 +140,11 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
 			<version>${spring.security.version}</version>
+		</dependency>
+			<dependency>
+			<groupId>org.springframework.ldap</groupId>
+			<artifactId>spring-ldap-core</artifactId>
+			<version>${spring.ldap.version}</version>
 		</dependency>
 		<!-- Spring Websocket -->
 		<dependency>
