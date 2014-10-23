@@ -2,13 +2,13 @@ package com.mweb.repository;
 
 import org.springframework.stereotype.Repository;
 
-import com.mweb.model.Menu;
+import com.mweb.model.common.TreeMenuNode;
 
 @Repository("MenuInfoService")
-public class MenuInfoService extends AbstractDataService<Menu, String> {
+public class MenuInfoService extends AbstractDataService<TreeMenuNode, String> {
 
 	public MenuInfoService()
 	{
-		setClazz(Menu.class);
+		setClazz(TreeMenuNode.class);
 	}
 }

@@ -16,6 +16,7 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -26,6 +27,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
  *
  */
 @Entity
+@Table(name="SAPENTITY")
 public class SAPEntity implements Serializable
 {
 	@EmbeddedId
