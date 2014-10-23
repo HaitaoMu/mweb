@@ -15,6 +15,31 @@
 		$("#createMenuBtn").click(function(){
 			$("#createMenuDlg").modal("show");
 		});
+		$("#submitMenuBtn").click(function(event){
+			var targetId = event.currentTarget.value;
+			var data = {
+					parentId:$("#menuId").find("option:selected").attr("id"),
+					menuName:$("#menuName").val(),
+					menuUrl:$("#menuUrl").val(),
+					menuIcon:$("#menuIcon").val(),
+					menuDescription:$("#menuDescription").val()
+			};
+
+			$.ajax({
+			    type: "post",
+			    url: event.currentTarget.value, 
+			    data:data,
+			    success: function(result) {
+			    	$("#createMenuDlg").modal("hide");
+					//successAlert("Successfully create menu")
+			    },
+			    error: function(){
+			    	$("#createMenuDlg").modal("hide");
+				    //errorAlert("Create menu failure");
+			    }
+			}); 
+		});
+		
 	});
 
 	function queryParams(params) {
@@ -48,13 +73,6 @@
 			<div class="row">
 				<div id="custom-toolbar">
 					<div class="form-inline" role="form">
-						<select class="form-control">
-							<option>1</option>
-							<option>2</option>
-							<option>3</option>
-							<option>4</option>
-							<option>5</option>
-						</select>
 						<button id="createMenuBtn" type="button" class="btn btn-success">Create Menu</button>
 					</div>
 				</div>
@@ -90,18 +108,25 @@
                      </div>
                      <div class="modal-body">
                   		  <form role="form">
-                                     <div class="form-group has-warning">
-                                         <input type="text" class="form-control" id="menuName" placeholder="Menu Name">
-                                     </div>
-                                     <div class="form-group has-warning">
-                                         <input type="text" class="form-control" id="menuUrl" placeholder="Menu Url">
-                                     </div>
-                                     <div class="form-group has-warning">
-                                         <input type="text" class="form-control" id="menuIcon" placeholder="Menu Icon">
-                                     </div>
-                                     <div class="form-group has-warning">
-                                         <input type="text" class="form-control" id="menuDescription" placeholder="Menu Description">
-                                     </div>
+                  		          <div class="form-group has-warning">
+	                  		          <select id="menuId" class="form-control">
+										  <c:forEach var="menu" items="${menus}">
+										      <option id="${menu.id}">${menu.name}</option>
+										  </c:forEach>
+									  </select>
+								  </div>
+                                  <div class="form-group has-warning">
+                                      <input type="text" class="form-control" id="menuName" placeholder="Menu Name">
+                                  </div>
+                                  <div class="form-group has-warning">
+                                      <input type="text" class="form-control" id="menuUrl" placeholder="Menu Url">
+                                  </div>
+                                  <div class="form-group has-warning">
+                                      <input type="text" class="form-control" id="menuIcon" placeholder="Menu Icon">
+                                  </div>
+                                  <div class="form-group has-warning">
+                                      <input type="text" class="form-control" id="menuDescription" placeholder="Menu Description">
+                                  </div>
                             </form>
                      </div>
                      <div class="modal-footer">

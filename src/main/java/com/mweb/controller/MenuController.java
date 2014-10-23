@@ -18,9 +18,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mweb.model.PageResult;
+import com.mweb.model.Result;
 import com.mweb.model.common.TreeMenuEntity;
 import com.mweb.repository.DBConfigService;
 import com.mweb.repository.TreeMenuService;
+
+import static com.mweb.common.constats.Constants.FAIL;
+import static com.mweb.common.constats.Constants.SUCCESS;
 
 /**
  * @author jet
@@ -35,9 +39,12 @@ public class MenuController extends AbstractController
 	TreeMenuService treeMenuService;
 	
 	@RequestMapping("/menu")
-	public String dbConfigIndex()
+	public ModelAndView dbConfigIndex()
 	{
-		return "menuManager";
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("menus", treeMenuService.findAll());
+		mv.setViewName("menuManager");
+		return mv;
 	}
 	
 	@RequestMapping(value = "/pageMenuConfig")
@@ -52,7 +59,7 @@ public class MenuController extends AbstractController
 	
 	@RequestMapping(value = "/saveMenu")
 	@ResponseBody
-	public PageResult saveMenu(
+	public Result saveMenu(
 			@RequestParam(value="parentId") int Id,
 			@RequestParam(value="menuName") String menuName,
 			@RequestParam(value="menuUrl") String menuUrl,
@@ -61,6 +68,42 @@ public class MenuController extends AbstractController
 			)
 	{
 		TreeMenuEntity entity = new TreeMenuEntity();
-		return Result("success",context.getMessage("CREATE_MENU_SUCCESS"));
+		entity.setMenuDescription(menuDescription);
+		entity.setMenuUrl(menuUrl);
+		entity.setMenuIcon(menuIcon);
+		entity.setName(menuName);
+		treeMenuService.addSubMenu(entity, Id);
+		return new Result(SUCCESS,getMessage("CREATE_MENU_SUCCESS"));
+	}
+	
+	@RequestMapping(value = "/updateMenu")
+	@ResponseBody
+	public Result updateMenu(
+			@RequestParam(value="menuId") int menuId,
+			@RequestParam(value="menuName") String menuName,
+			@RequestParam(value="menuUrl") String menuUrl,
+			@RequestParam(value="menuIcon") String menuIcon,
+			@RequestParam(value="menuDescription") String menuDescription			
+			)
+	{
+		TreeMenuEntity entity = treeMenuService.findOne(menuId);
+		if(null!=entity)
+		{
+			entity.setMenuDescription(menuDescription);
+			entity.setMenuUrl(menuUrl);
+			entity.setMenuIcon(menuIcon);
+			entity.setName(menuName);
+			treeMenuService.update(entity);
+			return new Result(SUCCESS,getMessage("CREATE_MENU_SUCCESS"));
+		}
+		return new Result(FAIL,getMessage("CREATE_MENU_FAILED"));
+	}
+	
+	@RequestMapping(value = "/deleteMenu")
+	@ResponseBody
+	public Result deleteMenu(@RequestParam(value="menuId") int menuId)
+	{
+		treeMenuService.deleteById(menuId);
+		return new Result(SUCCESS,getMessage("CREATE_MENU_SUCCESS"));
 	}
 }
