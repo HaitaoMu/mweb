@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mweb.model.PageResult;
+import com.mweb.model.common.TreeMenuEntity;
 import com.mweb.repository.DBConfigService;
 import com.mweb.repository.TreeMenuService;
 
@@ -27,7 +28,7 @@ import com.mweb.repository.TreeMenuService;
  */
 
 @Controller
-public class MenuController
+public class MenuController extends AbstractController
 {
 
 	@Autowired
@@ -52,10 +53,14 @@ public class MenuController
 	@RequestMapping(value = "/saveMenu")
 	@ResponseBody
 	public PageResult saveMenu(
-			@RequestParam(value = "pageNum",) int pageNum,
-			@RequestParam(value = "pageSize",defaultValue="10") int pageSize)
+			@RequestParam(value="parentId") int Id,
+			@RequestParam(value="menuName") String menuName,
+			@RequestParam(value="menuUrl") String menuUrl,
+			@RequestParam(value="menuIcon") String menuIcon,
+			@RequestParam(value="menuDescription") String menuDescription			
+			)
 	{
-		PageResult page = treeMenuService.findByPage(pageNum, pageSize);
-		return page;
+		TreeMenuEntity entity = new TreeMenuEntity();
+		return Result("success",context.getMessage("CREATE_MENU_SUCCESS"));
 	}
 }
