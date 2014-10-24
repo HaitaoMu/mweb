@@ -61,6 +61,6 @@ public class MenuController extends AbstractController
 			)
 	{
 		TreeMenuEntity entity = new TreeMenuEntity();
-		return Result("success",context.getMessage("CREATE_MENU_SUCCESS"));
+		return Result("success",getMessage("CREATE_MENU_SUCCESS"));
 	}
 }
