@@ -10,6 +10,11 @@
  ***********************************************************************/
 package com.mweb.controller;
 
+import static com.mweb.common.constats.Constants.FAIL;
+import static com.mweb.common.constats.Constants.SUCCESS;
+import static com.mweb.common.constats.Constants.DEFAULT_MENU;
+import static com.mweb.common.constats.Constants.ROOT_MENU;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,11 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.mweb.model.PageResult;
 import com.mweb.model.Result;
 import com.mweb.model.common.TreeMenuEntity;
-import com.mweb.repository.DBConfigService;
 import com.mweb.repository.TreeMenuService;
-
-import static com.mweb.common.constats.Constants.FAIL;
-import static com.mweb.common.constats.Constants.SUCCESS;
 
 /**
  * @author jet
@@ -38,6 +39,19 @@ public class MenuController extends AbstractController
 	@Autowired
 	TreeMenuService treeMenuService;
 	
+	
+	@RequestMapping("/listMenu")
+	@ResponseBody
+	public String listMenu()
+	{
+		TreeMenuEntity rootMenu = treeMenuService.findRootMenu();
+		if(null!=rootMenu)
+		{	
+			return DEFAULT_MENU+rootMenu.createTreeMenu(rootMenu);
+		}
+		return DEFAULT_MENU;
+	}
+
 	@RequestMapping("/menu")
 	public ModelAndView dbConfigIndex()
 	{
@@ -53,7 +67,7 @@ public class MenuController extends AbstractController
 			@RequestParam(value = "pageNum",defaultValue="1") int pageNum,
 			@RequestParam(value = "pageSize",defaultValue="10") int pageSize)
 	{
-		PageResult page = treeMenuService.findByPage(pageNum, pageSize);
+		PageResult page = treeMenuService.queryByPage(pageNum, pageSize);
 		return page;
 	}
 	
@@ -101,9 +115,13 @@ public class MenuController extends AbstractController
 	
 	@RequestMapping(value = "/deleteMenu")
 	@ResponseBody
-	public Result deleteMenu(@RequestParam(value="menuId") int menuId)
+	public Result deleteMenu(@RequestParam(value="menuId") String menuId)
 	{
-		treeMenuService.deleteById(menuId);
+		TreeMenuEntity menu = treeMenuService.findOne(Integer.parseInt(menuId));
+		if(null!=menu && !menu.getName().equals(ROOT_MENU))
+		{
+			treeMenuService.deleteById(Integer.parseInt(menuId));
+		}
 		return new Result(SUCCESS,getMessage("CREATE_MENU_SUCCESS"));
 	}
 }

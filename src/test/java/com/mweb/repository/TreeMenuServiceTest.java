@@ -27,6 +27,8 @@ import com.mweb.model.common.AbstractTreeNode;
 import com.mweb.model.common.TreeMenuEntity;
 import com.mweb.model.common.TreeMenuNode;
 
+import static com.mweb.common.constats.Constants.ROOT_MENU;
+
 /**
  * @author jet
  *
@@ -64,32 +66,26 @@ public class TreeMenuServiceTest extends AbstractServiceTest
 	@Test
 	public void createMenu()
 	{
-		MENU_ROOT = new TreeMenuEntity("ROOT","/","ROOT MENU");
+		MENU_ROOT = new TreeMenuEntity(ROOT_MENU,"home",ROOT_MENU);
 		MENU_ROOT.setParent(null);
 
-		TreeMenuEntity menuDashboard = new TreeMenuEntity("Dashboard","<c:url value='/home'/>","fa fa-dashboard fa-fw");
-		menuDashboard.setParent(MENU_ROOT);
-		
-		TreeMenuEntity menuInterface = new TreeMenuEntity("Interface Manager","<c:url value='/listInterface' />","fa fa-cogs fa-fw");
-		menuInterface.setParent(MENU_ROOT);
-		
-		TreeMenuEntity menuSapInterface = new TreeMenuEntity("Sap Interface","<c:url value='/sapIndex' />","fa fa-cogs fa-fw");
-		menuSapInterface.setParent(menuInterface);
 
-		TreeMenuEntity menuDatabase = new TreeMenuEntity("Database Manager","<c:url value='/dbConfigIndex' />","fa fa-files-o fa-fw");
+		TreeMenuEntity menuInterface = new TreeMenuEntity("Interface Manager","listInterface","fa fa-cogs fa-fw");
+		menuInterface.setParent(MENU_ROOT);
+
+		TreeMenuEntity menuDatabase = new TreeMenuEntity("Database Manager","dbConfigIndex","fa fa-files-o fa-fw");
 		menuDatabase.setParent(MENU_ROOT);
 		
-		TreeMenuEntity menuUser = new TreeMenuEntity("User Manager","<c:url value='/listUser' />","fa fa-cogs fa-fw");
+		TreeMenuEntity menuUser = new TreeMenuEntity("User Manager","listUser","fa fa-file fa-fw");
 		menuUser.setParent(MENU_ROOT);
 		
-		TreeMenuEntity menuRole = new TreeMenuEntity("Role Manager","<c:url value='/listRole' />","fa fa-cogs fa-fw");
+		TreeMenuEntity menuRole = new TreeMenuEntity("Role Manager","listRole","fa fa-file fa-fw");
 		menuRole.setParent(MENU_ROOT);
 
-		TreeMenuEntity menuChart = new TreeMenuEntity("Chart","<c:url value='/chart' />","fa fa-cogs fa-fw");
+		TreeMenuEntity menuChart = new TreeMenuEntity("Chart","chart","fa fa-cogs fa-fw");
 		menuChart.setParent(MENU_ROOT);
 		
 		Set<TreeMenuEntity> leaves = new HashSet<TreeMenuEntity>();
-		leaves.add(menuDashboard);
 		leaves.add(menuInterface);
 		leaves.add(menuDatabase);
 		leaves.add(menuUser);
@@ -98,6 +94,9 @@ public class TreeMenuServiceTest extends AbstractServiceTest
 		
 		MENU_ROOT.setChildrens(leaves);
 		treeMenuService.save(MENU_ROOT);
+		
+		TreeMenuEntity menuSapInterface = new TreeMenuEntity("Sap Interface","sapIndex","fa fa-cogs fa-fw");
+		menuSapInterface.setParent(menuInterface);
 		treeMenuService.save(menuSapInterface);
 
 	}
@@ -106,7 +105,7 @@ public class TreeMenuServiceTest extends AbstractServiceTest
 	public void iteratorMenu(){
 	
 		Map<String,String> parameters = new HashMap<String,String>();
-		parameters.put("name", "ROOT");
+		parameters.put("name", ROOT_MENU);
 		MENU_ROOT = treeMenuService.findByParameter(parameters).get(0);
 		System.out.println(MENU_ROOT.createTreeMenu(MENU_ROOT));
 	}

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.criterion.ProjectionList;
 import org.junit.Assert;
 import org.springframework.stereotype.Repository;
 
@@ -31,4 +32,5 @@ public class BatchLockService extends AbstractDataService<BatchLock, String>
 		}
 		return null;
 	}
+
 }

@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.criterion.ProjectionList;
 import org.springframework.stereotype.Repository;
 
 import com.mweb.model.DBConfig;
@@ -49,5 +50,6 @@ public class DBConfigService extends AbstractDataService<DBConfig, Long>
 		}
 		return db;
 	}
+
 
 }

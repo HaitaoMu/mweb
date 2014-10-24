@@ -7,9 +7,10 @@
 
 <head>
 <jsp:include page="template/header.jsp"></jsp:include>
+<script src="resources/js/plugins/confirm/jquery.confirm.min.js"></script>
 <script type="text/javascript">
 	$(function() {
-		$('#menuTable').bootstrapTable(function(event) {
+		 $table = $('#menuTable').bootstrapTable(function(event) {
 			console.log("event trigger");
 		});
 		$("#createMenuBtn").click(function(){
@@ -31,17 +32,20 @@
 			    data:data,
 			    success: function(result) {
 			    	$("#createMenuDlg").modal("hide");
-					//successAlert("Successfully create menu")
+			    	console.log($table);
+			    	$table.bootstrapTable('refresh');
 			    },
 			    error: function(){
 			    	$("#createMenuDlg").modal("hide");
-				    //errorAlert("Create menu failure");
 			    }
 			}); 
 		});
 		
+		
+		
+		
 	});
-
+	
 	function queryParams(params) {
 		return {
 			pageSize : params.pageSize,
@@ -51,6 +55,48 @@
 			order : params.sortOrder
 		};
 	}
+
+	 function operateFormatter(value, row, index) {
+	        return [
+			'<button type="button" class="edit btn btn-success btn-circle" href="javascript:void(0)" value="<c:url value="/updateMenu"/>" title="Edit">',
+				'<i class="fa fa-edit"> </i>',
+			'</button>',
+			'<button type="button" class="delete btn btn-warning btn-circle" href="javascript:void(0)" value="<c:url value="/deleteMenu"/>" title="Remove">',
+				'<i class="fa fa-times"> </i>',
+			'</button>'
+	        ].join('');
+	    }
+	 
+	 window.operateEvents = {
+     'click .edit': function (e, value, row, index) {
+         alert('You click edit icon, row: ' + JSON.stringify(row));
+         console.log(value, row, index);
+     },
+     'click .delete': function (e, value, row, index) {
+    	 $table =  $('#menuTable').bootstrapTable();
+         console.log(value, row, index);
+         $.confirm({
+			    text: "Are you sure you want to delete this menu?",
+			    confirm: function() {
+					$.ajax({
+					    type: "post",
+					    url: e.currentTarget.value, //your valid url
+					    data:{menuId:row.id},
+					    success: function(result) {
+					    	 $table.bootstrapTable('refresh');
+					    },
+					    error: function(){
+					    }
+					});
+			    },
+			    cancel: function(button) {
+			       console.log("cancel jquery dialog");
+			    }
+			});
+     }
+	};
+	
+	
 </script>
 </head>
 
@@ -78,19 +124,17 @@
 				</div>
 				<table id="menuTable" data-url="<c:url value="/pageMenuConfig"/>"
 					data-height="400" data-side-pagination="server"
-					data-pagination="true" data-page-list="[5, 10, 20, 50, 100, 200]"
+					data-pagination="true" data-page-list="[10,20, 50, 100, 200]"
 					data-search="true" data-show-refresh="true"
 					data-toolbar="#custom-toolbar"
 					data-show-columns="true" data-query-params="queryParams">
 					<thead>
 						<tr>
 							<th data-field="name" data-align="center">Menu Name</th>
-							<th data-field="menuUrl" data-align="right" data-sortable="true">Menu
-								URL</th>
-							<th data-field="menuIcon" data-align="right" data-sortable="true">Menu
-								ICON</th>
-							<th data-field="menuDescription" data-align="center"
-								data-sortable="true">Menu Description</th>
+							<th data-field="menuUrl" data-align="right" data-sortable="true">Menu URL</th>
+							<th data-field="menuIcon" data-align="right" data-sortable="true">Menu ICON</th>
+							<th data-field="menuDescription" data-align="center" data-sortable="true">Menu Description</th>
+							<th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents" >Operation</th>
 						</tr>
 					</thead>
 				</table>

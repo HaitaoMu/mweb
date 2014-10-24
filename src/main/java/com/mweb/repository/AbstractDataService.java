@@ -19,9 +19,11 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
@@ -86,10 +88,12 @@ public abstract class AbstractDataService<T extends Serializable, PK extends Ser
 	public PageResult findByPage(int pageNum, int pageSize)
 	{
 		PageResult<T> page = new PageResult<T>();
-
 		int firstResult = (pageNum - 1) * pageSize;
+
 		Criteria criteria = getCurrentSession().createCriteria(clazz);
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+//		criteria.setProjection(Projections.property("id"));
+//		criteria.setProjection(getProjectionList());
 		if (firstResult >= 0)
 		{
 			criteria.setFirstResult(firstResult);
@@ -102,6 +106,25 @@ public abstract class AbstractDataService<T extends Serializable, PK extends Ser
 		}
 		return page;
 	}
+	
+	public PageResult queryByPage(int pageNum, int pageSize)
+	{
+		PageResult<T> page = new PageResult<T>();
+
+		int firstResult = (pageNum - 1) * pageSize;
+		Query query = getCurrentSession().createQuery("from "+ clazz.getSimpleName());
+		query.setFirstResult(firstResult);
+		query.setMaxResults(pageSize);
+		List<T> data = query.list();
+		if (null != data && data.size() > 0)
+		{
+			page.setRows(data);
+			page.setTotal(getTotalCount());
+		}
+		return page;
+	}
+	
+//	public abstract ProjectionList getProjectionList();
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void save(final T entity)

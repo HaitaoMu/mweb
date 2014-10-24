@@ -40,6 +40,11 @@ public abstract class AbstractTreeEntity implements Serializable
 	 * 
 	 */
 	private static final long serialVersionUID = 7145507881241046770L;
+	
+	protected static final int LESS = -1;
+	protected static final int EQUAL = 0;
+	protected static final int LARGER =  1;
+	
 
 	@Id 
 	@Column(name="ID")

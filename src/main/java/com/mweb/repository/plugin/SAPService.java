@@ -12,6 +12,7 @@ package com.mweb.repository.plugin;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.criterion.ProjectionList;
 import org.springframework.stereotype.Repository;
 
 import com.mweb.batchservice.job.TaskListener;
@@ -33,4 +34,5 @@ public class SAPService extends AbstractDataService<SAPEntity, PK>
 	{
 		setClazz(SAPEntity.class);
 	}
+
 }

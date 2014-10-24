@@ -63,4 +63,7 @@
 <!-- Custom Theme JavaScript -->
 <script src="resources/js/sb-admin-2.js"></script>
 
+<!-- Custom Theme JavaScript -->
+<script src="resources/js/sidebar.js"></script>
+
 

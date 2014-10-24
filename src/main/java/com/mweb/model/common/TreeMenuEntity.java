@@ -10,6 +10,9 @@
  ***********************************************************************/
 package com.mweb.model.common;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -22,6 +25,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import static com.mweb.common.constats.Constants.WEB_ROOT;
 
 /**
  * @author jet
@@ -29,8 +33,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @Entity
 @Table(name = "TREE_MENU")
-public class TreeMenuEntity extends AbstractTreeEntity
+public class TreeMenuEntity extends AbstractTreeEntity implements Comparable<TreeMenuEntity>
 {
+
 
 	@Column(name = "MENU_URL")
 	private String menuUrl;
@@ -46,7 +51,7 @@ public class TreeMenuEntity extends AbstractTreeEntity
 	private TreeMenuEntity parent;
 
 	@JsonIgnore
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "parent")
+	@OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL}, mappedBy = "parent")
 	private Set<TreeMenuEntity> childrens;
 
 	/**
@@ -76,7 +81,7 @@ public class TreeMenuEntity extends AbstractTreeEntity
 
 	public void setMenuUrl(String menuUrl)
 	{
-		this.menuUrl = menuUrl;
+		this.menuUrl = WEB_ROOT+menuUrl;
 	}
 
 	public String getMenuIcon()
@@ -136,31 +141,42 @@ public class TreeMenuEntity extends AbstractTreeEntity
 		StringBuffer buffer = new StringBuffer();
 		if (null != menu)
 		{
-			for (TreeMenuEntity entity : menu.getChildrens())
+			List<TreeMenuEntity> entities = new ArrayList(menu.getChildrens());
+			Collections.sort(entities);
+			for (TreeMenuEntity entity :  entities)
 			{
 				boolean isLeaf = (null == entity.getChildrens()||0 == entity.getChildrens().size()) ? true : false; 
 				if(isLeaf)
 				{
-					buffer.append("<li>");
-					buffer.append("<a href='<c:url value='"+entity.menuUrl+"'/>'><i class="+entity.getMenuIcon()+"></i>"+entity.getName()+"</span></a>");
-					buffer.append("</li>");
+					buffer.append(createLinkMenu(entity));
 				}
 				else
 				{
 					buffer.append("<li>");
-					buffer.append("<a href='<c:url value='"+entity.menuUrl+"'/>'><i class="+entity.getMenuIcon()+"></i>"+entity.getName()+"</span><span class='fa arrow'></span></a>");
-					buffer.append("<ul class='nav nav-second-level'>");
+					buffer.append("<a href='"+entity.menuUrl+"'><i class='"+entity.getMenuIcon()+"'></i>"+entity.getName()+"</span><span class='fa arrow'></span></a>");
+					buffer.append("<ul class='nav nav-second-level collapse'>");
 					buffer.append(createTreeMenu(entity));
 					buffer.append("</ul>");
 					buffer.append("</li>");
 				}
-				parseTreeMenu(entity);
 			}
 		}
 		
 		return buffer.toString();
-//		@formatter:on
 
+
+	}
+	
+	private String createLinkMenu(TreeMenuEntity menu)
+	{
+		StringBuffer buffer = new StringBuffer();
+		if (null!=menu)
+		{
+			buffer.append("<li>");
+			buffer.append("<a href='" + menu.menuUrl + "'><i class='"+menu.getMenuIcon() + "'></i>" + menu.getName()+ "</span></a>");
+			buffer.append("</li>");
+		}
+		return buffer.toString();
 	}
 	
 	
@@ -169,5 +185,28 @@ public class TreeMenuEntity extends AbstractTreeEntity
 	{
 		return String.format("[name=%s,url=%s,icon=%s,description=%s]", getName(),getMenuUrl(),getMenuIcon(),getMenuDescription());
 	}
+
+	@Override
+	public int compareTo(TreeMenuEntity menu)
+	{
+		if(null == menu)
+		{
+			return EQUAL;
+		}
+		if(getId() > menu.getId())
+		{
+			return LARGER;
+		}
+		if(getId() == menu.getId())
+		{
+			return EQUAL;
+		}
+		if(getId() < menu.getId())
+		{
+			return LESS;
+		}
+		return EQUAL;
+	}
+//	@formatter:on
 
 }

@@ -70,7 +70,10 @@ public class Constants
 
 	public static final String RUN_AGAIN = "Run";
 	
+	public static final String WEB_ROOT = "/mweb/";
+
+	public static final String ROOT_MENU = "Dashboard";
 	
-	public static final String ROOT_MENU = "ROOT";
+	public static final String DEFAULT_MENU = "<li> <a class='active' href='"+WEB_ROOT+"home'><i class='fa fa-dashboard fa-fw'></i> Dashboard</a></li>";
 
 }

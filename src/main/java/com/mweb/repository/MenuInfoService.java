@@ -1,5 +1,6 @@
 package com.mweb.repository;
 
+import org.hibernate.criterion.ProjectionList;
 import org.springframework.stereotype.Repository;
 
 import com.mweb.model.common.TreeMenuNode;
@@ -11,4 +12,5 @@ public class MenuInfoService extends AbstractDataService<TreeMenuNode, String> {
 	{
 		setClazz(TreeMenuNode.class);
 	}
+
 }
