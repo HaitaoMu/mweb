@@ -1,13 +1,10 @@
 $(function(){
-	$("#side-menu").metisMenu({toggle: false});
 	$.ajax({
 	    type: "post",
-	    url:$("#side-menu").attr("value"), 
+	    url:$("#sidemenu").attr("value"), 
 	    success: function(result) {
-	    	$("#side-menu").html(result);
-	    	 $('#side-menu').metisMenu({
-	             doubleTapToGo: true
-	           });
+	    	$("#sidemenu").html(result);
+	    	$("#sidemenu").metisMenu();
 	    },
 	    error: function(){
 	    }

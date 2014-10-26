@@ -154,7 +154,7 @@ public class TreeMenuEntity extends AbstractTreeEntity implements Comparable<Tre
 				{
 					buffer.append("<li>");
 					buffer.append("<a href='"+entity.menuUrl+"'><i class='"+entity.getMenuIcon()+"'></i>"+entity.getName()+"</span><span class='fa arrow'></span></a>");
-					buffer.append("<ul class='nav nav-second-level collapse'>");
+					buffer.append("<ul class='nav nav-second-level'>");
 					buffer.append(createTreeMenu(entity));
 					buffer.append("</ul>");
 					buffer.append("</li>");

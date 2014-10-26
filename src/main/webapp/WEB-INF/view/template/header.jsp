@@ -14,8 +14,7 @@
 <link href="resources/css/plugins/bootstrap-table.min.css" rel="stylesheet">
 
 <!-- MetisMenu CSS -->
-<link href="resources/css/plugins/metisMenu/metisMenu.min.css"
-	rel="stylesheet">
+<link href="resources/css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
 
 <!-- Timeline CSS -->
 <link href="resources/css/plugins/timeline.css" rel="stylesheet">

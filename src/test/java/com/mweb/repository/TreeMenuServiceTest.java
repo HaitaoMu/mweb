@@ -70,7 +70,7 @@ public class TreeMenuServiceTest extends AbstractServiceTest
 		MENU_ROOT.setParent(null);
 
 
-		TreeMenuEntity menuInterface = new TreeMenuEntity("Interface Manager","listInterface","fa fa-cogs fa-fw");
+		TreeMenuEntity menuInterface = new TreeMenuEntity("Interface Manager","#","fa fa-cogs fa-fw");
 		menuInterface.setParent(MENU_ROOT);
 
 		TreeMenuEntity menuDatabase = new TreeMenuEntity("Database Manager","dbConfigIndex","fa fa-files-o fa-fw");
@@ -85,20 +85,24 @@ public class TreeMenuServiceTest extends AbstractServiceTest
 		TreeMenuEntity menuChart = new TreeMenuEntity("Chart","chart","fa fa-cogs fa-fw");
 		menuChart.setParent(MENU_ROOT);
 		
+		TreeMenuEntity menuList = new TreeMenuEntity("Menu Manager","menu","fa fa-cogs fa-fw");
+		menuList.setParent(MENU_ROOT);
+		
+		TreeMenuEntity menuSapInterface = new TreeMenuEntity("Sap Interface","sapIndex","fa fa-cogs fa-fw");
+		menuSapInterface.setParent(menuInterface);
+		
 		Set<TreeMenuEntity> leaves = new HashSet<TreeMenuEntity>();
 		leaves.add(menuInterface);
 		leaves.add(menuDatabase);
 		leaves.add(menuUser);
 		leaves.add(menuRole);
 		leaves.add(menuChart);
+		leaves.add(menuList);
 		
 		MENU_ROOT.setChildrens(leaves);
 		treeMenuService.save(MENU_ROOT);
+	    treeMenuService.save(menuSapInterface);
 		
-		TreeMenuEntity menuSapInterface = new TreeMenuEntity("Sap Interface","sapIndex","fa fa-cogs fa-fw");
-		menuSapInterface.setParent(menuInterface);
-		treeMenuService.save(menuSapInterface);
-
 	}
 	
 	@Test
