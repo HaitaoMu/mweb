@@ -51,7 +51,7 @@ public class TreeMenuEntity extends AbstractTreeEntity implements Comparable<Tre
 	private TreeMenuEntity parent;
 
 	@JsonIgnore
-	@OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL}, mappedBy = "parent")
+	@OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST,CascadeType.REMOVE}, mappedBy = "parent")
 	private Set<TreeMenuEntity> childrens;
 
 	/**
@@ -153,7 +153,7 @@ public class TreeMenuEntity extends AbstractTreeEntity implements Comparable<Tre
 				else
 				{
 					buffer.append("<li>");
-					buffer.append("<a href='"+entity.menuUrl+"'><i class='"+entity.getMenuIcon()+"'></i>"+entity.getName()+"</span><span class='fa arrow'></span></a>");
+					buffer.append("<a href='#'><i class='"+entity.getMenuIcon()+"'></i>"+entity.getName()+"</span><span class='fa arrow'></span></a>");
 					buffer.append("<ul class='nav nav-second-level'>");
 					buffer.append(createTreeMenu(entity));
 					buffer.append("</ul>");
@@ -173,7 +173,8 @@ public class TreeMenuEntity extends AbstractTreeEntity implements Comparable<Tre
 		if (null!=menu)
 		{
 			buffer.append("<li>");
-			buffer.append("<a href='" + menu.menuUrl + "'><i class='"+menu.getMenuIcon() + "'></i>" + menu.getName()+ "</span></a>");
+		    buffer.append("<a href='" + menu.menuUrl + "'>");
+			buffer.append("<i class='"+menu.getMenuIcon() + "'></i>" + menu.getName()+ "</span></a>");
 			buffer.append("</li>");
 		}
 		return buffer.toString();

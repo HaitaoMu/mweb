@@ -3,8 +3,10 @@ package com.mweb.config.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.jaas.JaasAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
@@ -19,6 +21,7 @@ import static com.mweb.common.constats.Constants.*;
 @Configuration
 @EnableWebMvcSecurity
 @ComponentScan(PACKAGE_NAME)
+@Order(1)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 {
 	private static final String USERNAME = "username";
@@ -45,6 +48,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 //				.roles("USER");
 //			auth.authenticationProvider(authenticationProvider);
 			auth.userDetailsService(customUserDetailsService).passwordEncoder(EncoderUtil.passwordEncoder);
+//			auth.
 //			@formatter:on
 		}
 		catch (Exception e)
@@ -63,7 +67,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 			.antMatchers("/404").hasRole("USER")
 			.antMatchers("/home").hasRole("USER")
 			.anyRequest()
-			.authenticated();
+			.fullyAuthenticated();
 		http.formLogin()
 			.loginPage("/login")
 			.failureHandler(authenticateHandler)
@@ -80,6 +84,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 		    .sessionManagement().maximumSessions(1);
 //		@formatter:on
 
+	}
+	
+	@Configuration
+	@Order(2)
+	protected static class AuthenticationConfiguration extends
+			GlobalAuthenticationConfigurerAdapter {
+
+		@Override
+		public void init(AuthenticationManagerBuilder auth) throws Exception {
+			auth.ldapAuthentication().userDnPatterns("uid={0},ou=people")
+					.groupSearchBase("ou=groups").contextSource()
+					.ldif("classpath:mweb.ldif");
+		}
 	}
 	
 	
