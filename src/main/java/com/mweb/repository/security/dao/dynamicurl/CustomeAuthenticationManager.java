@@ -1,37 +1,45 @@
-package com.mweb.repository.security.dao;
+package com.mweb.repository.security.dao.dynamicurl;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.access.vote.AbstractAccessDecisionManager;
-import org.springframework.security.access.vote.RoleVoter;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
-//@Component
-public class CustomeAccessDecisionManager extends AbstractAccessDecisionManager
+@Component
+public class CustomeAuthenticationManager extends AbstractAccessDecisionManager
 {
 
 	private static final Log logger = LogFactory
-			.getLog(CustomeAccessDecisionManager.class);
+			.getLog(CustomeAuthenticationManager.class);
+	
+	 private List<AccessDecisionVoter> decisionVoters;
 
-	@Bean
-	public List<AccessDecisionVoter> accessDecisionVoter()
+	 
+	 /**
+	 * 
+	 */
+	public CustomeAuthenticationManager()
 	{
-		List<AccessDecisionVoter> voters = new ArrayList<AccessDecisionVoter>();
-		voters.add(new RoleVoter());
-		return voters;
+		// TODO Auto-generated constructor stub
+	}
+	/**
+	 * 
+	 */
+	public CustomeAuthenticationManager(List<AccessDecisionVoter> voters)
+	{
+		// TODO Auto-generated constructor stub
+		this.decisionVoters = voters;
 	}
 	
 	@Override
@@ -78,5 +86,7 @@ public class CustomeAccessDecisionManager extends AbstractAccessDecisionManager
 		}
 		throw new AccessDeniedException("没有权限");
 	}
+
+
 
 }

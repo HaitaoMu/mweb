@@ -47,6 +47,8 @@ public class Constants
 	public static final String SUCCESS = "success";
 
 	public static final String FAIL = "fail";
+	
+	public static final String ROLE_PREFIX = "ROLE_";
 
 	/**
 	 * Batch job parameters

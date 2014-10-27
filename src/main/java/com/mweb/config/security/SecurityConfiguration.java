@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.authentication.jaas.JaasAuthenticationProvider;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,11 +20,14 @@ import org.springframework.security.config.annotation.web.servlet.configuration.
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import com.mweb.common.util.EncoderUtil;
 import com.mweb.repository.security.dao.AuthenticateHandler;
 import com.mweb.repository.security.dao.CustomUserDetailService;
-import com.mweb.repository.security.dao.CustomeAccessDecisionManager;
+import com.mweb.repository.security.dao.dynamicurl.CustomeAccessDecisionManager;
+import com.mweb.repository.security.dao.dynamicurl.FilterSecurityInterceptor;
+import com.mweb.repository.security.dao.dynamicurl.InvocationSecurityMetadataSourceService;
 
 import static com.mweb.common.constats.Constants.*;
 
@@ -39,14 +43,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 	@Autowired
 	private AuthenticateHandler authenticateHandler;
 	
-//	@Autowired
-//	private CustomeAccessDecisionManager accessDecisionManager;
-	// @Resource(name="customUserDetailsService")
-
-//	private JaasAuthenticationProvider authenticationProvider;
-
 	@Autowired
 	public CustomUserDetailService customUserDetailsService;
+	
+	@Autowired
+	private FilterSecurityInterceptor filterInterceptor;
+	
+	@Autowired
+	InvocationSecurityMetadataSourceService metadataSource;
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth)
@@ -76,10 +80,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 			.antMatchers("/resources/**").permitAll()
 			.antMatchers("/login").permitAll()
 //			.accessDecisionManager(accessDecisionManager)
-			.antMatchers("/404").hasRole("USER")
-			.antMatchers("/home").hasRole("USER")
+//			.antMatchers("/404").hasRole("USER")
+//			.antMatchers("/home").hasRole("USER")
 			.anyRequest()
-			.authenticated();
+			.authenticated()
+			.and()
+			.addFilterBefore(filterInterceptor, BasicAuthenticationFilter.class);
+//			.withObjectPostProcessor( new ObjectPostProcessor<FilterSecurityInterceptor>() {
+//                public <O extends FilterSecurityInterceptor> O postProcess(
+//                        O fsi) {
+//                    fsi.setSecurityMetadataSource(metadataSource);
+//                    return fsi;
+//                }
+//            });
 		http.formLogin()
 			.loginPage("/login")
 			.failureHandler(authenticateHandler)
@@ -95,11 +108,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 			.and()
 		    .sessionManagement().maximumSessions(1);
 		
-			List<Filter> filters = getFilterList();
-			for(Filter filter : filters)
-			{
-				http.addFilter(filter);
-			}
+//			List<Filter> filters = getFilterList();
+//			for(Filter filter : filters)
+//			{
+//				http.addFilter(filter);
+//			}
 	//		@formatter:on
 
 	}

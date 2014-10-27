@@ -1,18 +1,24 @@
-package com.mweb.repository.security.dao;
+package com.mweb.repository.security.dao.dynamicurl;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
+import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 
+@Component
 public class InvocationSecurityMetadataSourceService implements
-		FilterInvocationSecurityMetadataSource
+	FilterInvocationSecurityMetadataSource
 {
 
 	private static final Log logger = LogFactory
@@ -20,6 +26,21 @@ public class InvocationSecurityMetadataSourceService implements
 	private AntPathMatcher urlMatcher = new AntPathMatcher();
 	private static Map<String, Collection<ConfigAttribute>> resourceMap = null;
 
+	
+	/**
+	 * 
+	 */
+	public InvocationSecurityMetadataSourceService()
+	{
+		// TODO Auto-generated constructor stub
+		 resourceMap = new HashMap<String,Collection<ConfigAttribute>>();
+		 List<ConfigAttribute> userAttr = new ArrayList<ConfigAttribute>();
+		 ConfigAttribute cbUser = new SecurityConfig("ROLE_ADMIN"); // 构造一个权限(角色)
+		 userAttr.add(cbUser);
+		 resourceMap.put("/home", userAttr);
+		 
+	}
+	
 	@Override
 	public Collection<ConfigAttribute> getAttributes(Object object)
 			throws IllegalArgumentException
