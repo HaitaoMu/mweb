@@ -10,6 +10,7 @@ import org.springframework.util.Assert;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -83,6 +84,7 @@ public class MvcWebInitializer extends AbstractAnnotationConfigDispatcherServlet
 		CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
 		characterEncodingFilter.setEncoding("UTF-8");
 		characterEncodingFilter.setForceEncoding(true);
+		DelegatingFilterProxy proxy;
 
 //		OpenEntityManagerInViewFilter openEntityManagerInViewFilter = new OpenEntityManagerInViewFilter();
 //		openEntityManagerInViewFilter.setBeanName("openEntityManagerInViewFilter");

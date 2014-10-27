@@ -117,14 +117,6 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter
 	 * 国际化资源
 	 */
 	
-//	@Bean
-//	public ResourceBundleMessageSource resourceBundleMessageSource()
-//	{
-//		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-//		messageSource.setBasename("messages");
-//		return messageSource;
-//	}
-
 	@Bean
 	public MessageSource messageSource()
 	{
