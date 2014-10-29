@@ -1,5 +1,6 @@
 package com.mweb.repository.security.custom;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -14,34 +15,16 @@ import org.springframework.security.access.vote.AbstractAccessDecisionManager;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.web.access.expression.WebExpressionVoter;
 import org.springframework.stereotype.Component;
 
 //@Component
 public class CustomeAccessDecisionManager extends AbstractAccessDecisionManager
 {
 
-	private static final Log logger = LogFactory
-			.getLog(CustomeAccessDecisionManager.class);
+	private static final Log logger = LogFactory.getLog(CustomeAccessDecisionManager.class);
 	
-	 private List<AccessDecisionVoter> decisionVoters;
-
-	 
-	 /**
-	 * 
-	 */
-	public CustomeAccessDecisionManager()
-	{
-		// TODO Auto-generated constructor stub
-	}
-	/**
-	 * 
-	 */
-	public CustomeAccessDecisionManager(List<AccessDecisionVoter> voters)
-	{
-		// TODO Auto-generated constructor stub
-		this.decisionVoters = voters;
-	}
-	
+	   
 	@Override
 	public void decide(Authentication authentication, Object object,
 			Collection<ConfigAttribute> configAttributes)

@@ -1,41 +1,42 @@
 package com.mweb.config.security;
 
-import static com.mweb.common.constats.Constants.PACKAGE_NAME;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.Filter;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.access.AccessDecisionManager;
-import org.springframework.security.access.AccessDecisionVoter;
-import org.springframework.security.access.vote.AffirmativeBased;
+import org.springframework.security.authentication.jaas.JaasAuthenticationProvider;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
-import org.springframework.security.web.access.expression.WebExpressionVoter;
-import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
-import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
+import org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import com.mweb.common.util.EncoderUtil;
+import com.mweb.repository.security.custom.CustomeAccessDecisionManager;
+import com.mweb.repository.security.custom.FilterSecurityInterceptor;
 import com.mweb.repository.security.custom.InvocationSecurityMetadataSourceService;
 import com.mweb.repository.security.dao.AuthenticateHandler;
 import com.mweb.repository.security.dao.CustomUserDetailService;
+
+import static com.mweb.common.constats.Constants.*;
 
 @Configuration
 @EnableWebMvcSecurity
 @ComponentScan(PACKAGE_NAME)
 @Order(1)
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter
+public class SecurityConfigurationBak extends WebSecurityConfigurerAdapter
 {
-
-//	@formatter:off
-	
 	private static final String USERNAME = "username";
 	private static final String PASSWORD = "password";
 
@@ -46,48 +47,25 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 	public CustomUserDetailService customUserDetailsService;
 	
 //	@Autowired
-//	public CustomeAccessDecisionManager customAccessDecisionManager;
-	
-	@Autowired
-	public InvocationSecurityMetadataSourceService securityMetaDatasource;
-	
-//	@Bean
-//	public List<AccessDecisionVoter> getDecisionVoters()
-//	{
-//	        List<AccessDecisionVoter> decisionVoters = new ArrayList<AccessDecisionVoter>();
-//	        WebExpressionVoter expressionVoter = new WebExpressionVoter();
-//	        decisionVoters.add(expressionVoter);
-//	        return decisionVoters;
-//	}
-	
-	@Bean
-	public AccessDecisionManager defaultAccessDecisionManager() {
-	    List<AccessDecisionVoter> voters = new ArrayList<AccessDecisionVoter>();
-	    voters.add(new WebExpressionVoter());
-	    AccessDecisionManager result = new AffirmativeBased(voters);
-	    return result;
-	}
-	@Bean
-	public FilterSecurityInterceptor getFilterSecurityInterceptor() throws Exception
-	{
-		FilterSecurityInterceptor filterSecurityInteceptor = new FilterSecurityInterceptor();
-		filterSecurityInteceptor.setAuthenticationManager(authenticationManagerBean());
-		filterSecurityInteceptor.setAccessDecisionManager(defaultAccessDecisionManager());
-		filterSecurityInteceptor.setSecurityMetadataSource(securityMetaDatasource);
-		return filterSecurityInteceptor;
-	}
-	
+//	private FilterSecurityInterceptor filterInterceptor;
+//	
+//	@Autowired
+//	InvocationSecurityMetadataSourceService metadataSource;
+
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth)
 	{
 		try
 		{
-//			auth.authenticationProvider(new PreAuthenticatedAuthenticationProvider())
-//				.userDetailsService(customUserDetailsService)
-//				.passwordEncoder(EncoderUtil.passwordEncoder);
+//			@formatter:off
+//			auth.inMemoryAuthentication()
+//				.withUser("username").password("password")
+//				.roles("USER");
+//			auth.authenticationProvider(authenticationProvider);
 			auth.userDetailsService(customUserDetailsService).passwordEncoder(EncoderUtil.passwordEncoder);
-		}
-		catch (Exception e)
+//			auth.
+//			@formatter:on
+		} catch (Exception e)
 		{
 			e.printStackTrace();
 		}
@@ -95,13 +73,26 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 
 	protected void configure(HttpSecurity http) throws Exception
 	{
-
+//		@formatter:off
 		http.csrf().disable();
+		
 		http.authorizeRequests()
 			.antMatchers("/resources/**").permitAll()
 			.antMatchers("/login").permitAll()
+//			.accessDecisionManager(accessDecisionManager)
+			.antMatchers("/404").hasRole("USER")
+			.antMatchers("/home").hasRole("USER")
 			.anyRequest()
 			.authenticated();
+//			.and()
+//			.addFilterBefore(filterInterceptor, BasicAuthenticationFilter.class);
+//			.withObjectPostProcessor( new ObjectPostProcessor<FilterSecurityInterceptor>() {
+//                public <O extends FilterSecurityInterceptor> O postProcess(
+//                        O fsi) {
+//                    fsi.setSecurityMetadataSource(metadataSource);
+//                    return fsi;
+//                }
+//            });
 		http.formLogin()
 			.loginPage("/login")
 			.failureHandler(authenticateHandler)
@@ -118,13 +109,24 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 		    .sessionManagement().maximumSessions(1);
 		http.headers()
 			.contentTypeOptions()
-	    	.xssProtection()
-	    	.cacheControl()
-	    	.httpStrictTransportSecurity()
-	    	.frameOptions();
-		http.addFilterAfter(getFilterSecurityInterceptor(),FilterSecurityInterceptor.class);
+        	.xssProtection()
+        	.cacheControl()
+        	.httpStrictTransportSecurity()
+        	.frameOptions();
+//			List<Filter> filters = getFilterList();
+//			for(Filter filter : filters)
+//			{
+//				http.addFilter(filter);
+//			}
+	//		@formatter:on
 
 	}
+
+//	private List<Filter> getFilterList()
+//	{
+//		List<Filter> filters = new ArrayList<Filter>();
+//		return filters;
+//	}
 
 	@Configuration
 	@Order(2)
@@ -140,5 +142,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 //					.ldif("classpath:mweb.ldif");
 		}
 	}
-//	 @formatter:on
+
+	// @Bean
+	// public CustomUserDetailService customUserDetailsService()
+	// {
+	// return new CustomUserDetailService();
+	// }
 }

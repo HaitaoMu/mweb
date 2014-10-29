@@ -16,7 +16,7 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 
-//@Component
+@Component
 public class InvocationSecurityMetadataSourceService implements
 	FilterInvocationSecurityMetadataSource
 {
@@ -52,7 +52,6 @@ public class InvocationSecurityMetadataSourceService implements
 		// guess object is a URL.
 		FilterInvocation fi = (FilterInvocation) object;
 		String url = fi.getRequestUrl();
-		String httpMethod = fi.getRequest().getMethod();
 		Iterator<String> ite = resourceMap.keySet().iterator();
 		while (ite.hasNext())
 		{
