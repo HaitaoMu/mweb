@@ -1,4 +1,4 @@
-package com.mweb.repository.security.dao.dynamicurl;
+package com.mweb.repository.security.custom;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ import org.springframework.security.web.access.expression.WebExpressionVoter;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class FilterSecurityInterceptor extends AbstractSecurityInterceptor implements Filter
 {
 
@@ -45,12 +45,21 @@ public class FilterSecurityInterceptor extends AbstractSecurityInterceptor imple
 	
 	@Bean
 	public AccessDecisionManager defaultAccessDecisionManager() {
-	    List<AccessDecisionVoter> voters = new ArrayList<AccessDecisionVoter>();
-	    voters.add(new WebExpressionVoter());
-	   
-	    AccessDecisionManager result = new AffirmativeBased(voters);
-	    return result;
+		List<AccessDecisionVoter> voters = new ArrayList<AccessDecisionVoter>();
+		voters.add(new WebExpressionVoter());
+		
+		AccessDecisionManager result = new AffirmativeBased(voters);
+		return result;
 	}
+	
+//	@Bean
+//	public AuthenticationManager defaultAuthenticationManager() {
+//	    List<AccessDecisionVoter> voters = new ArrayList<AccessDecisionVoter>();
+//	    voters.add(new WebExpressionVoter());
+//	   
+//	    AuthenticationManager result = new AffirmativeBased(voters);
+//	    return result;
+//	}
 	
 	@Bean
 	public RoleVoter roleVoter() {

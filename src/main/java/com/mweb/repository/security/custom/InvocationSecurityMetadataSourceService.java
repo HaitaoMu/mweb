@@ -1,4 +1,4 @@
-package com.mweb.repository.security.dao.dynamicurl;
+package com.mweb.repository.security.custom;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,7 +16,7 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 
-@Component
+//@Component
 public class InvocationSecurityMetadataSourceService implements
 	FilterInvocationSecurityMetadataSource
 {

@@ -1,4 +1,4 @@
-package com.mweb.repository.security.dao.dynamicurl;
+package com.mweb.repository.security.custom;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -16,12 +16,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
-@Component
-public class CustomeAccessDecisionManager extends AbstractAccessDecisionManager
+//@Component
+public class CustomeAuthenticationManager extends AbstractAccessDecisionManager
 {
 
 	private static final Log logger = LogFactory
-			.getLog(CustomeAccessDecisionManager.class);
+			.getLog(CustomeAuthenticationManager.class);
 	
 	 private List<AccessDecisionVoter> decisionVoters;
 
@@ -29,14 +29,14 @@ public class CustomeAccessDecisionManager extends AbstractAccessDecisionManager
 	 /**
 	 * 
 	 */
-	public CustomeAccessDecisionManager()
+	public CustomeAuthenticationManager()
 	{
 		// TODO Auto-generated constructor stub
 	}
 	/**
 	 * 
 	 */
-	public CustomeAccessDecisionManager(List<AccessDecisionVoter> voters)
+	public CustomeAuthenticationManager(List<AccessDecisionVoter> voters)
 	{
 		// TODO Auto-generated constructor stub
 		this.decisionVoters = voters;

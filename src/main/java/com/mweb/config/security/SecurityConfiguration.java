@@ -23,11 +23,11 @@ import org.springframework.security.web.authentication.rememberme.RememberMeAuth
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import com.mweb.common.util.EncoderUtil;
+import com.mweb.repository.security.custom.CustomeAccessDecisionManager;
+import com.mweb.repository.security.custom.FilterSecurityInterceptor;
+import com.mweb.repository.security.custom.InvocationSecurityMetadataSourceService;
 import com.mweb.repository.security.dao.AuthenticateHandler;
 import com.mweb.repository.security.dao.CustomUserDetailService;
-import com.mweb.repository.security.dao.dynamicurl.CustomeAccessDecisionManager;
-import com.mweb.repository.security.dao.dynamicurl.FilterSecurityInterceptor;
-import com.mweb.repository.security.dao.dynamicurl.InvocationSecurityMetadataSourceService;
 
 import static com.mweb.common.constats.Constants.*;
 
@@ -46,11 +46,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 	@Autowired
 	public CustomUserDetailService customUserDetailsService;
 	
-	@Autowired
-	private FilterSecurityInterceptor filterInterceptor;
-	
-	@Autowired
-	InvocationSecurityMetadataSourceService metadataSource;
+//	@Autowired
+//	private FilterSecurityInterceptor filterInterceptor;
+//	
+//	@Autowired
+//	InvocationSecurityMetadataSourceService metadataSource;
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth)
@@ -83,9 +83,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 //			.antMatchers("/404").hasRole("USER")
 //			.antMatchers("/home").hasRole("USER")
 			.anyRequest()
-			.authenticated()
-			.and()
-			.addFilterBefore(filterInterceptor, BasicAuthenticationFilter.class);
+			.authenticated();
+//			.and()
+//			.addFilterBefore(filterInterceptor, BasicAuthenticationFilter.class);
 //			.withObjectPostProcessor( new ObjectPostProcessor<FilterSecurityInterceptor>() {
 //                public <O extends FilterSecurityInterceptor> O postProcess(
 //                        O fsi) {
@@ -99,7 +99,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 			.permitAll()
 			.usernameParameter(USERNAME)
 			.passwordParameter(PASSWORD)
-			.loginProcessingUrl("/login")
 			.defaultSuccessUrl("/home")
 			.and()
 			.logout()
@@ -107,7 +106,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 			.permitAll()
 			.and()
 		    .sessionManagement().maximumSessions(1);
-		
+		http.headers()
+			.contentTypeOptions()
+        	.xssProtection()
+        	.cacheControl()
+        	.httpStrictTransportSecurity()
+        	.frameOptions();
 //			List<Filter> filters = getFilterList();
 //			for(Filter filter : filters)
 //			{
@@ -117,11 +121,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 
 	}
 
-	private List<Filter> getFilterList()
-	{
-		List<Filter> filters = new ArrayList<Filter>();
-		return filters;
-	}
+//	private List<Filter> getFilterList()
+//	{
+//		List<Filter> filters = new ArrayList<Filter>();
+//		return filters;
+//	}
 
 	@Configuration
 	@Order(2)

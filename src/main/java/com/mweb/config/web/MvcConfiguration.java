@@ -70,7 +70,9 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry)
 	{
-		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/").setCachePeriod(YEAR_OF_SECONDS);
+		registry.addResourceHandler("/resources/**")
+		 		.addResourceLocations("/resources/")
+		 		.setCachePeriod(YEAR_OF_SECONDS);
 	}
 
 	/**
@@ -122,7 +124,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter
 	{
 
 		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-		messageSource.setBasenames("classpath:/messages");
+		messageSource.setBasenames("classpath:message/messages");
 		messageSource.setUseCodeAsDefaultMessage(true);
 		messageSource.setDefaultEncoding("UTF-8");
 		messageSource.setCacheSeconds(0);
