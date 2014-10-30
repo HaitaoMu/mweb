@@ -1,7 +1,5 @@
 package com.mweb.controller;
 
-import java.io.Reader;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -9,7 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -17,6 +14,12 @@ public class PageController
 {
 	private Log LOGGER = LogFactory.getLog(PageController.class);
 
+	@RequestMapping(value = "/")
+	public String index(Model model)
+	{
+		return "login";
+	}
+	
 	@RequestMapping(value = "/home")
 	public String home(Model model)
 	{

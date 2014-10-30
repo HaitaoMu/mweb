@@ -1,4 +1,4 @@
-package com.mweb.repository.security.custom;
+package com.mweb.repository.security.dao;
 
 import java.util.ArrayList;
 import java.util.Collection;

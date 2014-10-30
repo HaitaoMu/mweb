@@ -1,6 +1,7 @@
 package com.mweb.config.security;
 
 import static com.mweb.common.constats.Constants.PACKAGE_NAME;
+import static com.mweb.common.constats.Constants.ROLE_PREFIX;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.vote.AffirmativeBased;
+import org.springframework.security.access.vote.RoleVoter;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -23,9 +25,9 @@ import org.springframework.security.web.access.intercept.FilterSecurityIntercept
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
 
 import com.mweb.common.util.EncoderUtil;
-import com.mweb.repository.security.custom.InvocationSecurityMetadataSourceService;
 import com.mweb.repository.security.dao.AuthenticateHandler;
 import com.mweb.repository.security.dao.CustomUserDetailService;
+import com.mweb.repository.security.dao.InvocationSecurityMetadataSourceService;
 
 @Configuration
 @EnableWebMvcSecurity
@@ -64,6 +66,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 	public AccessDecisionManager defaultAccessDecisionManager() {
 	    List<AccessDecisionVoter> voters = new ArrayList<AccessDecisionVoter>();
 	    voters.add(new WebExpressionVoter());
+	    
+	    RoleVoter roleVoter = new RoleVoter();
+	    roleVoter.setRolePrefix(ROLE_PREFIX);
+	    voters.add(roleVoter);
+
 	    AccessDecisionManager result = new AffirmativeBased(voters);
 	    return result;
 	}
@@ -99,11 +106,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 		http.csrf().disable();
 		http.authorizeRequests()
 			.antMatchers("/resources/**").permitAll()
-			.antMatchers("/login").permitAll()
+			.antMatchers("/index").permitAll()
 			.anyRequest()
 			.authenticated();
 		http.formLogin()
-			.loginPage("/login")
+			.loginPage("/index")
 			.failureHandler(authenticateHandler)
 			.permitAll()
 			.usernameParameter(USERNAME)
@@ -113,9 +120,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 			.and()
 			.logout()
 			.logoutUrl("/logout")
+			.deleteCookies("remove")
+		    .invalidateHttpSession(false)
 			.permitAll()
 			.and()
-		    .sessionManagement().maximumSessions(1);
+		    .sessionManagement().maximumSessions(1).expiredUrl("/index");
 		http.headers()
 			.contentTypeOptions()
 	    	.xssProtection()
