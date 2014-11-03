@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class PageController
 {
-	private Log LOGGER = LogFactory.getLog(PageController.class);
+	private Log logger = LogFactory.getLog(PageController.class);
 
 	@RequestMapping(value = "/")
 	public String index(Model model)
@@ -42,9 +42,11 @@ public class PageController
 	//@formatter:on
 	
 	@RequestMapping(value="/logout")
-	public String logout()
+	public ModelAndView logout()
 	{
-		return "login";
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("login");
+		return mv;
 	}
 	
 	@RequestMapping(value="/404")

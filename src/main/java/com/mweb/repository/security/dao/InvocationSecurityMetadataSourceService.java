@@ -38,7 +38,7 @@ public class InvocationSecurityMetadataSourceService implements
 		 ConfigAttribute cbUser = new SecurityConfig("ROLE_ADMIN"); // 构造一个权限(角色)
 		 userAttr.add(cbUser);
 		 resourceMap.put("/home", userAttr);
-		 
+		 resourceMap.put("/logout", userAttr); 
 	}
 	
 	@Override

@@ -7,5 +7,8 @@
         	
         </ul>
    </div>
+<!--    	<div class="form-group"> -->
+<%-- 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> --%>
+<!-- 	</div> -->
 <!--     /.sidebar-collapse -->
 </div> 

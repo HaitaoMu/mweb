@@ -22,6 +22,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.web.access.expression.WebExpressionVoter;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
 
 import com.mweb.common.util.EncoderUtil;
@@ -103,7 +104,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 	protected void configure(HttpSecurity http) throws Exception
 	{
 
-		http.csrf().disable();
 		http.authorizeRequests()
 			.antMatchers("/resources/**").permitAll()
 			.antMatchers("/index").permitAll()
@@ -120,7 +120,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 			.and()
 			.logout()
 			.logoutUrl("/logout")
-			.deleteCookies("remove")
+//			.deleteCookies("remove")
 		    .invalidateHttpSession(false)
 			.permitAll()
 			.and()
