@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd-cpd>
+   <duplication lines="68" tokens="162">
+      <file line="31"
+            path="/Users/jet/github/mweb/src/main/java/com/mweb/model/plugin/SAPEntity.java"/>
+      <file line="31"
+            path="/Users/jet/github/mweb/src/main/java/com/mweb/model/plugin/SAPEntityModified.java"/>
+      <codefragment><![CDATA[public class SAPEntity implements Serializable
+{
+	@EmbeddedId
+	PK pk;
+
+	
+	private double price;
+
+	private double volume;
+
+	private double amount;
+
+	@JsonIgnore
+	public PK getPk()
+	{
+		return pk;
+	}
+
+	public void setPk(PK pk)
+	{
+		this.pk = pk;
+	}
+
+	@Column(name="PRICE")
+	public double getPrice()
+	{
+		return price;
+	}
+
+	public void setPrice(double price)
+	{
+		this.price = price;
+	}
+
+	@Column(name="VOLUME")
+	public double getVolume()
+	{
+		return volume;
+	}
+
+	public void setVolume(double volume)
+	{
+		this.volume = volume;
+	}
+
+	@Column(name="AMOUNT")
+	public double getAmount()
+	{
+		return amount;
+	}
+
+	public void setAmount(double amount)
+	{
+		this.amount = amount;
+	}
+
+	@Transient
+	public String getUserId()
+	{
+			return pk.getUserId();
+	}
+	
+	@Transient
+	public String getPropertyCode()
+	{
+			return pk.getPropertyCode();
+	}
+}]]></codefragment>
+   </duplication>
+</pmd-cpd>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite tests="5" failures="1" name="com.mweb.repository.BatchLockServiceTest" time="0.737" errors="0" skipped="0">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/jre/lib"/>
+    <property name="java.vm.version" value="25.5-b02"/>
+    <property name="gopherProxySet" value="false"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="path.separator" value=":"/>
+    <property name="guice.disable.misplaced.annotation.check" value="true"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="user.country" value="CN"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.os.patch.level" value="unknown"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="/Users/jet/github/mweb"/>
+    <property name="java.runtime.version" value="1.8.0_05-b13"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.CGraphicsEnvironment"/>
+    <property name="java.endorsed.dirs" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/jre/lib/endorsed"/>
+    <property name="os.arch" value="x86_64"/>
+    <property name="java.io.tmpdir" value="/var/folders/jv/52btg70n1jnd9bcgc47vcbk00000gn/T/"/>
+    <property name="line.separator" value="
+"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="os.name" value="Mac OS X"/>
+    <property name="net.sourceforge.cobertura.datafile" value="/Users/jet/github/mweb/target/cobertura/cobertura.ser"/>
+    <property name="classworlds.conf" value="/Users/jet/app/apache-maven-3.2.2/bin/m2.conf"/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.library.path" value="/Users/jet/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:."/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.class.version" value="52.0"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="os.version" value="10.10.1"/>
+    <property name="user.home" value="/Users/jet"/>
+    <property name="user.timezone" value="Asia/Chongqing"/>
+    <property name="java.awt.printerjob" value="sun.lwawt.macosx.CPrinterJob"/>
+    <property name="java.specification.version" value="1.8"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="user.name" value="jet"/>
+    <property name="java.class.path" value="/Users/jet/app/apache-maven-3.2.2/boot/plexus-classworlds-2.5.1.jar"/>
+    <property name="org.slf4j.simpleLogger.defaultLogLevel" value="info"/>
+    <property name="java.vm.specification.version" value="1.8"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.home" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/jre"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher clean site"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.language" value="zh"/>
+    <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.version" value="1.8.0_05"/>
+    <property name="java.ext.dirs" value="/Users/jet/Library/Java/Extensions:/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/jre/lib/ext:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java"/>
+    <property name="sun.boot.class.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/jre/lib/resources.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/jre/lib/rt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/jre/lib/sunrsasign.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/jre/lib/jsse.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/jre/lib/jce.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/jre/lib/charsets.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/jre/lib/jfr.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/jre/classes"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="maven.home" value="/Users/jet/app/apache-maven-3.2.2"/>
+    <property name="file.separator" value="/"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeBig"/>
+    <property name="project.build.outputDirectory" value="/Users/jet/github/mweb/target/generated-classes/cobertura"/>
+    <property name="sun.cpu.isalist" value=""/>
+  </properties>
+  <testcase classname="com.mweb.repository.BatchLockServiceTest" name="testIsJobRunning" time="0.471">
+    <failure type="java.lang.AssertionError">java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:86)
+	at org.junit.Assert.assertTrue(Assert.java:41)
+	at org.junit.Assert.assertNotNull(Assert.java:621)
+	at org.junit.Assert.assertNotNull(Assert.java:631)
+	at com.mweb.repository.BatchLockServiceTest.testIsJobRunning(BatchLockServiceTest.java:44)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:483)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestMethodCallbacks.evaluate(RunBeforeTestMethodCallbacks.java:74)
+	at org.springframework.test.context.junit4.statements.RunAfterTestMethodCallbacks.evaluate(RunAfterTestMethodCallbacks.java:83)
+	at org.springframework.test.context.junit4.statements.SpringRepeat.evaluate(SpringRepeat.java:72)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:233)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:87)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:71)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:176)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:252)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:141)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:112)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:483)
+	at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:189)
+	at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:165)
+	at org.apache.maven.surefire.booter.ProviderFactory.invokeProvider(ProviderFactory.java:85)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75)
+</failure>
+    <system-out>WARN  - HHH000038: Composite-id class does not override equals(): com.mweb.model.plugin.PK
+WARN  - HHH000039: Composite-id class does not override hashCode(): com.mweb.model.plugin.PK
+WARN  - HHH000038: Composite-id class does not override equals(): com.mweb.model.plugin.PK
+WARN  - HHH000039: Composite-id class does not override hashCode(): com.mweb.model.plugin.PK
+INFO  - HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+INFO  - HHH000399: Using default transaction strategy (direct JDBC transactions)
+INFO  - HHH000397: Using ASTQueryTranslatorFactory
+INFO  - HHH000228: Running hbm2ddl schema update
+INFO  - HHH000102: Fetching database metadata
+INFO  - HHH000396: Updating schema
+INFO  - HHH000261: Table found: mweb.ABSTRACT_TREE_NODE
+INFO  - HHH000037: Columns: [parent_id, menu_url, name, id, type]
+INFO  - HHH000108: Foreign keys: [fk_4658011873714f598d610523dec]
+INFO  - HHH000126: Indexes: [fk_4658011873714f598d610523dec, primary]
+INFO  - HHH000261: Table found: mweb.BATCH_LOCK
+INFO  - HHH000037: Columns: [lockstatus, locktype, id, lockdescription, lockname]
+INFO  - HHH000108: Foreign keys: []
+INFO  - HHH000126: Indexes: [uk_73ae217db2bf4f668a97f8bd990, uk_333f427bf5ef487ea67d42292a7, uk_20543f811bc54b7a9248bb089d6, uk_8ac2ebfc790547119253fe7bf3b, uk_b07cdd4d65b94bf5911dd24a501, uk_2459acd7efd5474bba7dfb5b34b, uk_aac42ceecf404f4d8b40607a444, uk_cfde8b59fd1f45c680d2ee5ccc6, uk_26132ae9e02546a597506f6d30b, uk_83a2cc603a2545f2b30d8416a90, uk_126b7b161aec4ca09726f98104e, uk_809db79e25154e9abea40f51e19, uk_03b462735baf40869486d8a77d5, uk_5adaf63e85b44b09adfb5e39019, uk_2bd1151460fc436e9b5fb020abf, uk_6e70c08885124edcb14e9860a6c, uk_9546cd9afcfc4b3591cea9c0dde, uk_682d6128a8354fd391130e64fb2, uk_ea290c67ee174e199bab41aaf8e, uk_ef83f84c98144e3c91f25df7491, uk_09e6a728fac349e0af31ac693eb, uk_780900e9dacd483d896e7acdca1, uk_0daaacfa50044a7da6439ca0aad, uk_56d24720c2d3465bb4eac2eeec8, uk_0d0c325d699746c0914aa8ae84d, uk_2d6803d8401d4285bdc77939c5e, uk_1613096d5c754f49af3d47d7046, uk_ad9592491c624001bc9bf75f8f5, uk_908bdb97b5cd42b29a7316d622c, uk_02f14617421a48c7b86611ed7ea, uk_c1cfdf7670ff47629e393f479cb, uk_a2d77e88c4cb43d3bdcf741b20b, uk_174987e1d5634bcc86264d9125b, uk_082e67f0ea414e1ab6597261b40, uk_0fea244847674b7aafe77e611b0, uk_9e8f99b29b9f480b965ce7afeaf, primary, uk_9e61f08cae0a463b83f806d60c8, uk_a95f05eebc3042d7a86c30275e2, uk_78d81e7a59a24294aaed169b0eb, uk_c2964de340834a51b5c22f6311e, uk_ar2jud8t7gy7lyk5sqx5q5tyl, uk_55a35094c2e54e6095430b76b57, uk_1e2804aa2cbf4b2e910bf03b5cb, uk_522c6eee7a234b87b2e31380919, uk_d607a443e293421ca6afd0655e5, uk_39388c17614143e1b5728b9ad3a, uk_2ac006db07dc42f8bd746a6b5b3, uk_4a3886d8eca74533a821e62d624, uk_a94057cf7c3a4ec8921f6935d8b, uk_acdd86e7905843a08dff2564812, uk_d7c046cfc20042709839f7df49c, uk_5a293e2b26b84b04aae9b4b569e, uk_a5b421dba8bc41b4b347593dddb, uk_70cd48c69996410e9f1bda98e90, uk_bfa5b67339164e20b058edd0c08, uk_895b98c7a9ee46c6b421f581013, uk_f62f1a9bac774c23b514573eac3, uk_015cc7bfc7b4451db397de8bfa0, uk_764b1e61755a4c2890981ca4f24, uk_b5adf1f640c741eda641f1f801a, uk_684c8914a51f4a3e83278b6be7e, uk_f848f4c89353409a8a09a5e0122, uk_1ecccbfa1f144ac1b2526aa90dd]
+INFO  - HHH000261: Table found: mweb.DBConfig
+INFO  - HHH000037: Columns: [password, dbname, driver, dbtype, id, url, username]
+INFO  - HHH000108: Foreign keys: []
+INFO  - HHH000126: Indexes: [primary]
+INFO  - HHH000261: Table found: mweb.SAPEntity
+INFO  - HHH000037: Columns: [volume, amount, price, propertycode, userid]
+INFO  - HHH000108: Foreign keys: []
+INFO  - HHH000126: Indexes: [primary]
+INFO  - HHH000261: Table found: mweb.SAPENTITY_MODIFIED
+INFO  - HHH000037: Columns: [volume, amount, price, propertycode, userid]
+INFO  - HHH000108: Foreign keys: []
+INFO  - HHH000126: Indexes: [primary]
+INFO  - HHH000261: Table found: mweb.TREE_MENU
+INFO  - HHH000037: Columns: [menu_description, menu_icon, parent_id, menu_url, name, id]
+INFO  - HHH000108: Foreign keys: [fk_8633110bb69142dbb1f509a474c]
+INFO  - HHH000126: Indexes: [fk_8633110bb69142dbb1f509a474c, primary]
+INFO  - HHH000261: Table found: mweb.USER_INFO
+INFO  - HHH000037: Columns: [user_password, user_id, user_name, user_description]
+INFO  - HHH000108: Foreign keys: []
+INFO  - HHH000126: Indexes: [primary]
+INFO  - HHH000261: Table found: mweb.USER_ROLE
+INFO  - HHH000037: Columns: [role_name, role_id, role_description]
+INFO  - HHH000108: Foreign keys: []
+INFO  - HHH000126: Indexes: [primary]
+INFO  - HHH000261: Table found: mweb.USER_WITH_ROLE
+INFO  - HHH000037: Columns: [user_id, role_id]
+INFO  - HHH000108: Foreign keys: [fk_abdc301351f04ccf9cfd467a521, fk_f1cbc6a1b1f84e5cabed13ec07b]
+INFO  - HHH000126: Indexes: [fk_abdc301351f04ccf9cfd467a521, fk_f1cbc6a1b1f84e5cabed13ec07b, primary]
+INFO  - HHH000232: Schema update complete
+</system-out>
+    <system-err>十一月 30, 2014 10:50:50 下午 org.springframework.context.support.GenericApplicationContext prepareRefresh
+信息: Refreshing org.springframework.context.support.GenericApplicationContext@67f946c3: startup date [Sun Nov 30 22:50:50 CST 2014]; root of context hierarchy
+</system-err>
+  </testcase>
+  <testcase classname="com.mweb.repository.BatchLockServiceTest" name="testSave" time="0.134"/>
+  <testcase classname="com.mweb.repository.BatchLockServiceTest" name="testUpdateLock" time="0.074"/>
+  <testcase classname="com.mweb.repository.BatchLockServiceTest" name="testGetLock" time="0.017"/>
+  <testcase classname="com.mweb.repository.BatchLockServiceTest" name="testDeleteLock" time="0.041"/>
+</testsuite>
